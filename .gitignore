@@ -1,7 +1,9 @@
-.streamit
+.streamlit
 .env 
 .venv
 
 *.zip
 
 gmic
+
+cd

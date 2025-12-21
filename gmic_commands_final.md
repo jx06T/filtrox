@@ -1,13 +1,12 @@
 # G'MIC Command Reference
 
-
 ---
 
 # Command: apply_curve
 
 ## Arguments:
 
-* 0<=smoothness<=1,x0,y0,x1,y1,x2,y2,...,xN,yN
+- 0<=smoothness<=1,x0,y0,x1,y1,x2,y2,...,xN,yN
 
 ## Description:
 
@@ -27,7 +26,7 @@ gmic image.jpg +apply_curve 1,0,0,128,255,255,0
 
 ## Arguments:
 
-* gamma>=0
+- gamma>=0
 
 ## Description:
 
@@ -43,7 +42,7 @@ gmic image.jpg +apply_gamma 2
 
 ## Arguments:
 
-* "command",[opacity_mask],_max_opacity_mask
+- "command",[opacity_mask],\_max_opacity_mask
 
 ## Description:
 
@@ -63,7 +62,7 @@ gmic image.jpg 100%,100% noise. 10 blur. 2%,0 ge. 50% blur. 0.5% normalize. 0,1 
 
 ## Arguments:
 
-* _ref_color1,...
+- \_ref_color1,...
 
 ## Description:
 
@@ -83,7 +82,7 @@ gmic image.jpg +balance_gamma 128,64,64
 
 ## Arguments:
 
-* datatype_source,datatype_target
+- datatype_source,datatype_target
 
 ## Description:
 
@@ -95,7 +94,7 @@ datatype_source and datatype_target can be { uint8 | int8 | uint16 | int16 | uin
 
 # Command: complex2polar
 
-### No argumentsDescription:Compute complex to polar transforms of selected images. ``` gmic image.jpg +fft complex2polar[-2,-1] log[-2] shift[-2] 50%,50%,0,0,2 remove[-1] ```
+### No argumentsDescription:Compute complex to polar transforms of selected images. `gmic image.jpg +fft complex2polar[-2,-1] log[-2] shift[-2] 50%,50%,0,0,2 remove[-1]`
 
 ---
 
@@ -109,7 +108,7 @@ datatype_source and datatype_target can be { uint8 | int8 | uint16 | int16 | uin
 
 ## Arguments:
 
-* [huffman_tree],_max_leaf_value
+- [huffman_tree],\_max_leaf_value
 
 ## Description:
 
@@ -125,7 +124,7 @@ Compress selected images with Huffman coding.
 
 ## Arguments:
 
-* _is_binary_data={ 0:No | 1:Yes },_maximum_sequence_length>=0
+- \_is_binary_data={ 0:No | 1:Yes },\_maximum_sequence_length>=0
 
 ## Description:
 
@@ -145,14 +144,14 @@ gmic image.jpg rescale2d ,100 quantize 4 round +compress_rle , +decompress_rle[-
 
 # Command: cumulate
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* { x | y | z | c }...{ x | y | z | c }    or
-* (no arg)
+- { x | y | z | c }...{ x | y | z | c }    or
+- (no arg)
 
 ## Description:
 
@@ -168,7 +167,7 @@ gmic image.jpg +histogram 256 +cumulate[-1] display_graph[-2,-1] 400,300,3
 
 ## Arguments:
 
-* _width>0,_height>0,_depth>0
+- \_width>0,\_height>0,\_depth>0
 
 ## Description:
 
@@ -184,8 +183,8 @@ width=height=depth=33 and reconstruction_colorspace=0.
 
 ## Arguments:
 
-* _width>0,_height>0,_depth>0    or
-* (no arg)
+- \_width>0,\_height>0,\_depth>0    or
+- (no arg)
 
 ## Description:
 
@@ -214,7 +213,7 @@ If the width, height and depth arguments are provided, they define the size of t
 
 ## Arguments:
 
-* [huffman_tree]
+- [huffman_tree]
 
 ## Description:
 
@@ -238,15 +237,15 @@ gmic image.jpg huffman_tree compress_huffman.. . +decompress_huffman.. .
 
 # Command: discard
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _value1,_value2,...    or
-* { x | y | z | c}...{ x | y | z | c},_value1,_value2,...    or
-* (no arg)
+- \_value1,\_value2,...    or
+- { x | y | z | c}...{ x | y | z | c},\_value1,\_value2,...    or
+- (no arg)
 
 ## Description:
 
@@ -280,13 +279,13 @@ gmic (1,2,2,3,3,3,4,4,4,4) +discard x
 
 # Command: endian
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _datatype
+- \_datatype
 
 ## Description:
 
@@ -299,14 +298,14 @@ This command does nothing for bool, uint8 and int8 datatypes.
 
 # Command: equalize
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _nb_levels[%]>0,_value_min[%],_value_max[%]    or
-* (no arg)
+- \_nb_levels[%]>0,\_value_min[%],\_value_max[%]    or
+- (no arg)
 
 ## Description:
 
@@ -337,15 +336,15 @@ gmic image.jpg +equalize 4,0,128
 
 # Command: fill
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* value1,_value2,...    or
-* [image]    or
-* 'formula'
+- value1,\_value2,...    or
+- [image]    or
+- 'formula'
 
 ## Description:
 
@@ -353,7 +352,7 @@ Fill selected images with values read from the specified value list, existing im
 
 or mathematical expression. Single quotes may be omitted in formula.
 
-(*equivalent to shortcut command* f).
+(_equivalent to shortcut command_ f).
 
 This command has a [tutorial page](https://gmic.eu/tutorial/fill).
 
@@ -383,7 +382,7 @@ gmic 400,400,1,3 fill "X=x-w/2; Y=y-h/2; R=sqrt(X^2+Y^2); a=atan2(Y,X); R<=180?2
 
 ## Arguments:
 
-* [reference],_affine_mode,_precision>0,_iter_max>=0
+- [reference],\_affine_mode,\_precision>0,\_iter_max>=0
 
 ## Description:
 
@@ -400,14 +399,14 @@ affine_mode=0, precision=1e-3 and iter_max=1000.
 
 # Command: map
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [palette],_boundary_conditions    or
-* palette_name,_boundary_conditions
+- [palette],\_boundary_conditions    or
+- palette_name,\_boundary_conditions
 
 ## Description:
 
@@ -443,8 +442,8 @@ gmic image.jpg +rgb2ycbcr split[-1] c (0,255,0) resize[-1] 256,1,1,1,3 map[-4] [
 
 ## Arguments:
 
-* (a00,...,aMN)    or
-* [matrix]
+- (a00,...,aMN)    or
+- [matrix]
 
 ## Description:
 
@@ -460,8 +459,8 @@ gmic image.jpg +mix_channels (0,1,0;1,0,0;0,0,1)
 
 ## Arguments:
 
-* base_value    or
-* (no arg)
+- base_value    or
+- (no arg)
 
 ## Description:
 
@@ -479,13 +478,13 @@ gmic image.jpg +negate
 
 # Command: noise
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* amplitude[%]>=0,_noise_type
+- amplitude[%]>=0,\_noise_type
 
 ## Description:
 
@@ -517,7 +516,7 @@ gmic 300,300,1,3 [0] noise[0] 20,0 noise[1] 20,1 +histogram 100 display_graph[-2
 
 ## Arguments:
 
-* _amplitude>=0
+- \_amplitude>=0
 
 ## Description:
 
@@ -537,7 +536,7 @@ gmic image.jpg +noise_hurl ,
 
 ## Arguments:
 
-* _scale_x[%]>0,_scale_y[%]>0,_scale_z[%]>0,_seed_x,_seed_y,_seed_z
+- \_scale_x[%]>0,\_scale_y[%]>0,\_scale_z[%]>0,\_seed_x,\_seed_y,\_seed_z
 
 ## Description:
 
@@ -560,7 +559,7 @@ gmic 500,500,1,3 noise_perlin ,
 
 ## Arguments:
 
-* _radius[%]>0,_max_sample_attempts>0,_p_norm>0
+- \_radius[%]>0,\_max_sample_attempts>0,\_p_norm>0
 
 ## Description:
 
@@ -583,7 +582,7 @@ gmic 300,300 noise_poissondisk 8
 
 ## Arguments:
 
-* p>=0
+- p>=0
 
 ## Description:
 
@@ -601,32 +600,32 @@ gmic image.jpg +normp[0] 0 +normp[0] 1 +normp[0] 2 +normp[0] inf
 
 # Command: norm1
 
-### No argumentsDescription:Compute the pointwise L1-norm of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/oldtutorial/_norm1). ``` gmic image.jpg +norm1 ```
+### No argumentsDescription:Compute the pointwise L1-norm of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/oldtutorial/_norm1). `gmic image.jpg +norm1`
 
 ---
 
 # Command: norm2
 
-### No argumentsDescription:Compute the pointwise L2-norm (euclidean norm) of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/oldtutorial/_norm2). ``` gmic image.jpg +norm ```
+### No argumentsDescription:Compute the pointwise L2-norm (euclidean norm) of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/oldtutorial/_norm2). `gmic image.jpg +norm`
 
 ---
 
 # Command: normalize
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* { value0[%] | [image0] },{ value1[%] | [image1] },_constant_case_ratio    or
-* [image]
+- { value0[%] | [image0] },{ value1[%] | [image1] },\_constant_case_ratio    or
+- [image]
 
 ## Description:
 
 Linearly normalize values of selected images in specified range.
 
-(*equivalent to shortcut command* n).
+(_equivalent to shortcut command_ n).
 
 This command has a [tutorial page](https://gmic.eu/tutorial/normalize).
 
@@ -644,13 +643,13 @@ gmic image.jpg split x,2 normalize[-1] 64,196 append x
 
 # Command: normalize_sum
 
-### No argumentsDescription:Normalize selected images such that they have a unit sum. ``` gmic image.jpg +histogram 256 normalize_sum[-1] display_graph[-1] 400,300 ```
+### No argumentsDescription:Normalize selected images such that they have a unit sum. `gmic image.jpg +histogram 256 normalize_sum[-1] display_graph[-1] 400,300`
 
 ---
 
 # Command: orientation
 
-### No argumentsDescription:Compute the pointwise orientation of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/tutorial/orientation). ``` gmic image.jpg +orientation +norm[-2] negate[-1] mul[-2] [-1] reverse[-2,-1] ```
+### No argumentsDescription:Compute the pointwise orientation of vector-valued pixels in selected images. This command has a [tutorial page](https://gmic.eu/tutorial/orientation). `gmic image.jpg +orientation +norm[-2] negate[-1] mul[-2] [-1] reverse[-2,-1]`
 
 ---
 
@@ -658,7 +657,7 @@ gmic image.jpg split x,2 normalize[-1] 64,196 append x
 
 ## Arguments:
 
-* _nb_levels>0
+- \_nb_levels>0
 
 ## Description:
 
@@ -686,7 +685,7 @@ gmic image.jpg luminance +otsu ,
 
 ## Arguments:
 
-* nb_levels>=1,_keep_values={ 0:No | 1:Yes },_quantization_type={ -1:Median-cut | 0:K-means | 1:Uniform }
+- nb_levels>=1,\_keep_values={ 0:No | 1:Yes },\_quantization_type={ -1:Median-cut | 0:K-means | 1:Uniform }
 
 ## Description:
 
@@ -716,7 +715,7 @@ gmic 200,200,1,1,'cos(x/10)*sin(y/10)' +quantize[0] 6 +quantize[0] 4 +quantize[0
 
 ## Arguments:
 
-* _min_area>0
+- \_min_area>0
 
 ## Description:
 
@@ -734,14 +733,14 @@ gmic image.jpg quantize 3 +blur 1 round[-1] +quantize_area[-1] 2
 
 # Command: rand
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* { value0[%] | [image0] },_{ value1[%] | [image1] },_[pdf],_precision[%]    or
-* [image]
+- { value0[%] | [image0] },_{ value1[%] | [image1] },_[pdf],\_precision[%]    or
+- [image]
 
 ## Description:
 
@@ -776,7 +775,7 @@ gmic 256 gaussian[-1] 30 line[-1] 47%,0,53%,0,1,0 500,500 rand[-1] 0,255,[-2] +h
 
 ## Arguments:
 
-* sum>0,_random_function
+- sum>0,\_random_function
 
 ## Description:
 
@@ -798,7 +797,7 @@ gmic 100 rand_sum 1000
 
 ## Arguments:
 
-* source,target
+- source,target
 
 ## Description:
 
@@ -814,7 +813,7 @@ gmic (1;2;3;4) +replace 2,3
 
 ## Arguments:
 
-* _expression
+- \_expression
 
 ## Description:
 
@@ -830,7 +829,7 @@ gmic (0;1;2) log +replace_inf 2
 
 ## Arguments:
 
-* _expression
+- \_expression
 
 ## Description:
 
@@ -842,7 +841,7 @@ Replace all NaN and infinite values in selected images by specified expression.
 
 ## Arguments:
 
-* _expression
+- \_expression
 
 ## Description:
 
@@ -858,7 +857,7 @@ gmic (-1;0;2) sqrt +replace_nan 2
 
 ## Arguments:
 
-* "search_seq","replace_seq"
+- "search_seq","replace_seq"
 
 ## Description:
 
@@ -874,7 +873,7 @@ gmic (1;2;3;4;5) +replace_seq "2,3,4","7,8"
 
 ## Arguments:
 
-* "search_str","replace_str"
+- "search_str","replace_str"
 
 ## Description:
 
@@ -888,14 +887,14 @@ gmic ('"Hello there, how are you ?"') +replace_str "Hello there","Hi David"
 
 # Command: round
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* rounding_value>=0,_rounding_type    or
-* (no arg)
+- rounding_value>=0,\_rounding_type    or
+- (no arg)
 
 ## Description:
 
@@ -927,7 +926,7 @@ gmic image.jpg mul {pi/180} sin +round
 
 ## Arguments:
 
-* gamma>=0
+- gamma>=0
 
 ## Description:
 
@@ -945,19 +944,19 @@ gmic 1000 fill '4*x/w' repeat 5 { +roundify[0] {$>*0.2} } append c display_graph
 
 # Command: set
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* value,_x[%],_y[%],_z[%],_c[%]
+- value,\_x[%],\_y[%],\_z[%],\_c[%]
 
 ## Description:
 
 Set pixel value in selected images, at specified coordinates.
 
-(*equivalent to shortcut command* =).
+(_equivalent to shortcut command_ =).
 
 If specified coordinates are outside the image bounds, no action is performed.
 
@@ -985,7 +984,7 @@ gmic image.jpg repeat 10000 { set 255,{u(100)}%,{u(100)}%,0,{u(100)}% }
 
 ## Arguments:
 
-* value[%],_is_soft_thresholding={ 0:No | 1:Yes }
+- value[%],\_is_soft_thresholding={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -1015,7 +1014,7 @@ gmic image.jpg +threshold[0] 50% +threshold[0] 50%,1
 
 ## Arguments:
 
-* -100<=_brightness<=100,-100<=_contrast<=100,-100<=_gamma<=100,-100<=_hue_shift<=100,-100<=_saturation<=100,_value_min,_value_max
+- -100<=\_brightness<=100,-100<=\_contrast<=100,-100<=\_gamma<=100,-100<=\_hue_shift<=100,-100<=\_saturation<=100,\_value_min,\_value_max
 
 ## Description:
 
@@ -1039,13 +1038,13 @@ gmic image.jpg +adjust_colors 0,30,0,0,30
 
 ## Arguments:
 
-* "command",color_channels,_value_action={ 0:None | 1:Cut | 2:Normalize }
+- "command",color_channels,\_value_action={ 0:None | 1:Cut | 2:Normalize }
 
 ## Description:
 
 Apply specified command on the chosen color channel(s) of each selected images.
 
-(*equivalent to shortcut command* ac).
+(_equivalent to shortcut command_ ac).
 
 Argument color_channels refers to a colorspace, and can be basically one of
 { all | rgba | [s]rgb | ryb | lrgb | ycbcr | lab | lch | hsv | hsi | hsl | cmy | cmyk | yiq }.
@@ -1067,7 +1066,7 @@ gmic image.jpg +apply_channels "equalize blur 2",ycbcr_cbcr
 
 ## Arguments:
 
-* _GM_smoothness,_RB_smoothness1,_RB_smoothness2
+- \_GM_smoothness,\_RB_smoothness1,\_RB_smoothness2
 
 ## Description:
 
@@ -1087,7 +1086,7 @@ gmic image.jpg rgb2bayer 0 +bayer2rgb 1,1,0.5
 
 ## Arguments:
 
-* strength
+- strength
 
 ## Description:
 
@@ -1109,13 +1108,13 @@ gmic image.jpg +brightness 20
 
 ## Arguments:
 
-* "clut_name",_resolution>0,_cut_and_round={ 0:No | 1:Yes }
+- "clut_name",\_resolution>0,\_cut_and_round={ 0:No | 1:Yes }
 
 ## Description:
 
 Insert one of the 1149 pre-defined CLUTs at the end of the image list.
 
-clut_name can be { 12_years_a_slave | 1917 | 2-strip-process | 60s | 60s_faded | 60s_faded_alt | 7drk_21 | action_magenta_01 | action_red_01 | ad_astra | adventure_1453 | agfa_apx_100 | agfa_apx_25 | agfa_precisa_100 | agfa_ultra_color_100 | agfa_vista_200 | agressive_highligjtes_recovery_5 | aladdin | alberto_street | alien_green | ampio | amstragram | amstragram+ | analog_film_1 | analogfx_anno_1870_color | analogfx_old_style_i | analogfx_old_style_ii | analogfx_old_style_iii | analogfx_sepia_color | analogfx_soft_sepia_i | analogfx_soft_sepia_ii | anime | ant-man | apocalypse_this_very_moment | aqua | aqua_and_orange_dark | aquaman | arabica_12 | asistas | atomic_pink | atusa | autumn | autumn_leaves | ava_614 | avalanche | avengers_endgame | azrael_93 | baby_driver | bad_boys_for_life | basuco | bboyz_2 | bc_darkum | beach_aqua_orange | beach_faded_analog | beati | beauty_and_the_beast | berlin_sky | bisogno | black_and_white | black_panther | black_star | black_white_01 | black_white_02 | black_white_03 | black_white_04 | black_white_05 | black_white_06 | blade_runner | bleach_bypass | bleachbypass_1 | bleachbypass_2 | bleachbypass_3 | bleachbypass_4 | bleech_bypass_green | bleech_bypass_yellow_01 | blue_cold_fade | blue_dark | blue_house | blue_ice | blue_love_39 | blue_mono | blue_shadows_01 | bluearchitecture | bluehour | blues | bob_ford | bohemian_rhapsody | bombshell | bourbon_64 | boyado | bright_green_01 | bright_teal_orange | bright_warm | brightgreen | brown_mobster | brownbm | brownish | bw_1 | bw_10 | bw_2 | bw_3 | bw_4 | bw_5 | bw_6 | bw_7 | bw_8 | bw_9 | bw_but_yellow | byers_11 | calidum | candlelight | captain_marvel | caribe | chemical_168 | chrome_01 | cineblue | cinebm_4k | cinema | cinema_2 | cinema_3 | cinema_4 | cinema_5 | cinema_noir | cinematic-1 | cinematic-10 | cinematic-2 | cinematic-3 | cinematic-4 | cinematic-5 | cinematic-6 | cinematic-7 | cinematic-8 | cinematic-9 | cinematic_01 | cinematic_02 | cinematic_03 | cinematic_04 | cinematic_05 | cinematic_06 | cinematic_07 | cinematic_for_flog | cinematic_forest | cinematic_lady_bird | cinematic_mexico | city | city_7 | city_dust | city_of_god | classic_films_01 | classic_films_02 | classic_films_03 | classic_films_04 | classic_films_05 | classic_teal_and_orange | clayton_33 | clear | clear_teal_fade | clouseau_54 | cobi_3 | coffee_44 | cold_clear_blue | cold_clear_blue_1 | cold_ice | cold_simplicity_2 | coldchrome | color_rich | colore | colorful_0209 | colornegative | conflict_01 | contrail_35 | contrast_with_highlights_protection | contrasty_afternoon | contrasty_green | convold | cosa | creed_2 | crispautumn | crispromance | crispwarm | crispwinter | cross_process_cp_130 | cross_process_cp_14 | cross_process_cp_15 | cross_process_cp_16 | cross_process_cp_18 | cross_process_cp_3 | cross_process_cp_4 | cross_process_cp_6 | crushin | cubicle_99 | culor | d_o_1 | dark_blues_in_sunlight | dark_green_02 | dark_green_1 | dark_man_x | dark_orange_teal | dark_place_01 | darkandsomber | darkness | date_39 | day_4nite | day_for_night | day_to_night_kings_blue | deep | deep_blue | deep_dark_warm | deep_high_contrast | deep_teal_fade | deep_warm_fade | deepskintones_2 | deepskintones_3 | delicatessen | denoiser_simple_40 | desert_gold_37 | dimension | dimmer | directions_23 | django_25 | doctor_strange | domingo_145 | dream_1 | dream_85 | drop_green_tint_14 | dropblues | dunkirk | duotone_blue_red | earth_tone_boost | eda_0_2 | edgyember | elegance_38 | enchanted | ensaya | eterna_for_flog | expired_69 | expired_fade | expired_polaroid | extreme | fade | fade_to_green | faded | faded_47 | faded_alt | faded_analog | faded_extreme | faded_green | faded_pink-ish | faded_print | faded_retro_01 | faded_retro_02 | faded_vivid | fadedlook | fallcolors | falua | farkling | fatos | faux_infrared | faux_infrared_bw_1 | faux_infrared_color_p_2 | faux_infrared_color_p_3 | faux_infrared_color_r_0a | faux_infrared_color_r_0b | faux_infrared_color_yp_1 | fezzle | fg_cinebasic | fg_cinebright | fg_cinecold | fg_cinedrama | fg_cinetealorange_1 | fg_cinetealorange_2 | fg_cinevibrant | fg_cinewarm | fgcinebasic | fgcinebright | fgcinecold | fgcinedrama | fgcinetealorange_1 | fgcinetealorange_2 | fgcinevibrant | fgcinewarm | fight_club | film_0987 | film_9879 | film_gb-19 | film_high_contrast | film_print_01 | film_print_02 | filmic | filo | flat_30 | flat_blue_moon | flavin | flog_to_rec_709 | foggynight | folger_50 | ford_v_ferrari | foresta | formula_b | french_comedy | frosted | frostedbeachpicnic | fuji_160c | fuji_160c_+ | fuji_160c_++ | fuji_160c_- | fuji_3510_constlclip | fuji_3510_constlmap | fuji_3510_cuspclip | fuji_3513_constlclip | fuji_3513_constlmap | fuji_3513_cuspclip | fuji_400h | fuji_400h_+ | fuji_400h_++ | fuji_400h_- | fuji_800z | fuji_800z_+ | fuji_800z_++ | fuji_800z_- | fuji_astia_100_generic | fuji_astia_100f | fuji_fp-100c | fuji_fp-100c_+ | fuji_fp-100c_++ | fuji_fp-100c_+++ | fuji_fp-100c_++_alt | fuji_fp-100c_- | fuji_fp-100c_-- | fuji_fp-100c_alt | fuji_fp-100c_cool | fuji_fp-100c_cool_+ | fuji_fp-100c_cool_++ | fuji_fp-100c_cool_- | fuji_fp-100c_cool_-- | fuji_fp-100c_negative | fuji_fp-100c_negative_+ | fuji_fp-100c_negative_++ | fuji_fp-100c_negative_+++ | fuji_fp-100c_negative_++_alt | fuji_fp-100c_negative_- | fuji_fp-100c_negative_-- | fuji_fp-3000b | fuji_fp-3000b_+ | fuji_fp-3000b_++ | fuji_fp-3000b_+++ | fuji_fp-3000b_- | fuji_fp-3000b_-- | fuji_fp-3000b_hc | fuji_fp-3000b_negative | fuji_fp-3000b_negative_+ | fuji_fp-3000b_negative_++ | fuji_fp-3000b_negative_+++ | fuji_fp-3000b_negative_- | fuji_fp-3000b_negative_-- | fuji_fp-3000b_negative_early | fuji_fp_100c | fuji_hdr | fuji_neopan_1600 | fuji_neopan_1600_+ | fuji_neopan_1600_++ | fuji_neopan_1600_- | fuji_neopan_acros_100 | fuji_provia_100_generic | fuji_provia_100f | fuji_provia_400f | fuji_provia_400x | fuji_sensia_100 | fuji_superia_100 | fuji_superia_100_+ | fuji_superia_100_++ | fuji_superia_100_- | fuji_superia_1600 | fuji_superia_1600_+ | fuji_superia_1600_++ | fuji_superia_1600_- | fuji_superia_200 | fuji_superia_200_xpro | fuji_superia_400 | fuji_superia_400_+ | fuji_superia_400_++ | fuji_superia_400_- | fuji_superia_800 | fuji_superia_800_+ | fuji_superia_800_++ | fuji_superia_800_- | fuji_superia_hg_1600 | fuji_superia_reala_100 | fuji_superia_x-tra_800 | fuji_velvia_100_generic | fuji_velvia_50 | fuji_xtrans_iii_acros | fuji_xtrans_iii_acros+g | fuji_xtrans_iii_acros+r | fuji_xtrans_iii_acros+ye | fuji_xtrans_iii_astia | fuji_xtrans_iii_classic_chrome | fuji_xtrans_iii_mono | fuji_xtrans_iii_mono+g | fuji_xtrans_iii_mono+r | fuji_xtrans_iii_mono+ye | fuji_xtrans_iii_pro_neg_hi | fuji_xtrans_iii_pro_neg_std | fuji_xtrans_iii_provia | fuji_xtrans_iii_sepia | fuji_xtrans_iii_velvia | fusion_88 | futuristicbleak_1 | futuristicbleak_2 | futuristicbleak_3 | futuristicbleak_4 | going_for_a_walk | golden | golden_bright | golden_fade | golden_mono | golden_night_softner_43 | golden_sony_37 | golden_vibrant | goldengate | goldentime | goldfx_bright_spring_breeze | goldfx_bright_summer_heat | goldfx_hot_summer_heat | goldfx_perfect_sunset_01min | goldfx_perfect_sunset_05min | goldfx_perfect_sunset_10min | goldfx_spring_breeze | goldfx_summer_heat | good_morning | green_15 | green_2025 | green_action | green_afternoon | green_and_orange | green_blues | green_book | green_conflict | green_day_01 | green_day_02 | green_g_09 | green_indoor | green_light | green_mono | green_yellow | greenish_contrasty | greenish_fade | greenish_fade_1 | gremerta | greyhound | hackmanite | hallowen_dark | happyness_133 | hard_teal_orange | hardboost | harsh_day | harsh_sunset | helios | herderite | heulandite | hiddenite | highlights_protection | hilutite | hitman | hlg_1_1 | honey_light | hong_kong | horrorblue | howlite | huesio | husmes | huyan | hydracore | hyla_68 | hypersthene | hypnosis | hypressen | i_tonya | ideo | ilford_delta_100 | ilford_delta_3200 | ilford_delta_3200_+ | ilford_delta_3200_++ | ilford_delta_3200_- | ilford_delta_400 | ilford_fp_4_plus_125 | ilford_hp_5 | ilford_hp_5_+ | ilford_hp_5_++ | ilford_hp_5_- | ilford_hp_5_plus_400 | ilford_hps_800 | ilford_pan_f_plus_50 | ilford_xp_2 | inception | indoor_blue | industrial_33 | infrared_-_dust_pink | instantc | j | jarklin | jojo_rabbit | joker | jumanji_the_next_level | jurassic_world_fallen_kingdom | justice_league | justpeachy | jwick_21 | k_tone_vintage_kodachrome | kahve_3 | kh_1 | kh_10 | kh_2 | kh_3 | kh_4 | kh_5 | kh_6 | kh_7 | kh_8 | kh_9 | killstreak | kingsman_the_golden_circle | knives_out | kodak_2383_constlclip | kodak_2383_constlmap | kodak_2383_cuspclip | kodak_2393_constlclip | kodak_2393_constlmap | kodak_2393_cuspclip | kodak_bw_400_cn | kodak_e-100_gx_ektachrome_100 | kodak_ektachrome_100_vs | kodak_ektachrome_100_vs_generic | kodak_ektar_100 | kodak_elite_100_xpro | kodak_elite_chrome_200 | kodak_elite_chrome_400 | kodak_elite_color_200 | kodak_elite_color_400 | kodak_elite_extracolor_100 | kodak_hie_hs_infra | kodak_kodachrome_200 | kodak_kodachrome_25 | kodak_kodachrome_64 | kodak_kodachrome_64_generic | kodak_portra_160 | kodak_portra_160_+ | kodak_portra_160_++ | kodak_portra_160_- | kodak_portra_160_nc | kodak_portra_160_nc_+ | kodak_portra_160_nc_++ | kodak_portra_160_nc_- | kodak_portra_160_vc | kodak_portra_160_vc_+ | kodak_portra_160_vc_++ | kodak_portra_160_vc_- | kodak_portra_400 | kodak_portra_400_+ | kodak_portra_400_++ | kodak_portra_400_- | kodak_portra_400_nc | kodak_portra_400_nc_+ | kodak_portra_400_nc_++ | kodak_portra_400_nc_- | kodak_portra_400_uc | kodak_portra_400_uc_+ | kodak_portra_400_uc_++ | kodak_portra_400_uc_- | kodak_portra_400_vc | kodak_portra_400_vc_+ | kodak_portra_400_vc_++ | kodak_portra_400_vc_- | kodak_portra_800 | kodak_portra_800_+ | kodak_portra_800_++ | kodak_portra_800_- | kodak_portra_800_hc | kodak_t-max_100 | kodak_t-max_3200 | kodak_t-max_400 | kodak_tmax_3200 | kodak_tmax_3200_+ | kodak_tmax_3200_++ | kodak_tmax_3200_- | kodak_tmax_3200_alt | kodak_tri-x_400 | kodak_tri-x_400_+ | kodak_tri-x_400_++ | kodak_tri-x_400_- | kodak_tri-x_400_alt | korben_214 | la_la_land | landscape | landscape_01 | landscape_02 | landscape_03 | landscape_04 | landscape_05 | landscape_1 | landscape_10 | landscape_2 | landscape_3 | landscape_4 | landscape_5 | landscape_6 | landscape_7 | landscape_8 | landscape_9 | lateafternoonwanderlust | latesunset | lavark | lc_1 | lc_10 | lc_2 | lc_3 | lc_4 | lc_5 | lc_6 | lc_7 | lc_8 | lc_9 | lenox_340 | levex | life_giving_tree | light | light_blown | litore | little_women | logan | lomo | lomography_redscale_100 | lomography_x-pro_slide_200 | london_nights | longbeachmorning | loro | lotta | louetta | low_contrast_blue | low_key_01 | lucky_64 | lushgreen | lushgreensummer | mad_max_fury_road | maesky | magenta_day | magenta_day_01 | magenta_dream | magenta_yellow | magentacoffee | magichour | marriage_story | matrix | mckinnon_75 | memories | mercato | metropolis | milo_5 | minimalistcaffeination | modern_film | modern_films_01 | modern_films_02 | modern_films_03 | modern_films_04 | modern_films_05 | modern_films_06 | modern_films_07 | molti | mono_2 | mono_tinted | monochrome | monochrome_1 | monochrome_2 | moody_1 | moody_10 | moody_2 | moody_3 | moody_4 | moody_5 | moody_6 | moody_7 | moody_8 | moody_9 | moonlight | moonlight_01 | moonlight_2 | moonrise | morning_6 | morroco_16 | mostly_blue | mother! | motus | moviz_1 | moviz_10 | moviz_11 | moviz_12 | moviz_13 | moviz_14 | moviz_15 | moviz_16 | moviz_17 | moviz_18 | moviz_19 | moviz_2 | moviz_20 | moviz_21 | moviz_22 | moviz_23 | moviz_24 | moviz_25 | moviz_26 | moviz_27 | moviz_28 | moviz_29 | moviz_3 | moviz_30 | moviz_31 | moviz_32 | moviz_33 | moviz_34 | moviz_35 | moviz_36 | moviz_37 | moviz_38 | moviz_39 | moviz_4 | moviz_40 | moviz_41 | moviz_42 | moviz_43 | moviz_44 | moviz_45 | moviz_46 | moviz_47 | moviz_48 | moviz_5 | moviz_6 | moviz_7 | moviz_8 | moviz_9 | mucca | mute_shift | muted_01 | muted_fade | mysticpurplesunset | nah | natural_vivid | naturalboost | negative | nemesis | neon_770 | neutral | neutral_pump | neutral_teal_orange | neutral_warm_fade | newspaper | night_01 | night_02 | night_03 | night_04 | night_05 | night_blade_4 | night_king_141 | night_spy | night_view | nightfromday | nightlife | nigrum | no_time_to_die | nostalgiahoney | nostalgic | nw-1 | nw-10 | nw-2 | nw-3 | nw-4 | nw-5 | nw-6 | nw-7 | nw-8 | nw-9 | old_west | once_upon_a_time | once_upon_a_time_in_hollywood | onda | only_red | only_red_and_blue | operation_yellow | orange_dark_4 | orange_dark_7 | orange_dark_look | orange_tone | orange_underexposed | orangeandblue | oranges | padre | paladin | paladin_1875 | parasite | partia | pasadena_21 | passing_by | perso | picola | pink_fade | pirates_of_the_caribbean | pitaya_15 | pmcinematic_01 | pmcinematic_02 | pmcinematic_03 | pmcinematic_04 | pmcinematic_05 | pmcinematic_06 | pmcinematic_07 | pmnight_01 | pmnight_02 | pmnight_03 | pmnight_04 | pmnight_05 | polaroid_664 | polaroid_665 | polaroid_665_+ | polaroid_665_++ | polaroid_665_- | polaroid_665_-- | polaroid_665_negative | polaroid_665_negative_+ | polaroid_665_negative_- | polaroid_665_negative_hc | polaroid_667 | polaroid_669 | polaroid_669_+ | polaroid_669_++ | polaroid_669_+++ | polaroid_669_- | polaroid_669_-- | polaroid_669_cold | polaroid_669_cold_+ | polaroid_669_cold_- | polaroid_669_cold_-- | polaroid_672 | polaroid_690 | polaroid_690_+ | polaroid_690_++ | polaroid_690_- | polaroid_690_-- | polaroid_690_cold | polaroid_690_cold_+ | polaroid_690_cold_++ | polaroid_690_cold_- | polaroid_690_cold_-- | polaroid_690_warm | polaroid_690_warm_+ | polaroid_690_warm_++ | polaroid_690_warm_- | polaroid_690_warm_-- | polaroid_polachrome | polaroid_px-100uv+_cold | polaroid_px-100uv+_cold_+ | polaroid_px-100uv+_cold_++ | polaroid_px-100uv+_cold_+++ | polaroid_px-100uv+_cold_- | polaroid_px-100uv+_cold_-- | polaroid_px-100uv+_warm | polaroid_px-100uv+_warm_+ | polaroid_px-100uv+_warm_++ | polaroid_px-100uv+_warm_+++ | polaroid_px-100uv+_warm_- | polaroid_px-100uv+_warm_-- | polaroid_px-680 | polaroid_px-680_+ | polaroid_px-680_++ | polaroid_px-680_- | polaroid_px-680_-- | polaroid_px-680_cold | polaroid_px-680_cold_+ | polaroid_px-680_cold_++ | polaroid_px-680_cold_++_alt | polaroid_px-680_cold_- | polaroid_px-680_cold_-- | polaroid_px-680_warm | polaroid_px-680_warm_+ | polaroid_px-680_warm_++ | polaroid_px-680_warm_- | polaroid_px-680_warm_-- | polaroid_px-70 | polaroid_px-70_+ | polaroid_px-70_++ | polaroid_px-70_+++ | polaroid_px-70_- | polaroid_px-70_-- | polaroid_px-70_cold | polaroid_px-70_cold_+ | polaroid_px-70_cold_++ | polaroid_px-70_cold_- | polaroid_px-70_cold_-- | polaroid_px-70_warm | polaroid_px-70_warm_+ | polaroid_px-70_warm_++ | polaroid_px-70_warm_- | polaroid_px-70_warm_-- | polaroid_time_zero_expired | polaroid_time_zero_expired_+ | polaroid_time_zero_expired_++ | polaroid_time_zero_expired_- | polaroid_time_zero_expired_-- | polaroid_time_zero_expired_--- | polaroid_time_zero_expired_cold | polaroid_time_zero_expired_cold_- | polaroid_time_zero_expired_cold_-- | polaroid_time_zero_expired_cold_--- | portrait | portrait_1 | portrait_10 | portrait_2 | portrait_3 | portrait_4 | portrait_5 | portrait_6 | portrait_7 | portrait_8 | portrait_9 | progressen | protect_highlights_01 | prussian_blue | pseudogrey | purple | purple_2 | quraqqq_12 | randas | red_afternoon_01 | red_day_01 | red_dream_01 | redblueyellow | reds | reds_oranges_yellows | reeve_38 | remy_24 | rest_33 | retro | retro_brown_01 | retro_magenta_01 | retro_summer_3 | retro_yellow_01 | rocketman | rollei_ir_400 | rollei_ortho_25 | rollei_retro_100_tonal | rollei_retro_80s | rotate_muted | rotate_vibrant | rotated | rotated_crush | satid | saturated_blue | saving_private_damon | scala | science_fiction | scrittle | sea | seges | selor | sensum | separation | serenity | seringe_4 | serpent | seventies_magazine | sevsuz | shade_kings_ink | shadow_king_39 | shine | sicario | sino | skin_tones | slog_to_rec_709_basic | slog_to_rec_709_contrasty | slog_to_rec_709_crush_shadows | slog_to_rec_709_green_correction | smart_contrast | smokey | smooth_clear | smooth_cromeish | smooth_fade | smooth_green_orange | smooth_sailing | smooth_teal_orange | soft_fade | softblackandwhite | softwarming | solarized_color | solarized_color_2 | soldi | spider-man_far_from_home | spotlight | springmorning | sprocket_231 | spy_29 | standard | star_wars_the_rise_of_skywalker | strano | street | stringa | studio_skin_tone_shaper | subtle_blue | subtle_green | subtle_yellow | sully | summer | summer_alt | sunlight_love_11 | sunlightlove | sunny | sunny_alt | sunny_rich | sunny_warm | sunset | sunset_aqua_orange | sunset_intense_violet_blue | sunset_violet_mood | super_warm | super_warm_rich | sutro_fx | sweet_bubblegum | sweet_gelatto | taşdemirrr_1 | taiga | tarraco | teal-orange_for_flog | teal_fade | teal_moonlight | tealmagentagold | tealorange | tealorange_1 | tealorange_2 | tealorange_3 | technicalfx_backlight_filter | teigen_28 | tenet | tensiongreen_1 | tensiongreen_2 | tensiongreen_3 | tensiongreen_4 | terra_4 | the_dark_knight | the_darkest_hour | the_gentelmen | the_grand_budapest_hotel | the_hurt_locker | the_irishman | the_lighthouse | the_lobster | the_martian | the_matrices | the_revenant | the_shape_of_water | the_social_network | the_two_popes | the_way_back | thor_ragnarok | thriller_2 | tirare | toastedgarden | top_gun_maverick | trent_18 | true_colors_8 | turkiest_42 | tutto | tweed_71 | ultra_water | uncut_gems | undeniable | undeniable_2 | underwater | unknown | upglow | urban_01 | urban_02 | urban_03 | urban_04 | urban_05 | urban_cowboy | uzbek_bukhara | uzbek_marriage | uzbek_samarcande | valize | valsky | velvetia | venom | very_warm_greenish | vfb_21 | vibrant | vibrant_alien | vibrant_contrast | vibrant_cromeish | victory | vintage | vintage_01 | vintage_02 | vintage_03 | vintage_04 | vintage_05 | vintage_163 | vintage_alt | vintage_brighter | vintage_chrome | vintage_mob | vintage_warmth_1 | violet_taste | vireo_37 | vita | vivid | vubes | war_for_the_planet_of_the_apes | warm | warm_dark_contrasty | warm_fade | warm_fade_1 | warm_highlight | warm_neutral | warm_sunset_red | warm_teal | warm_vintage | warm_yellow | wavefire | waves | well_see | western | western_6 | westernlut_2 | westernlut_2_13 | whiter_whites | winterlighthouse | wipe | wolf_of_wall_street | wonder_woman | wooden_gold_20 | x-men_dark_phoenix | yangabuz_8 | yellow_55b | yellow_film_01 | yellowstone | you_can_do_it | zed_32 | zeke_39 | zilverfx_bw_solarization | zilverfx_infrared | zilverfx_vintage_bw | zombieland_double_tap }
+clut*name can be { 12_years_a_slave | 1917 | 2-strip-process | 60s | 60s_faded | 60s_faded_alt | 7drk_21 | action_magenta_01 | action_red_01 | ad_astra | adventure_1453 | agfa_apx_100 | agfa_apx_25 | agfa_precisa_100 | agfa_ultra_color_100 | agfa_vista_200 | agressive_highligjtes_recovery_5 | aladdin | alberto_street | alien_green | ampio | amstragram | amstragram+ | analog_film_1 | analogfx_anno_1870_color | analogfx_old_style_i | analogfx_old_style_ii | analogfx_old_style_iii | analogfx_sepia_color | analogfx_soft_sepia_i | analogfx_soft_sepia_ii | anime | ant-man | apocalypse_this_very_moment | aqua | aqua_and_orange_dark | aquaman | arabica_12 | asistas | atomic_pink | atusa | autumn | autumn_leaves | ava_614 | avalanche | avengers_endgame | azrael_93 | baby_driver | bad_boys_for_life | basuco | bboyz_2 | bc_darkum | beach_aqua_orange | beach_faded_analog | beati | beauty_and_the_beast | berlin_sky | bisogno | black_and_white | black_panther | black_star | black_white_01 | black_white_02 | black_white_03 | black_white_04 | black_white_05 | black_white_06 | blade_runner | bleach_bypass | bleachbypass_1 | bleachbypass_2 | bleachbypass_3 | bleachbypass_4 | bleech_bypass_green | bleech_bypass_yellow_01 | blue_cold_fade | blue_dark | blue_house | blue_ice | blue_love_39 | blue_mono | blue_shadows_01 | bluearchitecture | bluehour | blues | bob_ford | bohemian_rhapsody | bombshell | bourbon_64 | boyado | bright_green_01 | bright_teal_orange | bright_warm | brightgreen | brown_mobster | brownbm | brownish | bw_1 | bw_10 | bw_2 | bw_3 | bw_4 | bw_5 | bw_6 | bw_7 | bw_8 | bw_9 | bw_but_yellow | byers_11 | calidum | candlelight | captain_marvel | caribe | chemical_168 | chrome_01 | cineblue | cinebm_4k | cinema | cinema_2 | cinema_3 | cinema_4 | cinema_5 | cinema_noir | cinematic-1 | cinematic-10 | cinematic-2 | cinematic-3 | cinematic-4 | cinematic-5 | cinematic-6 | cinematic-7 | cinematic-8 | cinematic-9 | cinematic_01 | cinematic_02 | cinematic_03 | cinematic_04 | cinematic_05 | cinematic_06 | cinematic_07 | cinematic_for_flog | cinematic_forest | cinematic_lady_bird | cinematic_mexico | city | city_7 | city_dust | city_of_god | classic_films_01 | classic_films_02 | classic_films_03 | classic_films_04 | classic_films_05 | classic_teal_and_orange | clayton_33 | clear | clear_teal_fade | clouseau_54 | cobi_3 | coffee_44 | cold_clear_blue | cold_clear_blue_1 | cold_ice | cold_simplicity_2 | coldchrome | color_rich | colore | colorful_0209 | colornegative | conflict_01 | contrail_35 | contrast_with_highlights_protection | contrasty_afternoon | contrasty_green | convold | cosa | creed_2 | crispautumn | crispromance | crispwarm | crispwinter | cross_process_cp_130 | cross_process_cp_14 | cross_process_cp_15 | cross_process_cp_16 | cross_process_cp_18 | cross_process_cp_3 | cross_process_cp_4 | cross_process_cp_6 | crushin | cubicle_99 | culor | d_o_1 | dark_blues_in_sunlight | dark_green_02 | dark_green_1 | dark_man_x | dark_orange_teal | dark_place_01 | darkandsomber | darkness | date_39 | day_4nite | day_for_night | day_to_night_kings_blue | deep | deep_blue | deep_dark_warm | deep_high_contrast | deep_teal_fade | deep_warm_fade | deepskintones_2 | deepskintones_3 | delicatessen | denoiser_simple_40 | desert_gold_37 | dimension | dimmer | directions_23 | django_25 | doctor_strange | domingo_145 | dream_1 | dream_85 | drop_green_tint_14 | dropblues | dunkirk | duotone_blue_red | earth_tone_boost | eda_0_2 | edgyember | elegance_38 | enchanted | ensaya | eterna_for_flog | expired_69 | expired_fade | expired_polaroid | extreme | fade | fade_to_green | faded | faded_47 | faded_alt | faded_analog | faded_extreme | faded_green | faded_pink-ish | faded_print | faded_retro_01 | faded_retro_02 | faded_vivid | fadedlook | fallcolors | falua | farkling | fatos | faux_infrared | faux_infrared_bw_1 | faux_infrared_color_p_2 | faux_infrared_color_p_3 | faux_infrared_color_r_0a | faux_infrared_color_r_0b | faux_infrared_color_yp_1 | fezzle | fg_cinebasic | fg_cinebright | fg_cinecold | fg_cinedrama | fg_cinetealorange_1 | fg_cinetealorange_2 | fg_cinevibrant | fg_cinewarm | fgcinebasic | fgcinebright | fgcinecold | fgcinedrama | fgcinetealorange_1 | fgcinetealorange_2 | fgcinevibrant | fgcinewarm | fight_club | film_0987 | film_9879 | film_gb-19 | film_high_contrast | film_print_01 | film_print_02 | filmic | filo | flat_30 | flat_blue_moon | flavin | flog_to_rec_709 | foggynight | folger_50 | ford_v_ferrari | foresta | formula_b | french_comedy | frosted | frostedbeachpicnic | fuji_160c | fuji_160c*+ | fuji*160c*++ | fuji*160c*- | fuji*3510_constlclip | fuji_3510_constlmap | fuji_3510_cuspclip | fuji_3513_constlclip | fuji_3513_constlmap | fuji_3513_cuspclip | fuji_400h | fuji_400h*+ | fuji*400h*++ | fuji*400h*- | fuji*800z | fuji_800z*+ | fuji*800z*++ | fuji*800z*- | fuji*astia_100_generic | fuji_astia_100f | fuji_fp-100c | fuji_fp-100c*+ | fuji*fp-100c*++ | fuji*fp-100c*+++ | fuji*fp-100c*++_alt | fuji_fp-100c_- | fuji*fp-100c*-- | fuji*fp-100c_alt | fuji_fp-100c_cool | fuji_fp-100c_cool*+ | fuji*fp-100c_cool*++ | fuji*fp-100c_cool*- | fuji*fp-100c_cool*-- | fuji*fp-100c_negative | fuji_fp-100c_negative*+ | fuji*fp-100c_negative*++ | fuji*fp-100c_negative*+++ | fuji*fp-100c_negative*++_alt | fuji_fp-100c_negative_- | fuji*fp-100c_negative*-- | fuji*fp-3000b | fuji_fp-3000b*+ | fuji*fp-3000b*++ | fuji*fp-3000b*+++ | fuji*fp-3000b*- | fuji*fp-3000b*-- | fuji*fp-3000b_hc | fuji_fp-3000b_negative | fuji_fp-3000b_negative*+ | fuji*fp-3000b_negative*++ | fuji*fp-3000b_negative*+++ | fuji*fp-3000b_negative*- | fuji*fp-3000b_negative*-- | fuji*fp-3000b_negative_early | fuji_fp_100c | fuji_hdr | fuji_neopan_1600 | fuji_neopan_1600*+ | fuji*neopan_1600*++ | fuji*neopan_1600*- | fuji*neopan_acros_100 | fuji_provia_100_generic | fuji_provia_100f | fuji_provia_400f | fuji_provia_400x | fuji_sensia_100 | fuji_superia_100 | fuji_superia_100*+ | fuji*superia_100*++ | fuji*superia_100*- | fuji*superia_1600 | fuji_superia_1600*+ | fuji*superia_1600*++ | fuji*superia_1600*- | fuji*superia_200 | fuji_superia_200_xpro | fuji_superia_400 | fuji_superia_400*+ | fuji*superia_400*++ | fuji*superia_400*- | fuji*superia_800 | fuji_superia_800*+ | fuji*superia_800*++ | fuji*superia_800*- | fuji*superia_hg_1600 | fuji_superia_reala_100 | fuji_superia_x-tra_800 | fuji_velvia_100_generic | fuji_velvia_50 | fuji_xtrans_iii_acros | fuji_xtrans_iii_acros+g | fuji_xtrans_iii_acros+r | fuji_xtrans_iii_acros+ye | fuji_xtrans_iii_astia | fuji_xtrans_iii_classic_chrome | fuji_xtrans_iii_mono | fuji_xtrans_iii_mono+g | fuji_xtrans_iii_mono+r | fuji_xtrans_iii_mono+ye | fuji_xtrans_iii_pro_neg_hi | fuji_xtrans_iii_pro_neg_std | fuji_xtrans_iii_provia | fuji_xtrans_iii_sepia | fuji_xtrans_iii_velvia | fusion_88 | futuristicbleak_1 | futuristicbleak_2 | futuristicbleak_3 | futuristicbleak_4 | going_for_a_walk | golden | golden_bright | golden_fade | golden_mono | golden_night_softner_43 | golden_sony_37 | golden_vibrant | goldengate | goldentime | goldfx_bright_spring_breeze | goldfx_bright_summer_heat | goldfx_hot_summer_heat | goldfx_perfect_sunset_01min | goldfx_perfect_sunset_05min | goldfx_perfect_sunset_10min | goldfx_spring_breeze | goldfx_summer_heat | good_morning | green_15 | green_2025 | green_action | green_afternoon | green_and_orange | green_blues | green_book | green_conflict | green_day_01 | green_day_02 | green_g_09 | green_indoor | green_light | green_mono | green_yellow | greenish_contrasty | greenish_fade | greenish_fade_1 | gremerta | greyhound | hackmanite | hallowen_dark | happyness_133 | hard_teal_orange | hardboost | harsh_day | harsh_sunset | helios | herderite | heulandite | hiddenite | highlights_protection | hilutite | hitman | hlg_1_1 | honey_light | hong_kong | horrorblue | howlite | huesio | husmes | huyan | hydracore | hyla_68 | hypersthene | hypnosis | hypressen | i_tonya | ideo | ilford_delta_100 | ilford_delta_3200 | ilford_delta_3200*+ | ilford*delta_3200*++ | ilford*delta_3200*- | ilford*delta_400 | ilford_fp_4_plus_125 | ilford_hp_5 | ilford_hp_5*+ | ilford*hp_5*++ | ilford*hp_5*- | ilford*hp_5_plus_400 | ilford_hps_800 | ilford_pan_f_plus_50 | ilford_xp_2 | inception | indoor_blue | industrial_33 | infrared*-_dust_pink | instantc | j | jarklin | jojo_rabbit | joker | jumanji_the_next_level | jurassic_world_fallen_kingdom | justice_league | justpeachy | jwick_21 | k_tone_vintage_kodachrome | kahve_3 | kh_1 | kh_10 | kh_2 | kh_3 | kh_4 | kh_5 | kh_6 | kh_7 | kh_8 | kh_9 | killstreak | kingsman_the_golden_circle | knives_out | kodak_2383_constlclip | kodak_2383_constlmap | kodak_2383_cuspclip | kodak_2393_constlclip | kodak_2393_constlmap | kodak_2393_cuspclip | kodak_bw_400_cn | kodak_e-100_gx_ektachrome_100 | kodak_ektachrome_100_vs | kodak_ektachrome_100_vs_generic | kodak_ektar_100 | kodak_elite_100_xpro | kodak_elite_chrome_200 | kodak_elite_chrome_400 | kodak_elite_color_200 | kodak_elite_color_400 | kodak_elite_extracolor_100 | kodak_hie_hs_infra | kodak_kodachrome_200 | kodak_kodachrome_25 | kodak_kodachrome_64 | kodak_kodachrome_64_generic | kodak_portra_160 | kodak_portra_160_+ | kodak*portra_160*++ | kodak*portra_160*- | kodak*portra_160_nc | kodak_portra_160_nc*+ | kodak*portra_160_nc*++ | kodak*portra_160_nc*- | kodak*portra_160_vc | kodak_portra_160_vc*+ | kodak*portra_160_vc*++ | kodak*portra_160_vc*- | kodak*portra_400 | kodak_portra_400*+ | kodak*portra_400*++ | kodak*portra_400*- | kodak*portra_400_nc | kodak_portra_400_nc*+ | kodak*portra_400_nc*++ | kodak*portra_400_nc*- | kodak*portra_400_uc | kodak_portra_400_uc*+ | kodak*portra_400_uc*++ | kodak*portra_400_uc*- | kodak*portra_400_vc | kodak_portra_400_vc*+ | kodak*portra_400_vc*++ | kodak*portra_400_vc*- | kodak*portra_800 | kodak_portra_800*+ | kodak*portra_800*++ | kodak*portra_800*- | kodak*portra_800_hc | kodak_t-max_100 | kodak_t-max_3200 | kodak_t-max_400 | kodak_tmax_3200 | kodak_tmax_3200*+ | kodak*tmax_3200*++ | kodak*tmax_3200*- | kodak*tmax_3200_alt | kodak_tri-x_400 | kodak_tri-x_400*+ | kodak*tri-x_400*++ | kodak*tri-x_400*- | kodak*tri-x_400_alt | korben_214 | la_la_land | landscape | landscape_01 | landscape_02 | landscape_03 | landscape_04 | landscape_05 | landscape_1 | landscape_10 | landscape_2 | landscape_3 | landscape_4 | landscape_5 | landscape_6 | landscape_7 | landscape_8 | landscape_9 | lateafternoonwanderlust | latesunset | lavark | lc_1 | lc_10 | lc_2 | lc_3 | lc_4 | lc_5 | lc_6 | lc_7 | lc_8 | lc_9 | lenox_340 | levex | life_giving_tree | light | light_blown | litore | little_women | logan | lomo | lomography_redscale_100 | lomography_x-pro_slide_200 | london_nights | longbeachmorning | loro | lotta | louetta | low_contrast_blue | low_key_01 | lucky_64 | lushgreen | lushgreensummer | mad_max_fury_road | maesky | magenta_day | magenta_day_01 | magenta_dream | magenta_yellow | magentacoffee | magichour | marriage_story | matrix | mckinnon_75 | memories | mercato | metropolis | milo_5 | minimalistcaffeination | modern_film | modern_films_01 | modern_films_02 | modern_films_03 | modern_films_04 | modern_films_05 | modern_films_06 | modern_films_07 | molti | mono_2 | mono_tinted | monochrome | monochrome_1 | monochrome_2 | moody_1 | moody_10 | moody_2 | moody_3 | moody_4 | moody_5 | moody_6 | moody_7 | moody_8 | moody_9 | moonlight | moonlight_01 | moonlight_2 | moonrise | morning_6 | morroco_16 | mostly_blue | mother! | motus | moviz_1 | moviz_10 | moviz_11 | moviz_12 | moviz_13 | moviz_14 | moviz_15 | moviz_16 | moviz_17 | moviz_18 | moviz_19 | moviz_2 | moviz_20 | moviz_21 | moviz_22 | moviz_23 | moviz_24 | moviz_25 | moviz_26 | moviz_27 | moviz_28 | moviz_29 | moviz_3 | moviz_30 | moviz_31 | moviz_32 | moviz_33 | moviz_34 | moviz_35 | moviz_36 | moviz_37 | moviz_38 | moviz_39 | moviz_4 | moviz_40 | moviz_41 | moviz_42 | moviz_43 | moviz_44 | moviz_45 | moviz_46 | moviz_47 | moviz_48 | moviz_5 | moviz_6 | moviz_7 | moviz_8 | moviz_9 | mucca | mute_shift | muted_01 | muted_fade | mysticpurplesunset | nah | natural_vivid | naturalboost | negative | nemesis | neon_770 | neutral | neutral_pump | neutral_teal_orange | neutral_warm_fade | newspaper | night_01 | night_02 | night_03 | night_04 | night_05 | night_blade_4 | night_king_141 | night_spy | night_view | nightfromday | nightlife | nigrum | no_time_to_die | nostalgiahoney | nostalgic | nw-1 | nw-10 | nw-2 | nw-3 | nw-4 | nw-5 | nw-6 | nw-7 | nw-8 | nw-9 | old_west | once_upon_a_time | once_upon_a_time_in_hollywood | onda | only_red | only_red_and_blue | operation_yellow | orange_dark_4 | orange_dark_7 | orange_dark_look | orange_tone | orange_underexposed | orangeandblue | oranges | padre | paladin | paladin_1875 | parasite | partia | pasadena_21 | passing_by | perso | picola | pink_fade | pirates_of_the_caribbean | pitaya_15 | pmcinematic_01 | pmcinematic_02 | pmcinematic_03 | pmcinematic_04 | pmcinematic_05 | pmcinematic_06 | pmcinematic_07 | pmnight_01 | pmnight_02 | pmnight_03 | pmnight_04 | pmnight_05 | polaroid_664 | polaroid_665 | polaroid_665*+ | polaroid*665*++ | polaroid*665*- | polaroid*665*-- | polaroid*665_negative | polaroid_665_negative*+ | polaroid*665_negative*- | polaroid*665_negative_hc | polaroid_667 | polaroid_669 | polaroid_669*+ | polaroid*669*++ | polaroid*669*+++ | polaroid*669*- | polaroid*669*-- | polaroid*669_cold | polaroid_669_cold*+ | polaroid*669_cold*- | polaroid*669_cold*-- | polaroid*672 | polaroid_690 | polaroid_690*+ | polaroid*690*++ | polaroid*690*- | polaroid*690*-- | polaroid*690_cold | polaroid_690_cold*+ | polaroid*690_cold*++ | polaroid*690_cold*- | polaroid*690_cold*-- | polaroid*690_warm | polaroid_690_warm*+ | polaroid*690_warm*++ | polaroid*690_warm*- | polaroid*690_warm*-- | polaroid*polachrome | polaroid_px-100uv+\_cold | polaroid_px-100uv+\_cold*+ | polaroid*px-100uv+\_cold*++ | polaroid*px-100uv+\_cold*+++ | polaroid*px-100uv+\_cold*- | polaroid*px-100uv+\_cold*-- | polaroid*px-100uv+\_warm | polaroid_px-100uv+\_warm*+ | polaroid*px-100uv+\_warm*++ | polaroid*px-100uv+\_warm*+++ | polaroid*px-100uv+\_warm*- | polaroid*px-100uv+\_warm*-- | polaroid*px-680 | polaroid_px-680*+ | polaroid*px-680*++ | polaroid*px-680*- | polaroid*px-680*-- | polaroid*px-680_cold | polaroid_px-680_cold*+ | polaroid*px-680_cold*++ | polaroid*px-680_cold*++_alt | polaroid_px-680_cold_- | polaroid*px-680_cold*-- | polaroid*px-680_warm | polaroid_px-680_warm*+ | polaroid*px-680_warm*++ | polaroid*px-680_warm*- | polaroid*px-680_warm*-- | polaroid*px-70 | polaroid_px-70*+ | polaroid*px-70*++ | polaroid*px-70*+++ | polaroid*px-70*- | polaroid*px-70*-- | polaroid*px-70_cold | polaroid_px-70_cold*+ | polaroid*px-70_cold*++ | polaroid*px-70_cold*- | polaroid*px-70_cold*-- | polaroid*px-70_warm | polaroid_px-70_warm*+ | polaroid*px-70_warm*++ | polaroid*px-70_warm*- | polaroid*px-70_warm*-- | polaroid*time_zero_expired | polaroid_time_zero_expired*+ | polaroid*time_zero_expired*++ | polaroid*time_zero_expired*- | polaroid*time_zero_expired*-- | polaroid*time_zero_expired*--- | polaroid*time_zero_expired_cold | polaroid_time_zero_expired_cold*- | polaroid*time_zero_expired_cold*-- | polaroid*time_zero_expired_cold*--- | portrait | portrait_1 | portrait_10 | portrait_2 | portrait_3 | portrait_4 | portrait_5 | portrait_6 | portrait_7 | portrait_8 | portrait_9 | progressen | protect_highlights_01 | prussian_blue | pseudogrey | purple | purple_2 | quraqqq_12 | randas | red_afternoon_01 | red_day_01 | red_dream_01 | redblueyellow | reds | reds_oranges_yellows | reeve_38 | remy_24 | rest_33 | retro | retro_brown_01 | retro_magenta_01 | retro_summer_3 | retro_yellow_01 | rocketman | rollei_ir_400 | rollei_ortho_25 | rollei_retro_100_tonal | rollei_retro_80s | rotate_muted | rotate_vibrant | rotated | rotated_crush | satid | saturated_blue | saving_private_damon | scala | science_fiction | scrittle | sea | seges | selor | sensum | separation | serenity | seringe_4 | serpent | seventies_magazine | sevsuz | shade_kings_ink | shadow_king_39 | shine | sicario | sino | skin_tones | slog_to_rec_709_basic | slog_to_rec_709_contrasty | slog_to_rec_709_crush_shadows | slog_to_rec_709_green_correction | smart_contrast | smokey | smooth_clear | smooth_cromeish | smooth_fade | smooth_green_orange | smooth_sailing | smooth_teal_orange | soft_fade | softblackandwhite | softwarming | solarized_color | solarized_color_2 | soldi | spider-man_far_from_home | spotlight | springmorning | sprocket_231 | spy_29 | standard | star_wars_the_rise_of_skywalker | strano | street | stringa | studio_skin_tone_shaper | subtle_blue | subtle_green | subtle_yellow | sully | summer | summer_alt | sunlight_love_11 | sunlightlove | sunny | sunny_alt | sunny_rich | sunny_warm | sunset | sunset_aqua_orange | sunset_intense_violet_blue | sunset_violet_mood | super_warm | super_warm_rich | sutro_fx | sweet_bubblegum | sweet_gelatto | taşdemirrr_1 | taiga | tarraco | teal-orange_for_flog | teal_fade | teal_moonlight | tealmagentagold | tealorange | tealorange_1 | tealorange_2 | tealorange_3 | technicalfx_backlight_filter | teigen_28 | tenet | tensiongreen_1 | tensiongreen_2 | tensiongreen_3 | tensiongreen_4 | terra_4 | the_dark_knight | the_darkest_hour | the_gentelmen | the_grand_budapest_hotel | the_hurt_locker | the_irishman | the_lighthouse | the_lobster | the_martian | the_matrices | the_revenant | the_shape_of_water | the_social_network | the_two_popes | the_way_back | thor_ragnarok | thriller_2 | tirare | toastedgarden | top_gun_maverick | trent_18 | true_colors_8 | turkiest_42 | tutto | tweed_71 | ultra_water | uncut_gems | undeniable | undeniable_2 | underwater | unknown | upglow | urban_01 | urban_02 | urban_03 | urban_04 | urban_05 | urban_cowboy | uzbek_bukhara | uzbek_marriage | uzbek_samarcande | valize | valsky | velvetia | venom | very_warm_greenish | vfb_21 | vibrant | vibrant_alien | vibrant_contrast | vibrant_cromeish | victory | vintage | vintage_01 | vintage_02 | vintage_03 | vintage_04 | vintage_05 | vintage_163 | vintage_alt | vintage_brighter | vintage_chrome | vintage_mob | vintage_warmth_1 | violet_taste | vireo_37 | vita | vivid | vubes | war_for_the_planet_of_the_apes | warm | warm_dark_contrasty | warm_fade | warm_fade_1 | warm_highlight | warm_neutral | warm_sunset_red | warm_teal | warm_vintage | warm_yellow | wavefire | waves | well_see | western | western_6 | westernlut_2 | westernlut_2_13 | whiter_whites | winterlighthouse | wipe | wolf_of_wall_street | wonder_woman | wooden_gold_20 | x-men_dark_phoenix | yangabuz_8 | yellow_55b | yellow_film_01 | yellowstone | you_can_do_it | zed_32 | zeke_39 | zilverfx_bw_solarization | zilverfx_infrared | zilverfx_vintage_bw | zombieland_double_tap }
 
 ## Default values:
 
@@ -1125,11 +1124,26 @@ resolution=33 and cut_and_round=1.
 gmic clut summer clut alien_green,17 clut orange_dark4,48
 ```
 
+## Critical Usage Rule:
+
+To actually apply the color effect to the user's image, you **MUST** append `+map_clut[0] [1]` immediately after generating the clut.
+
+**Syntax Pattern:**
+`clut PRESET_NAME +map_clut[0] [1]`
+
+**Explanation of the stack logic:**
+
+1. Start: `[0]` (Original Image)
+2. Command `clut summer`: Generates CLUT. Stack becomes `[0] Original, [1] CLUT`.
+3. Command `+map_clut[0] [1]`: Maps the colors of [1] onto [0] and creates a NEW result (`+`).
+4. End Stack: `[0] Original, [1] CLUT, [2] Result`.
+5. This ensures the final output is the colorized image.
+
 ---
 
 # Command: clut2hald
 
-### No argumentsDescription:Convert selected 3D CLUTs to 2D HaldCLUTs. ``` gmic clut summer +clut2hald ```
+### No argumentsDescription:Convert selected 3D CLUTs to 2D HaldCLUTs. `gmic clut summer +clut2hald`
 
 ---
 
@@ -1149,7 +1163,7 @@ gmic clut summer clut alien_green,17 clut orange_dark4,48
 
 ## Arguments:
 
-* type={ 0:Protanopia | 1:Protanomaly | 2:Deuteranopia | 3:Deuteranomaly | 4:Tritanopia | 5:Tritanomaly | 6:Achromatopsia | 7:Achromatomaly }
+- type={ 0:Protanopia | 1:Protanomaly | 2:Deuteranopia | 3:Deuteranomaly | 4:Tritanopia | 5:Tritanomaly | 6:Achromatopsia | 7:Achromatomaly }
 
 ## Description:
 
@@ -1169,7 +1183,7 @@ gmic image.jpg +colorblind 0
 
 ## Arguments:
 
-* nb_levels>=0,_method={ 0:Median-cut | 1:K-means },_sort_vectors
+- nb_levels>=0,\_method={ 0:Median-cut | 1:K-means },\_sort_vectors
 
 ## Description:
 
@@ -1194,7 +1208,7 @@ gmic image.jpg +colormap[0] 4 +colormap[0] 8 +colormap[0] 16
 
 ## Arguments:
 
-* _operator
+- \_operator
 
 ## Description:
 
@@ -1216,7 +1230,7 @@ gmic image.jpg +compose_channels and
 
 ## Arguments:
 
-* strength
+- strength
 
 ## Description:
 
@@ -1238,7 +1252,7 @@ gmic image.jpg +contrast 20
 
 ## Arguments:
 
-* _count_until={ 0:None | >0:Max number of counted colors }
+- \_count_until={ 0:None | >0:Max number of counted colors }
 
 ## Description:
 
@@ -1253,7 +1267,7 @@ This command returns the number of distinct colors for each image (separated by 
 
 ## Arguments:
 
-* [image],_metric={ 0:DeltaE_1976 | 1:DeltaE_2000 },"_to_Lab_command"
+- [image],\_metric={ 0:DeltaE_1976 | 1:DeltaE_2000 },"\_to_Lab_command"
 
 ## Description:
 
@@ -1273,13 +1287,13 @@ gmic image.jpg +blur 2 +deltaE[0] [1],1,srgb2lab
 
 # Command: direction2rgb
 
-### No argumentsDescription:Compute RGB representation of selected 2D direction fields. ``` gmic image.jpg luminance gradient append c blur 2 orientation +direction2rgb ```
+### No argumentsDescription:Compute RGB representation of selected 2D direction fields. `gmic image.jpg luminance gradient append c blur 2 orientation +direction2rgb`
 
 ---
 
 # Command: ditheredbw
 
-### No argumentsDescription:Create dithered B&W version of selected images. ``` gmic image.jpg +equalize ditheredbw[-1] ```
+### No argumentsDescription:Create dithered B&W version of selected images. `gmic image.jpg +equalize ditheredbw[-1]`
 
 ---
 
@@ -1287,13 +1301,13 @@ gmic image.jpg +blur 2 +deltaE[0] [1],1,srgb2lab
 
 ## Arguments:
 
-* col1,...,colN
+- col1,...,colN
 
 ## Description:
 
 Fill selected images with specified color.
 
-(*equivalent to shortcut command* fc).
+(_equivalent to shortcut command_ fc).
 
 This command has a [tutorial page](https://gmic.eu/oldtutorial/_fill_color).
 
@@ -1307,7 +1321,7 @@ gmic image.jpg +fill_color 255,0,255
 
 ## Arguments:
 
-* _is_orientation={ 0:No | 1:Yes }
+- \_is_orientation={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -1361,7 +1375,7 @@ gmic image.jpg +gradient2rgb 0 equalize[-1]
 
 # Command: hsv2rgb
 
-### No argumentsDescription:Convert color representation of selected images from HSV to RGB. ``` gmic (0,360;0,360^0,0;1,1^1,1;1,1) resize 400,400,1,3,3 hsv2rgb ```
+### No argumentsDescription:Convert color representation of selected images from HSV to RGB. `gmic (0,360;0,360^0,0;1,1^1,1;1,1) resize 400,400,1,3,3 hsv2rgb`
 
 ---
 
@@ -1387,8 +1401,8 @@ gmic image.jpg +gradient2rgb 0 equalize[-1]
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1416,8 +1430,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1437,8 +1451,8 @@ gmic (50,50;50,50^-3,3;-3,3^-3,-3;3,3) resize 400,400,1,3,3 lab2rgb
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1458,8 +1472,8 @@ gmic (50,50;50,50^-3,3;-3,3^-3,-3;3,3) resize 400,400,1,3,3 lab2rgb
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1479,8 +1493,8 @@ gmic (50,50;50,50^-3,3;-3,3^-3,-3;3,3) resize 400,400,1,3,3 lab2rgb
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1496,8 +1510,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1519,8 +1533,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1536,8 +1550,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1551,13 +1565,13 @@ illuminant=2.
 
 # Command: luminance
 
-### No argumentsDescription:Compute luminance of selected sRGB images. This command has a [tutorial page](https://gmic.eu/tutorial/luminance). ``` gmic image.jpg +luminance ```
+### No argumentsDescription:Compute luminance of selected sRGB images. This command has a [tutorial page](https://gmic.eu/tutorial/luminance). `gmic image.jpg +luminance`
 
 ---
 
 # Command: lightness
 
-### No argumentsDescription:Compute lightness of selected sRGB images. ``` gmic image.jpg +lightness ```
+### No argumentsDescription:Compute lightness of selected sRGB images. `gmic image.jpg +lightness`
 
 ---
 
@@ -1565,7 +1579,7 @@ illuminant=2.
 
 ## Arguments:
 
-* _nb_colors>1,_min_rgb_value
+- \_nb_colors>1,\_min_rgb_value
 
 ## Description:
 
@@ -1584,7 +1598,7 @@ nb_colors=256 and min_rgb_value=64.
 
 ## Arguments:
 
-* [clut] | "clut_name"
+- [clut] | "clut_name"
 
 ## Description:
 
@@ -1600,7 +1614,7 @@ gmic image.jpg uniform_distribution {2^6},3 mirror[-1] x +map_clut[0] [1]
 
 ## Arguments:
 
-* [reference_image],_nb_levels>0,_color_channels
+- [reference_image],\_nb_levels>0,\_color_channels
 
 ## Description:
 
@@ -1622,7 +1636,7 @@ gmic image.jpg 100,100,1,3,"u([256,200,100])" +match_histogram[0] [1]
 
 ## Arguments:
 
-* [reference_image],_color_channels
+- [reference_image],\_color_channels
 
 ## Description:
 
@@ -1644,7 +1658,7 @@ gmic sample lena,earth +match_pca[0] [1]
 
 ## Arguments:
 
-* [reference],_gamma>=0,_regularization>=0,_luminosity_constraints>=0,_rgb_resolution>=0,_is_constraints={ 0:No | 1:Yes }
+- [reference],\_gamma>=0,\_regularization>=0,\_luminosity_constraints>=0,\_rgb_resolution>=0,\_is_constraints={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -1669,7 +1683,7 @@ gmic sample pencils,wall +match_rgb[0] [1],0,0.01
 
 ## Arguments:
 
-* a11,a12,a13,a21,a22,a23,a31,a32,a33
+- a11,a12,a13,a21,a22,a23,a31,a32,a33
 
 ## Description:
 
@@ -1697,7 +1711,7 @@ gmic image.jpg +mix_rgb 0,1,0,1,0,0,0,0,1
 
 ## Arguments:
 
-* palette_name | palette_number
+- palette_name | palette_number
 
 ## Description:
 
@@ -1721,7 +1735,7 @@ gmic palette hsv
 
 ## Arguments:
 
-* _max_increment>=0,_JND_threshold>=0,_bits_depth>0
+- \_max_increment>=0,\_JND_threshold>=0,\_bits_depth>0
 
 ## Description:
 
@@ -1743,7 +1757,7 @@ gmic pseudogray 5
 
 ## Arguments:
 
-* _seed = { >=0 | -1 }
+- \_seed = { >=0 | -1 }
 
 ## Description:
 
@@ -1761,7 +1775,7 @@ gmic image.jpg random_clut +map_clut.. .
 
 ## Arguments:
 
-* _seed = { >=0 | -1 }
+- \_seed = { >=0 | -1 }
 
 ## Description:
 
@@ -1779,7 +1793,7 @@ gmic image.jpg random_clut +map_clut.. .
 
 ## Arguments:
 
-* tolerance[%]>=0,smoothness[%]>=0,src1,src2,...,dest1,dest2,...
+- tolerance[%]>=0,smoothness[%]>=0,src1,src2,...,dest1,dest2,...
 
 ## Description:
 
@@ -1795,7 +1809,7 @@ gmic image.jpg +replace_color 40,3,204,153,110,255,0,0
 
 ## Arguments:
 
-* _value_offset>0,_colorspace={ hsi | hsv | lab | lrgb | rgb | ycbcr },0<=_min_cut<=100,0<=_max_cut<=100,_sigma_low>0,_sigma_mid>0,_sigma_high>0
+- \_value_offset>0,\_colorspace={ hsi | hsv | lab | lrgb | rgb | ycbcr },0<=\_min_cut<=100,0<=\_max_cut<=100,\_sigma_low>0,\_sigma_mid>0,\_sigma_high>0
 
 ## Description:
 
@@ -1813,8 +1827,8 @@ offset=1, colorspace=hsv, min_cut=1, max_cut=1, sigma_low=15,sigma_mid=80 and si
 
 ## Arguments:
 
-* _min_RGB_value,_max_RGB_value    or
-* (no arg)
+- \_min_RGB_value,\_max_RGB_value    or
+- (no arg)
 
 ## Description:
 
@@ -1826,8 +1840,8 @@ Return a random int-valued RGB color.
 
 ## Arguments:
 
-* _min_RGB_value,_max_RGB_value,_min_A_value,_max_A_value    or
-* (no_arg)
+- \_min_RGB_value,\_max_RGB_value,\_min_A_value,\_max_A_value    or
+- (no_arg)
 
 ## Description:
 
@@ -1839,7 +1853,7 @@ Return a random int-valued RGBA color.
 
 ## Arguments:
 
-* _start_pattern=0,_color_grid=0
+- \_start_pattern=0,\_color_grid=0
 
 ## Description:
 
@@ -1857,61 +1871,61 @@ gmic image.jpg +rgb2bayer 0
 
 # Command: rgb2cmy
 
-### No argumentsDescription:Convert color representation of selected images from RGB to CMY. ``` gmic image.jpg rgb2cmy split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to CMY. `gmic image.jpg rgb2cmy split c`
 
 ---
 
 # Command: rgb2cmyk
 
-### No argumentsDescription:Convert color representation of selected images from RGB to CMYK. Examples of use:• Example #1 ``` gmic image.jpg rgb2cmyk split c ``` • Example #2 ``` gmic image.jpg rgb2cmyk split c fill[3] 0 append c cmyk2rgb ```
+### No argumentsDescription:Convert color representation of selected images from RGB to CMYK. Examples of use:• Example #1 `gmic image.jpg rgb2cmyk split c` • Example #2 `gmic image.jpg rgb2cmyk split c fill[3] 0 append c cmyk2rgb`
 
 ---
 
 # Command: rgb2hcy
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HCY. ``` gmic image.jpg rgb2hcy split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HCY. `gmic image.jpg rgb2hcy split c`
 
 ---
 
 # Command: rgb2hsi
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSI. ``` gmic image.jpg rgb2hsi split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSI. `gmic image.jpg rgb2hsi split c`
 
 ---
 
 # Command: rgb2hsi8
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSI8. ``` gmic image.jpg rgb2hsi8 split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSI8. `gmic image.jpg rgb2hsi8 split c`
 
 ---
 
 # Command: rgb2hsl
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSL. Examples of use:• Example #1 ``` gmic image.jpg rgb2hsl split c ``` • Example #2 ``` gmic image.jpg rgb2hsl +split c add[-3] 100 mod[-3] 360 append[-3--1] c hsl2rgb ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSL. Examples of use:• Example #1 `gmic image.jpg rgb2hsl split c` • Example #2 `gmic image.jpg rgb2hsl +split c add[-3] 100 mod[-3] 360 append[-3--1] c hsl2rgb`
 
 ---
 
 # Command: rgb2hsl8
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSL8. ``` gmic image.jpg rgb2hsl8 split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSL8. `gmic image.jpg rgb2hsl8 split c`
 
 ---
 
 # Command: rgb2hsv
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSV. Examples of use:• Example #1 ``` gmic image.jpg rgb2hsv split c ``` • Example #2 ``` gmic image.jpg rgb2hsv +split c add[-2] 0.3 cut[-2] 0,1 append[-3--1] c hsv2rgb ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSV. Examples of use:• Example #1 `gmic image.jpg rgb2hsv split c` • Example #2 `gmic image.jpg rgb2hsv +split c add[-2] 0.3 cut[-2] 0,1 append[-3--1] c hsv2rgb`
 
 ---
 
 # Command: rgb2hsv8
 
-### No argumentsDescription:Convert color representation of selected images from RGB to HSV8. ``` gmic image.jpg rgb2hsv8 split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to HSV8. `gmic image.jpg rgb2hsv8 split c`
 
 ---
 
 # Command: rgb2int
 
-### No argumentsDescription:Convert color representation of selected images from RGB to INT24 scalars. ``` gmic image.jpg rgb2int ```
+### No argumentsDescription:Convert color representation of selected images from RGB to INT24 scalars. `gmic image.jpg rgb2int`
 
 ---
 
@@ -1919,8 +1933,8 @@ gmic image.jpg +rgb2bayer 0
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1936,8 +1950,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1953,8 +1967,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1974,8 +1988,8 @@ gmic image.jpg rgb2lab8 split c
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -1995,8 +2009,8 @@ gmic image.jpg rgb2lch split c
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2014,7 +2028,7 @@ gmic image.jpg rgb2lch8 split c
 
 # Command: rgb2luv
 
-### No argumentsDescription:Convert color representation of selected images from RGB to LUV. ``` gmic image.jpg rgb2luv split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to LUV. `gmic image.jpg rgb2luv split c`
 
 ---
 
@@ -2026,7 +2040,7 @@ gmic image.jpg rgb2lch8 split c
 
 # Command: rgb2ryb
 
-### No argumentsDescription:Convert color representation of selected images from RGB to RYB. ``` gmic image.jpg rgb2ryb split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to RYB. `gmic image.jpg rgb2ryb split c`
 
 ---
 
@@ -2040,8 +2054,8 @@ gmic image.jpg rgb2lch8 split c
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2061,8 +2075,8 @@ gmic image.jpg rgb2xyz split c
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2080,31 +2094,31 @@ gmic image.jpg rgb2xyz8 split c
 
 # Command: rgb2yiq
 
-### No argumentsDescription:Convert color representation of selected images from RGB to YIQ. ``` gmic image.jpg rgb2yiq split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to YIQ. `gmic image.jpg rgb2yiq split c`
 
 ---
 
 # Command: rgb2yiq8
 
-### No argumentsDescription:Convert color representation of selected images from RGB to YIQ8. ``` gmic image.jpg rgb2yiq8 split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to YIQ8. `gmic image.jpg rgb2yiq8 split c`
 
 ---
 
 # Command: rgb2ycbcr
 
-### No argumentsDescription:Convert color representation of selected images from RGB to YCbCr. ``` gmic image.jpg rgb2ycbcr split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to YCbCr. `gmic image.jpg rgb2ycbcr split c`
 
 ---
 
 # Command: rgb2yuv
 
-### No argumentsDescription:Convert color representation of selected images from RGB to YUV. ``` gmic image.jpg rgb2yuv split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to YUV. `gmic image.jpg rgb2yuv split c`
 
 ---
 
 # Command: rgb2yuv8
 
-### No argumentsDescription:Convert color representation of selected images from RGB to YUV8. ``` gmic image.jpg rgb2yuv8 split c ```
+### No argumentsDescription:Convert color representation of selected images from RGB to YUV8. `gmic image.jpg rgb2yuv8 split c`
 
 ---
 
@@ -2124,7 +2138,7 @@ gmic image.jpg rgb2xyz8 split c
 
 ## Arguments:
 
-* tolerance[%]>=0,col1,...,colN
+- tolerance[%]>=0,col1,...,colN
 
 ## Description:
 
@@ -2140,13 +2154,13 @@ gmic image.jpg +select_color 40,204,153,110
 
 # Command: sepia
 
-### No argumentsDescription:Apply sepia tones effect on selected images. ``` gmic image.jpg sepia ```
+### No argumentsDescription:Apply sepia tones effect on selected images. `gmic image.jpg sepia`
 
 ---
 
 # Command: solarize
 
-### No argumentsDescription:Solarize selected images. ``` gmic image.jpg solarize ```
+### No argumentsDescription:Solarize selected images. `gmic image.jpg solarize`
 
 ---
 
@@ -2154,7 +2168,7 @@ gmic image.jpg +select_color 40,204,153,110
 
 ## Arguments:
 
-* _tolerance>=0,_max_nb_outputs>0,_min_area>0
+- \_tolerance>=0,\_max_nb_outputs>0,\_min_area>0
 
 ## Description:
 
@@ -2183,7 +2197,7 @@ gmic image.jpg quantize 5 +split_colors , display_rgba
 
 ## Arguments:
 
-* keep_splitting_values={ +:Increasing | -:Decreasing },value1,_value2,...
+- keep_splitting_values={ +:Increasing | -:Decreasing },value1,\_value2,...
 
 ## Description:
 
@@ -2195,8 +2209,8 @@ Split selected images into multiple parts, where specified vector [value1,_value
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2226,8 +2240,8 @@ gmic image.jpg srgb2lab +split c mul[-2,-1] 2.5 append[-3--1] c lab2srgb
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2261,7 +2275,7 @@ illuminant=2.
 
 ## Arguments:
 
-* mode={ 0:Adaptive | 1:G | 2:GA | 3:RGB | 4:RGBA }
+- mode={ 0:Adaptive | 1:G | 2:GA | 3:RGB | 4:RGBA }
 
 ## Description:
 
@@ -2275,7 +2289,7 @@ mode=0.
 
 # Command: to_gray
 
-### No argumentsDescription:Force selected images to be in GRAY mode. ``` gmic image.jpg +to_gray ```
+### No argumentsDescription:Force selected images to be in GRAY mode. `gmic image.jpg +to_gray`
 
 ---
 
@@ -2289,7 +2303,7 @@ mode=0.
 
 ## Arguments:
 
-* _max_step>=0,_is_perceptual_constraint={ 0:No | 1:Yes },_bits_depth>0
+- \_max_step>=0,\_is_perceptual_constraint={ 0:No | 1:Yes },\_bits_depth>0
 
 ## Description:
 
@@ -2332,8 +2346,8 @@ Extension of this technique to arbitrary increments for more tones, has been don
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2349,8 +2363,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2366,8 +2380,8 @@ illuminant=2.
 
 ## Arguments:
 
-* illuminant={ 0:D50 | 1:D65 | 2:E }    or
-* (no arg)
+- illuminant={ 0:D50 | 1:D65 | 2:E }    or
+- (no arg)
 
 ## Description:
 
@@ -2411,20 +2425,20 @@ illuminant=2.
 
 # Command: append
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [image],axis,_centering    or
-* axis,_centering
+- [image],axis,\_centering    or
+- axis,\_centering
 
 ## Description:
 
 Append specified image to selected images, or all selected images together, along specified axis.
 
-(*equivalent to shortcut command* a).
+(_equivalent to shortcut command_ a).
 
 axis can be { x | y | z | c }.
 Usual centering values are { 0:left-justified | 0.5:centered | 1:right-justified }.
@@ -2459,7 +2473,7 @@ gmic image.jpg append[0] [0],y
 
 ## Arguments:
 
-* _M>=0,_N>=0,0<=_centering_x<=1,0<=_centering_y<=1
+- \_M>=0,\_N>=0,0<=\_centering_x<=1,0<=\_centering_y<=1
 
 ## Description:
 
@@ -2485,7 +2499,7 @@ gmic image.jpg split xy,4 append_tiles ,
 
 ## Arguments:
 
-* "command",number_of_scales>0,_min_scale[%]>=0,_max_scale[%]>=0,_scale_gamma>0,_interpolation
+- "command",number_of_scales>0,\_min_scale[%]>=0,\_max_scale[%]>=0,\_scale_gamma>0,\_interpolation
 
 ## Description:
 
@@ -2507,7 +2521,7 @@ gmic image.jpg apply_scales "blur 5 sharpen 1000",4
 
 ## Arguments:
 
-* _axes,_value1,_value2,...
+- \_axes,\_value1,\_value2,...
 
 ## Description:
 
@@ -2535,7 +2549,7 @@ gmic 400,400,1,3 fill_color 64,128,255 ellipse 50%,50%,120,120,0,1,255 +autocrop
 
 ## Arguments:
 
-* _threshold[%],_min_area[%]>=0,_is_high_connectivity={ 0:No | 1:Yes },_output_type={ 0:Crop | 1:Segmentation | 2:Coordinates }
+- \_threshold[%],\_min_area[%]>=0,\_is_high_connectivity={ 0:No | 1:Yes },\_output_type={ 0:Crop | 1:Segmentation | 2:Coordinates }
 
 ## Description:
 
@@ -2557,7 +2571,7 @@ gmic 256,256 noise 0.1,2 eq 1 dilate_circ 20 label_fg 0,1 normalize 0,255 +neq 0
 
 ## Arguments:
 
-* _axes,_value1,_value2,...
+- \_axes,\_value1,\_value2,...
 
 ## Description:
 
@@ -2582,7 +2596,7 @@ axes=xyz.
 
 ## Arguments:
 
-* value1,value2,... | auto
+- value1,value2,... | auto
 
 ## Description:
 
@@ -2604,7 +2618,7 @@ gmic image.jpg +fill[-1] 0 ellipse[-1] 50%,50%,30%,20%,0,1,1 autocrop_seq 0
 
 ## Arguments:
 
-* c0[%],_c1[%],_boundary_conditions
+- c0[%],\_c1[%],\_boundary_conditions
 
 ## Description:
 
@@ -2636,7 +2650,7 @@ gmic image.jpg luminance channels 0,2
 
 ## Arguments:
 
-* x0[%],_x1[%],_boundary_conditions
+- x0[%],\_x1[%],\_boundary_conditions
 
 ## Description:
 
@@ -2656,22 +2670,22 @@ gmic image.jpg columns -25%,50%
 
 # Command: crop
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* x0[%],x1[%],_boundary_conditions    or
-* x0[%],y0[%],x1[%],y1[%],_boundary_conditions    or
-* x0[%],y0[%],z0[%],x1[%],y1[%],z1[%],_boundary_conditions    or
-* x0[%],y0[%],z0[%],c0[%],x1[%],y1[%],z1[%],c1[%],_boundary_conditions
+- x0[%],x1[%],\_boundary_conditions    or
+- x0[%],y0[%],x1[%],y1[%],\_boundary_conditions    or
+- x0[%],y0[%],z0[%],x1[%],y1[%],z1[%],\_boundary_conditions    or
+- x0[%],y0[%],z0[%],c0[%],x1[%],y1[%],z1[%],c1[%],\_boundary_conditions
 
 ## Description:
 
 Crop selected images with specified region coordinates.
 
-(*equivalent to shortcut command* z).
+(_equivalent to shortcut command_ z).
 
 boundary_conditions can be { 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }.
 
@@ -2699,7 +2713,7 @@ gmic image.jpg crop 25%,25%,75%,75%
 
 ## Arguments:
 
-* _depth,_is_plain={ 0:No | 1:Yes },_is_colored={ 0:No | 1:Yes }
+- \_depth,\_is_plain={ 0:No | 1:Yes },\_is_colored={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -2719,7 +2733,7 @@ gmic sample colorful,64 +elevate 32
 
 ## Arguments:
 
-* axes,size[%],_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- axes,size[%],\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -2741,7 +2755,7 @@ gmic image.jpg expand xy,30
 
 ## Arguments:
 
-* "condition",_output_type={ 0:XYZC-coords | 1:XYZ-coords | 2:Scalar-values | 3:Vector-values | 4:XYZC-coords + scalar value | 5:XYZ-coords + vector-values }
+- "condition",\_output_type={ 0:XYZC-coords | 1:XYZ-coords | 2:Scalar-values | 3:Vector-values | 4:XYZC-coords + scalar value | 5:XYZ-coords + vector-values }
 
 ## Description:
 
@@ -2764,7 +2778,7 @@ gmic sp lena +extract "norm(I)>128",3
 
 ## Arguments:
 
-* [label_image],_extract_xyz_coordinates={ 0:No | 1:Yes },_label_1,...,_label_M
+- [label_image],\_extract_xyz_coordinates={ 0:No | 1:Yes },\_label_1,...,\_label_M
 
 ## Description:
 
@@ -2786,7 +2800,7 @@ gmic image.jpg +blur 3 quantize. 4,0 +extract_region[0] [1],0,1,3
 
 ## Arguments:
 
-* "_layout_code",_montage_mode={ 0<=centering<=1 | 2<=scale+2<=3 },_output_mode={ 0:Single layer | 1:Multiple layers },"_processing_command"
+- "\_layout_code",\_montage_mode={ 0<=centering<=1 | 2<=scale+2<=3 },\_output_mode={ 0:Single layer | 1:Multiple layers },"\_processing_command"
 
 ## Description:
 
@@ -2827,13 +2841,13 @@ gmic image.jpg sample ? +plasma[0] 1 shape_cupid 256 normalize 0,255 frame xy,3,
 
 # Command: mirror
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* { x | y | z }...{ x | y | z }
+- { x | y | z }...{ x | y | z }
 
 ## Description:
 
@@ -2857,13 +2871,13 @@ gmic image.jpg +mirror x +mirror y append_tiles 2,2
 
 # Command: permute
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* permutation_string
+- permutation_string
 
 ## Description:
 
@@ -2882,7 +2896,7 @@ gmic image.jpg permute yxzc
 
 ## Arguments:
 
-* _width[%]={ 0:Any | >0 },_height[%]={ 0:Any | >0 },-1=<_interpolation<=6,_mode={ 0:Inside | 1:Padded-inside | 2:Outside | 3:Cropped-outside }
+- \_width[%]={ 0:Any | >0 },\_height[%]={ 0:Any | >0 },-1=<\_interpolation<=6,\_mode={ 0:Inside | 1:Padded-inside | 2:Outside | 3:Cropped-outside }
 
 ## Description:
 
@@ -2898,7 +2912,7 @@ If mode==1 or mode==3, image size is exactly (width,height).
 
 If mode==2, image size is at least (width,height).
 
-(*equivalent to shortcut command* rs).
+(_equivalent to shortcut command_ rs).
 
 ## Default values:
 
@@ -2910,8 +2924,8 @@ width=height=0, interpolation=2 and mode=0.
 
 ## Arguments:
 
-* _width[%]={ 0:Any | >0 },_height[%]={ 0:Any | >0 },_depth[%]={ 0:Any | >0 },-1=<_interpolation<=6,_mode={ 0:Inside | 1:Padded-inside | 2:Outside | 3    or
-* Cropped-outside }
+- \_width[%]={ 0:Any | >0 },\_height[%]={ 0:Any | >0 },\_depth[%]={ 0:Any | >0 },-1=<\_interpolation<=6,\_mode={ 0:Inside | 1:Padded-inside | 2:Outside | 3    or
+- Cropped-outside }
 
 ## Description:
 
@@ -2927,7 +2941,7 @@ If mode==1 or mode==3, image size is exactly (width,height).
 
 If mode==2, image size is at least (width,height).
 
-(*equivalent to shortcut command* rs3d).
+(_equivalent to shortcut command_ rs3d).
 
 ## Default values:
 
@@ -2937,19 +2951,19 @@ width=height=depth=0, interpolation=2 and mode=0.
 
 # Command: resize
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* {[image_w] | width[%]>0},_{[image_h] | height[%]>0},_{[image_d] | depth[%]>0},_{[image_s] | spectrum[%]>0},_interpolation,_boundary_conditions,_ax,_ay,_az,_ac
+- {[image_w] | width[%]>0},_{[image_h] | height[%]>0},_{[image_d] | depth[%]>0},\_{[image_s] | spectrum[%]>0},\_interpolation,\_boundary_conditions,\_ax,\_ay,\_az,\_ac
 
 ## Description:
 
 Resize selected images with specified geometry.
 
-(*equivalent to shortcut command* r).
+(_equivalent to shortcut command_ r).
 
 interpolation can be { -1:None (memory content) | 0:None | 1:Nearest | 2:Average | 3:Linear | 4=Grid | 5=Bicubic | 6=Lanczos }.
 boundary_conditions has different meanings, according to the chosen interpolation mode :
@@ -2973,13 +2987,13 @@ gmic image.jpg +resize[-1] 256,128,1,3,2 +resize[-1] 120%,120%,1,3,0,1,0.5,0.5 +
 
 ## Arguments:
 
-* [reference],_interpolation,_boundary_conditions,_ax,_ay,_az,_ac
+- [reference],\_interpolation,\_boundary_conditions,\_ax,\_ay,\_az,\_ac
 
 ## Description:
 
 Resize selected images to the geometry of specified [reference] image.
 
-(*equivalent to shortcut command* ri).
+(_equivalent to shortcut command_ ri).
 
 ## Default values:
 
@@ -2995,7 +3009,7 @@ gmic image.jpg sample duck +resize_as_image[-1] [-2]
 
 ## Arguments:
 
-* width[%]>0,_height[%]>0,_depth[%]>0
+- width[%]>0,\_height[%]>0,\_depth[%]>0
 
 ## Description:
 
@@ -3013,7 +3027,7 @@ height=100% and depth=100%.
 
 ## Arguments:
 
-* width[%]>=0,_height[%]>=0,_depth[%]>=0,_B_value,_C_value
+- width[%]>=0,\_height[%]>=0,\_depth[%]>=0,\_B_value,\_C_value
 
 ## Description:
 
@@ -3035,7 +3049,7 @@ gmic image.jpg rescale2d 32 resize_mn 800%,800%
 
 ## Arguments:
 
-* _interpolation,_boundary_conditions,_ax,_ay,_az,_ac
+- \_interpolation,\_boundary_conditions,\_ax,\_ay,\_az,\_ac
 
 ## Description:
 
@@ -3061,14 +3075,14 @@ gmic image.jpg +resize_pow2[-1] 0
 
 # Command: rotate
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* angle,_interpolation,_boundary_conditions,_center_x[%],_center_y[%]    or
-* u,v,w,angle,interpolation,boundary_conditions,_center_x[%],_center_y[%],_center_z[%]
+- angle,\_interpolation,\_boundary_conditions,\_center_x[%],\_center_y[%]    or
+- u,v,w,angle,interpolation,boundary_conditions,\_center_x[%],\_center_y[%],\_center_z[%]
 
 ## Description:
 
@@ -3076,7 +3090,7 @@ Rotate selected images with specified angle (in deg.), and optionally 3D axis (u
 
 interpolation can be { 0:None | 1:Linear | 2:Bicubic }.
 boundary_conditions can be { 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }.
-When a rotation center (cx,cy,_cz) is specified, the size of the image is preserved.
+When a rotation center (cx,cy,\_cz) is specified, the size of the image is preserved.
 
 ## Default values:
 
@@ -3092,7 +3106,7 @@ gmic image.jpg +rotate -25,1,2,50%,50% rotate[0] 25
 
 ## Arguments:
 
-* angle,_max_size_factor>=0
+- angle,\_max_size_factor>=0
 
 ## Description:
 
@@ -3114,7 +3128,7 @@ gmic sample colorful,128 +rotate_tileable 16
 
 ## Arguments:
 
-* y0[%],_y1[%],_boundary_conditions
+- y0[%],\_y1[%],\_boundary_conditions
 
 ## Description:
 
@@ -3134,7 +3148,7 @@ gmic image.jpg rows -25%,50%
 
 # Command: scale2x
 
-### No argumentsDescription:Double XY-size of selected images, using the Scale2x algorithm. ``` gmic image.jpg threshold 50% resize 50%,50% +scale2x ```
+### No argumentsDescription:Double XY-size of selected images, using the Scale2x algorithm. `gmic image.jpg threshold 50% resize 50%,50% +scale2x`
 
 ---
 
@@ -3142,7 +3156,7 @@ gmic image.jpg rows -25%,50%
 
 ## Arguments:
 
-* _sharpness>=0
+- \_sharpness>=0
 
 ## Description:
 
@@ -3160,7 +3174,7 @@ gmic image.jpg rescale2d 128 +scale2x_cnn ,
 
 # Command: scale3x
 
-### No argumentsDescription:Triple XY-size of selected images, using the Scale3x algorithm. ``` gmic image.jpg threshold 50% resize 33%,33% +scale3x ```
+### No argumentsDescription:Triple XY-size of selected images, using the Scale3x algorithm. `gmic image.jpg threshold 50% resize 33%,33% +scale3x`
 
 ---
 
@@ -3168,7 +3182,7 @@ gmic image.jpg rescale2d 128 +scale2x_cnn ,
 
 ## Arguments:
 
-* _edge_threshold>=0,_exponent>0,_extend_1px={ 0:No | 1:Yes }
+- \_edge_threshold>=0,\_exponent>0,\_extend_1px={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -3190,7 +3204,7 @@ gmic image.jpg rescale2d 128 +scale_dcci2x ,
 
 ## Arguments:
 
-* _width[%]>=0,_height[%]>=0,_is_priority_channel={ 0:No | 1:Yes },_is_antialiasing={ 0:No | 1:Yes },_maximum_seams[%]>=0
+- \_width[%]>=0,\_height[%]>=0,\_is_priority_channel={ 0:No | 1:Yes },\_is_antialiasing={ 0:No | 1:Yes },\_maximum_seams[%]>=0
 
 ## Description:
 
@@ -3208,13 +3222,13 @@ gmic image.jpg seamcarve 60%
 
 # Command: shift
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* vx[%],_vy[%],_vz[%],_vc[%],_boundary_conditions,_interpolation={ 0:Nearest_neighbor | 1:Linear }
+- vx[%],\_vy[%],\_vz[%],\_vc[%],\_boundary_conditions,\_interpolation={ 0:Nearest_neighbor | 1:Linear }
 
 ## Description:
 
@@ -3237,7 +3251,7 @@ gmic image.jpg +shift[0] 50%,50%,0,0,0 +shift[0] 50%,50%,0,0,1 +shift[0] 50%,50%
 
 ## Arguments:
 
-* axes,size[%],_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- axes,size[%],\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -3259,7 +3273,7 @@ gmic image.jpg shrink xy,100
 
 ## Arguments:
 
-* z0[%],_z1[%],_boundary_conditions
+- z0[%],\_z1[%],\_boundary_conditions
 
 ## Description:
 
@@ -3275,13 +3289,13 @@ z1=z0 and boundary_conditions=0.
 
 # Command: sort
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _ordering={ +:Increasing | -:Decreasing },_axis={ x | y | z | c }
+- \_ordering={ +:Increasing | -:Decreasing },\_axis={ x | y | z | c }
 
 ## Description:
 
@@ -3302,15 +3316,15 @@ gmic 64 rand 0,100 +sort display_graph 400,300,3
 
 # Command: split
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* { x | y | z | c }...{ x | y | z | c },_split_mode[%],_max_parts>0    or
-* keep_splitting_values={ +:Increasing | -:Decreasing },_{ x | y | z | c }...{ x | y | z | c },value1,_value2,...    or
-* (no arg)
+- { x | y | z | c }...{ x | y | z | c },\_split_mode[%],\_max_parts>0    or
+- keep*splitting_values={ +:Increasing | -:Decreasing },*{ x | y | z | c }...{ x | y | z | c },value1,\_value2,...    or
+- (no arg)
 
 ## Description:
 
@@ -3318,7 +3332,7 @@ Split selected images along specified axes, or regarding to a sequence of scalar
 
 (optionally along specified axes).
 
-(*equivalent to shortcut command* s).
+(_equivalent to shortcut command_ s).
 
 Argument split_mode determines how the split is done. It can be :
 
@@ -3378,7 +3392,7 @@ gmic (1,2,2,3,3,3,4,4,4,4) +split x,0 append[1--1] y
 
 ## Arguments:
 
-* M!=0,_N!=0,_is_homogeneous={ 0:No | 1:Yes }
+- M!=0,\_N!=0,\_is_homogeneous={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -3400,7 +3414,7 @@ gmic image.jpg +local split_tiles 5,4 blur 3,0 sharpen 700 append_tiles 4,5 done
 
 ## Arguments:
 
-* -1<=_amplitude<=1,_aspect_ratio,_zoom,_center_x[%],_center_y[%],_boundary_conditions
+- -1<=\_amplitude<=1,\_aspect_ratio,\_zoom,\_center_x[%],\_center_y[%],\_boundary_conditions
 
 ## Description:
 
@@ -3419,19 +3433,19 @@ amplitude=0.25, aspect_ratio=0, zoom=0, center_x=center_y=50% and boundary_condi
 
 # Command: unroll
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _axis={ x | y | z | c }
+- \_axis={ x | y | z | c }
 
 ## Description:
 
 Unroll selected images along specified axis.
 
-(*equivalent to shortcut command* y).
+(_equivalent to shortcut command_ y).
 
 ## Default values:
 
@@ -3447,7 +3461,7 @@ gmic (1,2,3;4,5,6;7,8,9) +unroll y
 
 ## Arguments:
 
-* width[%],_height[%],_depth,_smoothness>=0,_anisotropy=[0,1],sharpening>=0
+- width[%],\_height[%],\_depth,\_smoothness>=0,\_anisotropy=[0,1],sharpening>=0
 
 ## Description:
 
@@ -3467,7 +3481,7 @@ gmic image.jpg rescale2d ,100 +upscale_smart 500%,500% append x
 
 ## Arguments:
 
-* _x[%],_y[%],_z[%],_separator_size>=0
+- \_x[%],\_y[%],\_z[%],\_separator_size>=0
 
 ## Description:
 
@@ -3487,7 +3501,7 @@ gmic image.jpg rescale2d 64 animate noise,0,100,50 cut 0,255 append z volumetric
 
 ## Arguments:
 
-* _min_freq[%],_max_freq[%]
+- \_min_freq[%],\_max_freq[%]
 
 ## Description:
 
@@ -3507,14 +3521,14 @@ gmic image.jpg bandpass 1%,3%
 
 # Command: bilateral
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [guide],std_deviation_s[%]>=0,std_deviation_r[%]>=0,_sampling_s>=0,_sampling_r>=0    or
-* std_deviation_s[%]>=0,std_deviation_r[%]>=0,_sampling_s>=0,_sampling_r>=0
+- [guide],std_deviation_s[%]>=0,std_deviation_r[%]>=0,\_sampling_s>=0,\_sampling_r>=0    or
+- std_deviation_s[%]>=0,std_deviation_r[%]>=0,\_sampling_s>=0,\_sampling_r>=0
 
 ## Description:
 
@@ -3532,20 +3546,20 @@ gmic image.jpg repeat 5 { bilateral 10,10 }
 
 # Command: blur
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* std_deviation[%]>=0,_boundary_conditions,_kernel    or
-* axes,std_deviation[%]>=0,_boundary_conditions,_kernel
+- std_deviation[%]>=0,\_boundary_conditions,\_kernel    or
+- axes,std_deviation[%]>=0,\_boundary_conditions,\_kernel
 
 ## Description:
 
 Blur selected images by a Deriche or gaussian filter (recursive implementation).
 
-(*equivalent to shortcut command* b).
+(_equivalent to shortcut command_ b).
 
 boundary_conditions can be { 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }.
 kernel can be { 0:Deriche | 1:Gaussian }.
@@ -3578,7 +3592,7 @@ gmic image.jpg +blur y,10%
 
 ## Arguments:
 
-* amplitude[%],_center_x[%],_center_y[%]
+- amplitude[%],\_center_x[%],\_center_y[%]
 
 ## Description:
 
@@ -3600,7 +3614,7 @@ gmic image.jpg blur_angular 2%
 
 ## Arguments:
 
-* _amplitude>=0,_ratio>=0,_nb_iter>=0,_blend_operator={ + | max | min },_kernel={ 0:Deriche | 1:Gaussian | 2:Box | 3:Triangle | 4:Quadratic },_normalize_scales={ 0:No | 1:Yes },_axes
+- \_amplitude>=0,\_ratio>=0,\_nb_iter>=0,\_blend_operator={ + | max | min },\_kernel={ 0:Deriche | 1:Gaussian | 2:Box | 3:Triangle | 4:Quadratic },\_normalize_scales={ 0:No | 1:Yes },\_axes
 
 ## Description:
 
@@ -3625,7 +3639,7 @@ gmic image.jpg blur_bloom ,
 
 ## Arguments:
 
-* amplitude1[%],_amplitude2[%],_angle,_boundary_conditions={ 0:Dirichlet | 1:Neumann }
+- amplitude1[%],\_amplitude2[%],\_angle,\_boundary_conditions={ 0:Dirichlet | 1:Neumann }
 
 ## Description:
 
@@ -3647,7 +3661,7 @@ gmic image.jpg blur_linear 10,0,45
 
 ## Arguments:
 
-* amplitude[%],_center_x[%],_center_y[%]
+- amplitude[%],\_center_x[%],\_center_y[%]
 
 ## Description:
 
@@ -3669,7 +3683,7 @@ gmic image.jpg blur_radial 2%
 
 ## Arguments:
 
-* sigma>=0,_edges>0,_nb_scales>0
+- sigma>=0,\_edges>0,\_nb_scales>0
 
 ## Description:
 
@@ -3689,14 +3703,14 @@ gmic image.jpg noise 20 cut 0,255 +local[-1] repeat 4 { blur_selective , } done
 
 # Command: boxfilter
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* size[%]>=0,_order,_boundary_conditions,_nb_iter>=0    or
-* axes,size[%]>=0,_order,_boundary_conditions,_nb_iter>=0
+- size[%]>=0,\_order,\_boundary_conditions,\_nb_iter>=0    or
+- axes,size[%]>=0,\_order,\_boundary_conditions,\_nb_iter>=0
 
 ## Description:
 
@@ -3729,7 +3743,7 @@ gmic image.jpg +boxfilter y,3,1
 
 # Command: bump2normal
 
-### No argumentsDescription:Convert selected bumpmaps to normalmaps. ``` gmic 300,300 circle 50%,50%,128,1,255 blur 2% +bump2normal ```
+### No argumentsDescription:Convert selected bumpmaps to normalmaps. `gmic 300,300 circle 50%,50%,128,1,255 blur 2% +bump2normal`
 
 ---
 
@@ -3737,9 +3751,9 @@ gmic image.jpg +boxfilter y,3,1
 
 ## Arguments:
 
-* size>=0    or
-* size_x>=0,size_y>=0,_size_z>=0    or
-* [kernel],_boundary_conditions,_is_real={ 0:Binary-mode | 1:Real-mode }
+- size>=0    or
+- size_x>=0,size_y>=0,\_size_z>=0    or
+- [kernel],\_boundary_conditions,\_is_real={ 0:Binary-mode | 1:Real-mode }
 
 ## Description:
 
@@ -3761,7 +3775,7 @@ gmic image.jpg +closing 10
 
 ## Arguments:
 
-* _size>=0,_is_real={ 0:No | 1:Yes }
+- \_size>=0,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -3779,13 +3793,13 @@ gmic image.jpg +closing_circ 7
 
 # Command: convolve
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [mask],_boundary_conditions,_is_normalized={ 0:No | 1:Yes },_channel_mode,_xcenter,_ycenter,_zcenter,_xstride>0,_ystride>0,_zstride>0,_xdilation,_ydilation,_zdilation,_xoffset,_yoffset,_zoffset,_xsize>=0,_ysize>=0,_zsize>=0
+- [mask],\_boundary_conditions,\_is_normalized={ 0:No | 1:Yes },\_channel_mode,\_xcenter,\_ycenter,\_zcenter,\_xstride>0,\_ystride>0,\_zstride>0,\_xdilation,\_ydilation,\_zdilation,\_xoffset,\_yoffset,\_zoffset,\_xsize>=0,\_ysize>=0,\_zsize>=0
 
 ## Description:
 
@@ -3820,7 +3834,7 @@ gmic image.jpg (0,1,0) resize[-1] 130,1,1,1,3 +convolve[0] [1]
 
 ## Arguments:
 
-* [mask],_boundary_conditions
+- [mask],\_boundary_conditions
 
 ## Description:
 
@@ -3836,13 +3850,13 @@ gmic image.jpg 100%,100% gaussian[-1] 20,1,45 +convolve_fft[0] [1]
 
 # Command: correlate
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [mask],_boundary_conditions,_is_normalized={ 0:No | 1:Yes },_channel_mode,_xcenter,_ycenter,_zcenter,_xstride>0,_ystride>0,_zstride>0,_xdilation,_ydilation,_zdilation,_xoffset,_yoffset,_zoffset,_xsize>=0,_ysize>=0,_zsize>=0
+- [mask],\_boundary_conditions,\_is_normalized={ 0:No | 1:Yes },\_channel_mode,\_xcenter,\_ycenter,\_zcenter,\_xstride>0,\_ystride>0,\_zstride>0,\_xdilation,\_ydilation,\_zdilation,\_xoffset,\_yoffset,\_zoffset,\_xsize>=0,\_ysize>=0,\_zsize>=0
 
 ## Description:
 
@@ -3875,7 +3889,7 @@ gmic image.jpg +crop 40%,40%,60%,60% +correlate[0] [-1],0,1
 
 ## Arguments:
 
-* [mask]
+- [mask]
 
 ## Description:
 
@@ -3889,7 +3903,7 @@ gmic image.jpg +shift -30,-20 +cross_correlation[0] [1]
 
 # Command: curvature
 
-### No argumentsDescription:Compute isophote curvatures on selected images. ``` gmic image.jpg blur 10 curvature ```
+### No argumentsDescription:Compute isophote curvatures on selected images. `gmic image.jpg blur 10 curvature`
 
 ---
 
@@ -3897,8 +3911,8 @@ gmic image.jpg +shift -30,-20 +cross_correlation[0] [1]
 
 ## Arguments:
 
-* _{ x | y | z }...{ x | y | z }    or
-* (no arg)
+- \_{ x | y | z }...{ x | y | z }    or
+- (no arg)
 
 ## Description:
 
@@ -3926,7 +3940,7 @@ gmic image.jpg +dct +idct[-1] abs[-2] +[-2] 1 log[-2]
 
 ## Arguments:
 
-* amplitude[%]>=0,_nb_iter>=0,_dt>=0,_regul>=0,_regul_type={ 0:Tikhonov | 1:Meancurv. | 2:TV }
+- amplitude[%]>=0,\_nb_iter>=0,\_dt>=0,\_regul>=0,\_regul_type={ 0:Tikhonov | 1:Meancurv. | 2:TV }
 
 ## Description:
 
@@ -3946,7 +3960,7 @@ gmic image.jpg blur 3 +deblur 3,40,20,0.01
 
 ## Arguments:
 
-* sigma>=0,_nb_iter>=0,_acceleration>=0,_kernel_type={ 0:Deriche | 1:Gaussian }.
+- sigma>=0,\_nb_iter>=0,\_acceleration>=0,\_kernel_type={ 0:Deriche | 1:Gaussian }.
 
 ## Description:
 
@@ -3966,7 +3980,7 @@ gmic image.jpg +blur 1 +deblur_goldmeinel[-1] 1
 
 ## Arguments:
 
-* sigma>=0, nb_iter>=0, _kernel_type={ 0:Deriche | 1:Gaussian }.
+- sigma>=0, nb_iter>=0, \_kernel_type={ 0:Deriche | 1:Gaussian }.
 
 ## Description:
 
@@ -3986,7 +4000,7 @@ gmic image.jpg +blur 1 +deblur_richardsonlucy[-1] 1
 
 ## Arguments:
 
-* [kernel],_regularization>=0
+- [kernel],\_regularization>=0
 
 ## Description:
 
@@ -4006,7 +4020,7 @@ gmic image.jpg +gaussian 5 +convolve_fft[0] [1] +deconvolve_fft[-1] [1]
 
 ## Arguments:
 
-* _method
+- \_method
 
 ## Description:
 
@@ -4024,14 +4038,14 @@ gmic image.jpg +rotate 3,1,1,50%,50% resize 100%,50% resize 100%,200%,1,3,4 shif
 
 # Command: denoise
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [guide],std_deviation_s[%]>=0,std_deviation_r[%]>=0,_patch_size>0,_lookup_size>0,_smoothness,_fast_approx={ 0:No | 1:Yes }    or
-* std_deviation_s[%]>=0,std_deviation_r[%]>=0,_patch_size>0,_lookup_size>0,_smoothness,_fast_approx={ 0:No | 1:Yes }
+- [guide],std_deviation_s[%]>=0,std_deviation_r[%]>=0,\_patch_size>0,\_lookup_size>0,\_smoothness,\_fast_approx={ 0:No | 1:Yes }    or
+- std_deviation_s[%]>=0,std_deviation_r[%]>=0,\_patch_size>0,\_lookup_size>0,\_smoothness,\_fast_approx={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4051,7 +4065,7 @@ gmic image.jpg +denoise 5,5,8
 
 ## Arguments:
 
-* _threshold>=0,_nb_scales>=0,_cycle_spinning>0
+- \_threshold>=0,\_nb_scales>=0,\_cycle_spinning>0
 
 ## Description:
 
@@ -4073,7 +4087,7 @@ gmic image.jpg noise 20 cut 0,255 +denoise_haar[-1] 0.8
 
 ## Arguments:
 
-* _noise_level>=0,_patch_size>0
+- \_noise_level>=0,\_patch_size>0
 
 ## Description:
 
@@ -4096,7 +4110,7 @@ gmic image.jpg noise 20 cut 0,255 +denoise_cnn 0
 
 ## Arguments:
 
-* _strength>=0,_patch_size>0,_lookup_size>0,_spatial_sampling>0
+- \_strength>=0,\_patch_size>0,\_lookup_size>0,\_spatial_sampling>0
 
 ## Description:
 
@@ -4114,13 +4128,13 @@ gmic image.jpg +noise 20 cut[-1] 0,255 +denoise_patchpca[-1] ,
 
 # Command: deriche
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* std_deviation[%]>=0,order={ 0 | 1 | 2 },axis={ x | y | z | c },_boundary_conditions
+- std_deviation[%]>=0,order={ 0 | 1 | 2 },axis={ x | y | z | c },\_boundary_conditions
 
 ## Description:
 
@@ -4153,15 +4167,15 @@ gmic image.jpg +deriche 30,0,x deriche[-2] 30,0,y add
 
 # Command: dilate
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* size[%]>=0    or
-* size_x[%]>=0,size_y[%]>=0,size_z[%]>=0    or
-* [kernel],_boundary_conditions,_is_real={ 0:Binary-mode | 1:Real-mode }
+- size[%]>=0    or
+- size_x[%]>=0,size_y[%]>=0,size_z[%]>=0    or
+- [kernel],\_boundary_conditions,\_is_real={ 0:Binary-mode | 1:Real-mode }
 
 ## Description:
 
@@ -4183,7 +4197,7 @@ gmic image.jpg +dilate 10
 
 ## Arguments:
 
-* _size[%]>=0,_boundary_conditions,_is_real={ 0:No | 1:Yes }
+- \_size[%]>=0,\_boundary_conditions,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4205,7 +4219,7 @@ gmic image.jpg +dilate_circ 7
 
 ## Arguments:
 
-* _size[%]>=0,_boundary_conditions,_is_real={ 0:No | 1:Yes }
+- \_size[%]>=0,\_boundary_conditions,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4225,7 +4239,7 @@ gmic image.jpg +dilate_oct 7
 
 ## Arguments:
 
-* size_x>=1,size_y>=1,size_z>=1,_threshold>=0,_boundary_conditions
+- size_x>=1,size_y>=1,size_z>=1,\_threshold>=0,\_boundary_conditions
 
 ## Description:
 
@@ -4241,7 +4255,7 @@ size_y=size_x, size_z=1, threshold=255 and boundary_conditions=1.
 
 # Command: divergence
 
-### No argumentsDescription:Compute divergence of selected vector fields. ``` gmic image.jpg luminance +gradient append[-2,-1] c divergence[-1] ```
+### No argumentsDescription:Compute divergence of selected vector fields. `gmic image.jpg luminance +gradient append[-2,-1] c divergence[-1]`
 
 ---
 
@@ -4249,7 +4263,7 @@ size_y=size_x, size_z=1, threshold=255 and boundary_conditions=1.
 
 ## Arguments:
 
-* _sigma1[%]>=0,_sigma2[%]>=0
+- \_sigma1[%]>=0,\_sigma2[%]>=0
 
 ## Description:
 
@@ -4269,7 +4283,7 @@ gmic image.jpg dog 2,3
 
 ## Arguments:
 
-* _sharpness>=0,0<=_anisotropy<=1,_alpha[%],_sigma[%],is_sqrt={ 0:No | 1:Yes }
+- \_sharpness>=0,0<=\_anisotropy<=1,\_alpha[%],\_sigma[%],is_sqrt={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4289,15 +4303,15 @@ gmic image.jpg diffusiontensors 0.8 abs pow 0.2
 
 # Command: erode
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* size[%]>=0    or
-* size_x[%]>=0,size_y[%]>=0,_size_z[%]>=0    or
-* [kernel],_boundary_conditions,_is_real={ 0:Binary-mode | 1:Real-mode }
+- size[%]>=0    or
+- size_x[%]>=0,size_y[%]>=0,\_size_z[%]>=0    or
+- [kernel],\_boundary_conditions,\_is_real={ 0:Binary-mode | 1:Real-mode }
 
 ## Description:
 
@@ -4319,7 +4333,7 @@ gmic image.jpg +erode 10
 
 ## Arguments:
 
-* _size[%]>=0,_boundary_conditions,_is_real={ 0:No | 1:Yes }
+- \_size[%]>=0,\_boundary_conditions,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4341,7 +4355,7 @@ gmic image.jpg +erode_circ 7
 
 ## Arguments:
 
-* _size[%]>=0,_boundary_conditions,_is_real={ 0:No | 1:Yes }
+- \_size[%]>=0,\_boundary_conditions,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4361,7 +4375,7 @@ gmic image.jpg +erode_oct 7
 
 ## Arguments:
 
-* size_x>=1,size_y>=1,size_z>=1,_threshold>=0,_boundary_conditions
+- size_x>=1,size_y>=1,size_z>=1,\_threshold>=0,\_boundary_conditions
 
 ## Description:
 
@@ -4377,13 +4391,13 @@ size_y=size_x, size_z=1, threshold=255 and boundary_conditions=1.
 
 # Command: fft
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _{ x | y | z }...{ x | y | z }
+- \_{ x | y | z }...{ x | y | z }
 
 ## Description:
 
@@ -4417,14 +4431,14 @@ gmic image.jpg w2:=int(w/2) h2:=int(h/2) fft shift $w2,$h2,0,0,2 ellipse $w2,$h2
 
 ## Arguments:
 
-* { x | y | z | c }...{ x | y | z | c },_scheme,_boundary_conditions    or
-* (no arg)
+- { x | y | z | c }...{ x | y | z | c },\_scheme,\_boundary_conditions    or
+- (no arg)
 
 ## Description:
 
 Compute the gradient components (first derivatives) of selected images, along specified axes.
 
-(*equivalent to shortcut command* g).
+(_equivalent to shortcut command_ g).
 
 scheme can be { -1:Backward | 0:Centered | 1:Forward | 2:Sobel | 3:Rotation-invariant (default) | 4:Deriche | 5:Vanvliet | 6:FB-Maxabs }.
 boundary_conditions can be { 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }.
@@ -4446,8 +4460,8 @@ gmic image.jpg gradient
 
 ## Arguments:
 
-* _scheme,_boundary_conditions    or
-* (no arg)
+- \_scheme,\_boundary_conditions    or
+- (no arg)
 
 ## Description:
 
@@ -4472,7 +4486,7 @@ gmic image.jpg gradient_norm equalize
 
 ## Arguments:
 
-* _dimension={ 1 | 2 | 3 }
+- \_dimension={ 1 | 2 | 3 }
 
 ## Description:
 
@@ -4490,14 +4504,14 @@ gmic image.jpg +gradient_orientation 2
 
 # Command: guided
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [guide],radius[%]>=0,regularization[%]>=0    or
-* radius[%]>=0,regularization[%]>=0
+- [guide],radius[%]>=0,regularization[%]>=0    or
+- radius[%]>=0,regularization[%]>=0
 
 ## Description:
 
@@ -4519,7 +4533,7 @@ gmic image.jpg +guided 5,400
 
 ## Arguments:
 
-* scale>0
+- scale>0
 
 ## Description:
 
@@ -4537,7 +4551,7 @@ This command has a [tutorial page](https://gmic.eu/oldtutorial/_haar).
 
 ## Arguments:
 
-* _nb_iter>=0,_dt,_keep_sequence={ 0:No | 1:Yes }
+- \_nb_iter>=0,\_dt,\_keep_sequence={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4557,8 +4571,8 @@ gmic image.jpg +heat_flow 20
 
 ## Arguments:
 
-* { xx | xy | xz | yy | yz | zz }...{ xx | xy | xz | yy | yz | zz },_boundary_conditions    or
-* (no arg) :
+- { xx | xy | xz | yy | yz | zz }...{ xx | xy | xz | yy | yz | zz },\_boundary_conditions    or
+- (no arg) :
 
 ## Description:
 
@@ -4581,8 +4595,8 @@ gmic image.jpg hessian
 
 ## Arguments:
 
-* _{ x | y | z }...{ x | y | z }    or
-* (no arg)
+- \_{ x | y | z }...{ x | y | z }    or
+- (no arg)
 
 ## Description:
 
@@ -4605,19 +4619,19 @@ This command has a [tutorial page](https://gmic.eu/oldtutorial/_dct-and-idct).
 
 # Command: iee
 
-### No argumentsDescription:Compute gradient-orthogonal-directed 2nd derivative of image(s). ``` gmic image.jpg iee ```
+### No argumentsDescription:Compute gradient-orthogonal-directed 2nd derivative of image(s). `gmic image.jpg iee`
 
 ---
 
 # Command: ifft
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _{ x | y | z }...{ x | y | z }
+- \_{ x | y | z }...{ x | y | z }
 
 ## Description:
 
@@ -4637,7 +4651,7 @@ This command has a [tutorial page](https://gmic.eu/oldtutorial/_fft).
 
 ## Arguments:
 
-* scale>0
+- scale>0
 
 ## Description:
 
@@ -4655,7 +4669,7 @@ This command has a [tutorial page](https://gmic.eu/oldtutorial/_haar).
 
 ## Arguments:
 
-* { nb_iterations>0 | 0 },_[initial_estimate]
+- { nb*iterations>0 | 0 },*[initial_estimate]
 
 ## Description:
 
@@ -4677,21 +4691,21 @@ gmic image.jpg +laplacian +ilaplacian[-1] 0
 
 # Command: inn
 
-### No argumentsDescription:Compute gradient-directed 2nd derivative of image(s). ``` gmic image.jpg inn ```
+### No argumentsDescription:Compute gradient-directed 2nd derivative of image(s). `gmic image.jpg inn`
 
 ---
 
 # Command: inpaint
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [mask]    or
-* [mask],0,_fast_method    or
-* [mask],_patch_size>=1,_lookup_size>=1,_lookup_factor>=0,_lookup_increment!=0,_blend_size>=0,0<=_blend_threshold<=1,_blend_decay>=0,_blend_scales>=1,_is_blend_outer={ 0:No | 1:Yes }
+- [mask]    or
+- [mask],0,\_fast_method    or
+- [mask],\_patch_size>=1,\_lookup_size>=1,\_lookup_factor>=0,\_lookup_increment!=0,\_blend_size>=0,0<=\_blend_threshold<=1,\_blend_decay>=0,\_blend_scales>=1,\_is_blend_outer={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4725,7 +4739,7 @@ gmic image.jpg 100%,100% circle 30%,30%,30,1,255,0,255 circle 70%,70%,50,1,255,0
 
 ## Arguments:
 
-* [mask],_nb_scales[%],_diffusion_type={ 0:Isotropic | 1:Delaunay-guided | 2:Edge-guided | 3:Mask-guided },_diffusion_iter>=0
+- [mask],\_nb_scales[%],\_diffusion_type={ 0:Isotropic | 1:Delaunay-guided | 2:Edge-guided | 3:Mask-guided },\_diffusion_iter>=0
 
 ## Description:
 
@@ -4754,7 +4768,7 @@ gmic image.jpg 100%,100% ellipse[-1] 30%,30%,40,30,0,1,255 +inpaint_pde[0] [1]
 
 ## Arguments:
 
-* [mask],_nb_global_iter>=0,_nb_local_iter>=0,_dt>0,_alpha>=0,_sigma>=0
+- [mask],\_nb_global_iter>=0,\_nb_local_iter>=0,\_dt>0,\_alpha>=0,\_sigma>=0
 
 ## Description:
 
@@ -4774,7 +4788,7 @@ gmic image.jpg 100%,100% ellipse[-1] 30%,30%,40,30,0,1,255 inpaint_flow[0] [1]
 
 ## Arguments:
 
-* maximal_area[%]>=0,_tolerance>=0,_is_high_connectivity={ 0:No | 1:Yes }
+- maximal_area[%]>=0,\_tolerance>=0,\_is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4794,7 +4808,7 @@ gmic image.jpg noise 5%,2 +inpaint_holes 8,40
 
 ## Arguments:
 
-* [mask]
+- [mask]
 
 ## Description:
 
@@ -4810,7 +4824,7 @@ gmic image.jpg 100%,100% ellipse[-1] 30%,30%,40,30,0,1,255 +inpaint_morpho[0] [1
 
 ## Arguments:
 
-* [mask],_nb_scales={ 0:Auto | >0 },_patch_size>0,_nb_iterations_per_scale>0,_blend_size>=0,_allow_outer_blending={ 0:No | 1:Yes },_is_already_initialized={ 0:No | 1:Yes }
+- [mask],\_nb_scales={ 0:Auto | >0 },\_patch_size>0,\_nb_iterations_per_scale>0,\_blend_size>=0,\_allow_outer_blending={ 0:No | 1:Yes },\_is_already_initialized={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4830,7 +4844,7 @@ gmic image.jpg 100%,100% ellipse[-1] 30%,30%,40,30,0,1,255 +inpaint_matchpatch[0
 
 ## Arguments:
 
-* size>0
+- size>0
 
 ## Description:
 
@@ -4844,7 +4858,7 @@ gmic image.jpg kuwahara 9
 
 # Command: laplacian
 
-### No argumentsDescription:Compute Laplacian of selected images. ``` gmic image.jpg laplacian ```
+### No argumentsDescription:Compute Laplacian of selected images. `gmic image.jpg laplacian`
 
 ---
 
@@ -4852,7 +4866,7 @@ gmic image.jpg kuwahara 9
 
 ## Arguments:
 
-* _amplitude>0,_channels>0
+- \_amplitude>0,\_channels>0
 
 ## Description:
 
@@ -4872,7 +4886,7 @@ gmic 400,400,1,2,'!c?x-w/2:y-h/2' +lic 200,3 quiver[-2] [-2],10,1,1,1,255
 
 ## Arguments:
 
-* _threshold>=0,_gamma>=0,_smoothness>=0,nb_iter>=0
+- \_threshold>=0,\_gamma>=0,\_smoothness>=0,nb_iter>=0
 
 ## Description:
 
@@ -4892,7 +4906,7 @@ gmic image.jpg +map_tones ,
 
 ## Arguments:
 
-* _radius[%]>=0,_power>=0
+- \_radius[%]>=0,\_power>=0
 
 ## Description:
 
@@ -4912,7 +4926,7 @@ gmic image.jpg +map_tones_fast ,
 
 ## Arguments:
 
-* _nb_iter>=0,_dt,_keep_sequence={ 0:No | 1:Yes }
+- \_nb_iter>=0,\_dt,\_keep_sequence={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -4930,13 +4944,13 @@ gmic image.jpg +meancurvature_flow 20
 
 # Command: median
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* size>=0,_threshold>0
+- size>=0,\_threshold>0
 
 ## Description:
 
@@ -4958,8 +4972,8 @@ gmic image.jpg +median 5
 
 ## Arguments:
 
-* [guide],_patch_radius>0,_spatial_bandwidth>0,_tonal_bandwidth>0,_patch_measure_command    or
-* _patch_radius>0,_spatial_bandwidth>0,_tonal_bandwidth>0,_patch_measure_command
+- [guide],\_patch_radius>0,\_spatial_bandwidth>0,\_tonal_bandwidth>0,\_patch_measure_command    or
+- \_patch_radius>0,\_spatial_bandwidth>0,\_tonal_bandwidth>0,\_patch_measure_command
 
 ## Description:
 
@@ -4967,7 +4981,7 @@ Apply non local means denoising of Buades et al, 2005. on selected images.
 
 The patch is a gaussian function of std_patch_radius.
 The spatial kernel is a rectangle of radius spatial_bandwidth.
-The tonal kernel is exponential (exp(-d^2/_tonal_bandwidth^2))
+The tonal kernel is exponential (exp(-d^2/\_tonal_bandwidth^2))
 with d the euclidean distance between image patches.
 
 ## Default values:
@@ -4984,7 +4998,7 @@ gmic image.jpg +noise 10 nlmeans[-1] 4,4,{0.6*${-std_noise}}
 
 ## Arguments:
 
-* _reference_image,_scaling_map,_patch_radius>0,_spatial_bandwidth>0
+- \_reference_image,\_scaling_map,\_patch_radius>0,\_spatial_bandwidth>0
 
 ## Description:
 
@@ -4996,7 +5010,7 @@ Apply non local means denoising using a image for weight and a map for scaling
 
 ## Arguments:
 
-* _amplitude>=0,_radius>0,_n_smooth[%]>=0,_a_smooth[%]>=0,_is_cut={ 0:No | 1:Yes },_min=0,_max=255
+- \_amplitude>=0,\_radius>0,\_n_smooth[%]>=0,\_a_smooth[%]>=0,\_is_cut={ 0:No | 1:Yes },\_min=0,\_max=255
 
 ## Description:
 
@@ -5016,7 +5030,7 @@ gmic image.jpg normalize_local 8,10
 
 ## Arguments:
 
-* [mask]
+- [mask]
 
 ## Description:
 
@@ -5032,9 +5046,9 @@ gmic image.jpg +shift -30,-20 +normalized_cross_correlation[0] [1]
 
 ## Arguments:
 
-* size>=0    or
-* size_x>=0,size_y>=0,_size_z>=0    or
-* [kernel],_boundary_conditions,_is_real={ 0:Binary-mode | 1:Real-mode }
+- size>=0    or
+- size_x>=0,size_y>=0,\_size_z>=0    or
+- [kernel],\_boundary_conditions,\_is_real={ 0:Binary-mode | 1:Real-mode }
 
 ## Description:
 
@@ -5056,7 +5070,7 @@ gmic image.jpg +opening 10
 
 ## Arguments:
 
-* _size>=0,_is_real={ 0:No | 1:Yes }
+- \_size>=0,\_is_real={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5076,7 +5090,7 @@ gmic image.jpg +opening_circ 7
 
 ## Arguments:
 
-* [mask],0<=_min_percentile[%]<=100,0<=_max_percentile[%]<=100.
+- [mask],0<=\_min_percentile[%]<=100,0<=\_max_percentile[%]<=100.
 
 ## Description:
 
@@ -5096,7 +5110,7 @@ gmic image.jpg shape_circle 11,11 +percentile[0] [1],25,75
 
 ## Arguments:
 
-* K_factor>0,_nb_iter>=0,_dt,_keep_sequence={ 0:No | 1:Yes }
+- K_factor>0,\_nb_iter>=0,\_dt,\_keep_sequence={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5116,7 +5130,7 @@ gmic image.jpg +heat_flow 20
 
 ## Arguments:
 
-* [destination]
+- [destination]
 
 ## Description:
 
@@ -5132,7 +5146,7 @@ gmic image.jpg +shift -30,-20 +phase_correlation[0] [1] unroll[-1] y
 
 ## Arguments:
 
-* _nb_iter>=0,_dt,_velocity_command,_keep_sequence={ 0:No | 1:Yes }
+- \_nb_iter>=0,\_dt,\_velocity_command,\_keep_sequence={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5150,7 +5164,7 @@ gmic image.jpg +pde_flow 20
 
 # Command: periodize_poisson
 
-### No argumentsDescription:Periodize selected images using a Poisson solver in Fourier space. ``` gmic image.jpg +periodize_poisson array 2,2,2 ```
+### No argumentsDescription:Periodize selected images using a Poisson solver in Fourier space. `gmic image.jpg +periodize_poisson array 2,2,2`
 
 ---
 
@@ -5158,9 +5172,9 @@ gmic image.jpg +pde_flow 20
 
 ## Arguments:
 
-* dx,_x0,_x1,_phi(r)    or
-* dx,dy,_x0,_y0,_x1,_y1,_phi(r)    or
-* dx,dy,dz,x0,y0,z0,x1,y1,z1,phi(r)
+- dx,\_x0,\_x1,\_phi(r)    or
+- dx,dy,\_x0,\_y0,\_x1,\_y1,\_phi(r)    or
+- dx,dy,dz,x0,y0,z0,x1,y1,z1,phi(r)
 
 ## Description:
 
@@ -5203,7 +5217,7 @@ gmic 32,1,1,5,u([400,400,255,255,255]) rbf 400,400 c 0,255
 
 ## Arguments:
 
-* 0<=_threshold<=100,_smoothness>=0,0<=attenuation<=1
+- 0<=\_threshold<=100,\_smoothness>=0,0<=attenuation<=1
 
 ## Description:
 
@@ -5223,7 +5237,7 @@ gmic image.jpg +red_eye ,
 
 ## Arguments:
 
-* _mask_size>0, _threshold[%]>0
+- \_mask_size>0, \_threshold[%]>0
 
 ## Description:
 
@@ -5243,7 +5257,7 @@ gmic image.jpg noise 10,2 +remove_hotpixels ,
 
 ## Arguments:
 
-* number_of_pixels[%]>=0
+- number_of_pixels[%]>=0
 
 ## Description:
 
@@ -5259,7 +5273,7 @@ gmic image.jpg +remove_pixels 50%
 
 ## Arguments:
 
-* std_deviation_s[%]>=0,std_deviation_r[%]>=0,_precision>=0
+- std_deviation_s[%]>=0,std_deviation_r[%]>=0,\_precision>=0
 
 ## Description:
 
@@ -5282,8 +5296,8 @@ gmic image.jpg +rolling_guidance , +-
 
 ## Arguments:
 
-* amplitude>=0    or
-* amplitude>=0,edge>=0,_alpha[%],_sigma[%]
+- amplitude>=0    or
+- amplitude>=0,edge>=0,\_alpha[%],\_sigma[%]
 
 ## Description:
 
@@ -5315,7 +5329,7 @@ gmic image.jpg blur 5 sharpen 300,1
 
 ## Arguments:
 
-* _amplitude[%]>=0,_nb_scales>0,0<=_anisotropy<=1,0<=_minimize_alpha<=1
+- \_amplitude[%]>=0,\_nb_scales>0,0<=\_anisotropy<=1,0<=\_minimize_alpha<=1
 
 ## Description:
 
@@ -5329,16 +5343,16 @@ amplitude=1, nb_scales=5, anisotropy=0 and minimize_alpha=1.
 
 # Command: smooth
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* amplitude[%]>=0,_sharpness>=0,0<=_anisotropy<=1,_alpha[%],_sigma[%],_dl>0,_da>0,_precision>0,_interpolation,_fast_approx={ 0:No | 1:Yes }    or
-* nb_iterations>=0,_sharpness>=0,_anisotropy,_alpha,_sigma,_dt>0,0    or
-* [tensor_field],_amplitude>=0,_dl>0,_da>0,_precision>0,_interpolation,_fast_approx={ 0:No | 1:Yes }    or
-* [tensor_field],_nb_iters>=0,_dt>0,0
+- amplitude[%]>=0,\_sharpness>=0,0<=\_anisotropy<=1,\_alpha[%],\_sigma[%],\_dl>0,\_da>0,\_precision>0,\_interpolation,\_fast_approx={ 0:No | 1:Yes }    or
+- nb_iterations>=0,\_sharpness>=0,\_anisotropy,\_alpha,\_sigma,\_dt>0,0    or
+- [tensor_field],\_amplitude>=0,\_dl>0,\_da>0,\_precision>0,\_interpolation,\_fast_approx={ 0:No | 1:Yes }    or
+- [tensor_field],\_nb_iters>=0,\_dt>0,0
 
 ## Description:
 
@@ -5373,7 +5387,7 @@ gmic image.jpg 100%,100%,1,2 rand[-1] -100,100 repeat 2 smooth[-1] 100,0.2,1,4,4
 
 ## Arguments:
 
-* smoothness[%]>0
+- smoothness[%]>0
 
 ## Description:
 
@@ -5389,7 +5403,7 @@ gmic image.jpg split_freq 2%
 
 ## Arguments:
 
-* "laplacian_command",_nb_iterations>=0,_time_step>0,_nb_scales>=0
+- "laplacian_command",\_nb_iterations>=0,\_time_step>0,\_nb_scales>=0
 
 ## Description:
 
@@ -5412,7 +5426,7 @@ gmic image.jpg command "foo : gradient x" +solve_poisson foo +foo[0] +laplacian[
 
 ## Arguments:
 
-* _nb_scales[%]={ 0:Auto | -S<0 | N>0 },_subsample={ 0:No | 1:Yes },0<=_anisotropy<=1,0<=_minimize_alpha<=1
+- \_nb_scales[%]={ 0:Auto | -S<0 | N>0 },\_subsample={ 0:No | 1:Yes },0<=\_anisotropy<=1,0<=\_minimize_alpha<=1
 
 ## Description:
 
@@ -5432,7 +5446,7 @@ nb_scales=0, subsample=0, anisotropy=0 and minimize_alpha=1.
 
 ## Arguments:
 
-* _nb_scales[%]={ 0:Auto | -S<0 | N>0 },_base_scale[%]>=0,_detail_scale[%]>=0
+- \_nb_scales[%]={ 0:Auto | -S<0 | N>0 },\_base_scale[%]>=0,\_detail_scale[%]>=0
 
 ## Description:
 
@@ -5455,7 +5469,7 @@ gmic image.jpg split_details ,
 
 ## Arguments:
 
-* _scheme={ 0:Centered | 1:Forward/backward }
+- \_scheme={ 0:Centered | 1:Forward/backward }
 
 ## Description:
 
@@ -5477,7 +5491,7 @@ gmic image.jpg structuretensors abs pow 0.2
 
 ## Arguments:
 
-* _smoothness[%]>=0,_diffusion_type={ 0:Isotropic | 1:Delaunay-guided | 2:Edge-oriented },_diffusion_iter>=0
+- \_smoothness[%]>=0,\_diffusion_type={ 0:Isotropic | 1:Delaunay-guided | 2:Edge-oriented },\_diffusion_iter>=0
 
 ## Description:
 
@@ -5497,7 +5511,7 @@ gmic image.jpg 100%,100% circle[-1] 50%,50%,25%,1,255 append c +solidify , displ
 
 ## Arguments:
 
-* _width[%]>0,_height[%]>0
+- \_width[%]>0,\_height[%]>0
 
 ## Description:
 
@@ -5520,7 +5534,7 @@ gmic image.jpg crop 2,282,50,328 +syntexturize 320,320
 
 ## Arguments:
 
-* _width[%]>0,_height[%]>0,_nb_scales>=0,_patch_size>0,_blending_size>=0,_precision>=0
+- \_width[%]>0,\_height[%]>0,\_nb_scales>=0,\_patch_size>0,\_blending_size>=0,\_precision>=0
 
 ## Description:
 
@@ -5542,7 +5556,7 @@ gmic image.jpg crop 25%,25%,75%,75% syntexturize_matchpatch 512,512
 
 ## Arguments:
 
-* _nb_iter>=0,_dt,_keep_sequence={ 0:No | 1:Yes }
+- \_nb_iter>=0,\_dt,\_keep_sequence={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5562,7 +5576,7 @@ gmic image.jpg +tv_flow 40
 
 ## Arguments:
 
-* radius[%]>=0,_amount>=0,_threshold[%]>=0
+- radius[%]>=0,\_amount>=0,\_threshold[%]>=0
 
 ## Description:
 
@@ -5582,7 +5596,7 @@ gmic image.jpg blur 3 +unsharp 1.5,15 cut 0,255
 
 ## Arguments:
 
-* _nb_scales>0,_radius[%]>=0,_amount>=0,threshold[%]>=0
+- \_nb_scales>0,\_radius[%]>=0,\_amount>=0,threshold[%]>=0
 
 ## Description:
 
@@ -5600,13 +5614,13 @@ gmic image.jpg blur 3 +unsharp_octave 4,5,15 cut 0,255
 
 # Command: vanvliet
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* std_deviation[%]>=0,order={ 0 | 1 | 2 | 3 },axis={ x | y | z | c },_boundary_conditions
+- std_deviation[%]>=0,order={ 0 | 1 | 2 | 3 },axis={ x | y | z | c },\_boundary_conditions
 
 ## Description:
 
@@ -5637,7 +5651,7 @@ gmic image.jpg +vanvliet 30,0,x vanvliet[-2] 30,0,y add
 
 # Command: voronoi
 
-### No argumentsDescription:Compute the discrete Voronoi diagram of non-zero pixels in selected images. ``` gmic 400,400 noise 0.2,2 eq 1 +label_fg 0 voronoi[-1] +gradient[-1] xy,1 append[-2,-1] c norm[-1] ==[-1] 0 map[-2] 2,2 mul[-2,-1] normalize[-2] 0,255 dilate_circ[-2] 4 reverse max ```
+### No argumentsDescription:Compute the discrete Voronoi diagram of non-zero pixels in selected images. `gmic 400,400 noise 0.2,2 eq 1 +label_fg 0 voronoi[-1] +gradient[-1] xy,1 append[-2,-1] c norm[-1] ==[-1] 0 map[-2] 2,2 mul[-2,-1] normalize[-2] 0,255 dilate_circ[-2] 4 reverse max`
 
 ---
 
@@ -5645,7 +5659,7 @@ gmic image.jpg +vanvliet 30,0,x vanvliet[-2] 30,0,y add
 
 ## Arguments:
 
-* text,_size>0
+- text,\_size>0
 
 ## Description:
 
@@ -5663,13 +5677,13 @@ gmic image.jpg +watermark_fourier "Watermarked!" +display_fft remove[-3,-1] norm
 
 # Command: watershed
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [priority_image],_is_high_connectivity={ 0:No | 1:Yes }
+- [priority_image],\_is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5689,7 +5703,7 @@ gmic 400,400 noise 0.2,2 eq 1 +distance 1 mul[-1] -1 label[-2] watershed[-2] [-1
 
 ## Arguments:
 
-* tolerance>=0,is_high_connectivity={ 0:No | 1:Yes }
+- tolerance>=0,is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5711,7 +5725,7 @@ gmic image.jpg luminance stencil[-1] 1 +area 0
 
 ## Arguments:
 
-* tolerance>=0,is_high_connectivity={ 0:No | 1:Yes }
+- tolerance>=0,is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5733,7 +5747,7 @@ gmic image.jpg luminance stencil[-1] 1 +area_fg 0
 
 ## Arguments:
 
-* x0[%],y0[%],z0[%],...,xN[%],yn[%],zn[%]
+- x0[%],y0[%],z0[%],...,xN[%],yn[%],zn[%]
 
 ## Description:
 
@@ -5749,8 +5763,8 @@ gmic image.jpg +at_curve 0,0,0,80%,50%,0,100%,100%,0
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],x2[%],y2[%],x3[%],y3[%],_interpolation,_boundary_conditions    or
-* x0[%],y0[%],z0[%],x1[%],y1[%],z1[%],x2[%],y2[%],z2[%],x3[%],y3[%],z3[%],_interpolation,_boundary_conditions
+- x0[%],y0[%],x1[%],y1[%],x2[%],y2[%],x3[%],y3[%],\_interpolation,\_boundary_conditions    or
+- x0[%],y0[%],z0[%],x1[%],y1[%],z1[%],x2[%],y2[%],z2[%],x3[%],y3[%],z3[%],\_interpolation,\_boundary_conditions
 
 ## Description:
 
@@ -5767,7 +5781,7 @@ gmic image.jpg params=5%,5%,95%,5%,60%,95%,40%,95% +at_quadrangle $params polygo
 
 # Command: barycenter
 
-### No argumentsDescription:Compute the barycenter vector of pixel values. ``` gmic 256,256 ellipse 50%,50%,20%,20%,0,1,1 deform 20 +barycenter +ellipse[-2] {@0,1},5,5,0,10 ```
+### No argumentsDescription:Compute the barycenter vector of pixel values. `gmic 256,256 ellipse 50%,50%,20%,20%,0,1,1 deform 20 +barycenter +ellipse[-2] {@0,1},5,5,0,10`
 
 ---
 
@@ -5781,7 +5795,7 @@ gmic image.jpg params=5%,5%,95%,5%,60%,95%,40%,95% +at_quadrangle $params polygo
 
 ## Arguments:
 
-* _sigma[%]>=0,_low_threshold>=0,_high_threshold>=0
+- \_sigma[%]>=0,\_low_threshold>=0,\_high_threshold>=0
 
 ## Description:
 
@@ -5801,7 +5815,7 @@ gmic image.jpg canny 1
 
 ## Arguments:
 
-* _output_type={ 0:Image | 1:Coordinates/triangles }
+- \_output_type={ 0:Image | 1:Coordinates/triangles }
 
 ## Description:
 
@@ -5831,7 +5845,7 @@ gmic image.jpg 100%,100% noise. 2,2 eq. 1 delaunay. +blend shapeaverage0
 
 ## Arguments:
 
-* 0<=tolerance<=1,_skin_x,_skin_y,_skin_radius>=0
+- 0<=tolerance<=1,\_skin_x,\_skin_y,\_skin_radius>=0
 
 ## Description:
 
@@ -5849,13 +5863,13 @@ tolerance=0.5 and skin_x=skiny=radius=-1.
 
 # Command: displacement
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [reference],_smoothness>=0,_precision>=0,_nb_scales>=0,_iteration_max>=0,mode={ 0:Backward | 1:Forward },_[guide]
+- [reference],_smoothness>=0,\_precision>=0,\_nb_scales>=0,\_iteration_max>=0,mode={ 0:Backward | 1:Forward },_[guide]
 
 ## Description:
 
@@ -5876,14 +5890,14 @@ gmic image.jpg +rotate 3,1,0,50%,50% +displacement[-1] [-2] quiver[-1] [-1],15,1
 
 # Command: distance
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* isovalue[%],_metric    or
-* isovalue[%],[metric],_method
+- isovalue[%],\_metric    or
+- isovalue[%],[metric],\_method
 
 ## Description:
 
@@ -5918,7 +5932,7 @@ gmic 400,400 set 1,50%,50% +distance[0] 1,2 +distance[0] 1,1 distance[0] 1,0 mod
 
 ## Arguments:
 
-* x0,y0,_n0,_is_high_connectivity={ 0:No | 1:Yes }
+- x0,y0,\_n0,\_is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -5944,7 +5958,7 @@ x0=y0=n0=-1 and is_high_connectivity=1.
 
 ## Arguments:
 
-* _threshold[%]>=0
+- \_threshold[%]>=0
 
 ## Description:
 
@@ -5962,19 +5976,19 @@ gmic image.jpg +edges 15%
 
 # Command: fftpolar
 
-### No argumentsDescription:Compute fourier transform of selected images, as centered magnitude/phase images. ``` gmic image.jpg fftpolar ellipse 50%,50%,10,10,0,1,0 ifftpolar ```
+### No argumentsDescription:Compute fourier transform of selected images, as centered magnitude/phase images. `gmic image.jpg fftpolar ellipse 50%,50%,10,10,0,1,0 ifftpolar`
 
 ---
 
 # Command: histogram
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* nb_levels[%]>0,_min_value[%],_max_value[%]
+- nb_levels[%]>0,\_min_value[%],\_max_value[%]
 
 ## Description:
 
@@ -5997,7 +6011,7 @@ gmic image.jpg +histogram 64 display_graph[-1] 400,300,3
 
 ## Arguments:
 
-* [mask],nb_levels[%]>0,_min_value[%],_max_value[%]
+- [mask],nb_levels[%]>0,\_min_value[%],\_max_value[%]
 
 ## Description:
 
@@ -6013,7 +6027,7 @@ min_value=0% and max_value=100%.
 
 ## Arguments:
 
-* nb_levels[%]>0,_value0[%],_value1[%]
+- nb_levels[%]>0,\_value0[%],\_value1[%]
 
 ## Description:
 
@@ -6036,7 +6050,7 @@ gmic image.jpg channels 0,1 +histogram_nd 256
 
 ## Arguments:
 
-* _nb_levels>0,_is_normalized={ 0:No | 1:Yes },_val0[%],_val1[%]
+- \_nb_levels>0,\_is_normalized={ 0:No | 1:Yes },\_val0[%],\_val1[%]
 
 ## Description:
 
@@ -6056,7 +6070,7 @@ gmic image.jpg +histogram_cumul 256 histogram[0] 256 display_graph 400,300,3
 
 ## Arguments:
 
-* nb_levels[%]>0,_value0[%],_value1[%]
+- nb_levels[%]>0,\_value0[%],\_value1[%]
 
 ## Description:
 
@@ -6075,7 +6089,7 @@ value0=0% and value1=100%.
 
 ## Arguments:
 
-* _width>0,_height>0,gradient_norm_voting={ 0:No | 1:Yes }
+- \_width>0,\_height>0,gradient_norm_voting={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -6107,7 +6121,7 @@ gmic image.jpg +blur 1.5 hough[-1] 400,400 blur[-1] 0.5 add[-1] 1 log[-1]
 
 ## Arguments:
 
-* patch_size>0,_overlap[%]>0,_boundary_conditions
+- patch_size>0,\_overlap[%]>0,\_boundary_conditions
 
 ## Description:
 
@@ -6134,7 +6148,7 @@ gmic image.jpg img2patches 64
 
 ## Arguments:
 
-* _nb_levels>0
+- \_nb_levels>0
 
 ## Description:
 
@@ -6152,13 +6166,13 @@ gmic image.jpg blur 2 isophotes 6 dilate_circ 5 display_rgba
 
 # Command: label
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* _tolerance>=0,is_high_connectivity={ 0:No | 1:Yes },_is_L2_norm={ 0:No | 1:Yes }
+- \_tolerance>=0,is_high_connectivity={ 0:No | 1:Yes },\_is_L2_norm={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -6192,7 +6206,7 @@ gmic 400,400 set 1,50%,50% distance 1 mod 16 threshold 8 label mod 255 map 2
 
 ## Arguments:
 
-* tolerance>=0,is_high_connectivity={ 0:No | 1:Yes },_is_L2_norm={ 0:No | 1:Yes }
+- tolerance>=0,is_high_connectivity={ 0:No | 1:Yes },\_is_L2_norm={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -6209,7 +6223,7 @@ is_high_connectivity=0.
 
 # Command: laar
 
-### No argumentsDescription:Extract the largest axis-aligned rectangle in non-zero areas of selected images. Rectangle coordinates are returned in status, as a sequence of numbers x0,y0,x1,y1. ``` gmic shape_cupid 256 coords=${-laar} normalize 0,255 to_rgb rectangle $coords,0.5,0,128,0 ```
+### No argumentsDescription:Extract the largest axis-aligned rectangle in non-zero areas of selected images. Rectangle coordinates are returned in status, as a sequence of numbers x0,y0,x1,y1. `gmic shape_cupid 256 coords=${-laar} normalize 0,255 to_rgb rectangle $coords,0.5,0,128,0`
 
 ---
 
@@ -6217,7 +6231,7 @@ is_high_connectivity=0.
 
 ## Arguments:
 
-* _patch_size>=1
+- \_patch_size>=1
 
 ## Description:
 
@@ -6237,7 +6251,7 @@ gmic image.jpg norm +max_patch 16
 
 ## Arguments:
 
-* _patch_size>=1
+- \_patch_size>=1
 
 ## Description:
 
@@ -6257,7 +6271,7 @@ gmic image.jpg norm +min_patch 16
 
 ## Arguments:
 
-* x0[%]>=0,y0[%]>=0,z0[%]>=0,x1[%]>=0,y1[%]>=0,z1[%]>=0,_is_high_connectivity={ 0:No | 1:Yes }
+- x0[%]>=0,y0[%]>=0,z0[%]>=0,x1[%]>=0,y1[%]>=0,z1[%]>=0,\_is_high_connectivity={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -6277,7 +6291,7 @@ gmic image.jpg +gradient_norm fill[-1] 1/(1+i) minimal_path[-1] 0,0,0,100%,100%,
 
 ## Arguments:
 
-* [reference]
+- [reference]
 
 ## Description:
 
@@ -6289,7 +6303,7 @@ This command does not modify the images. It returns a value or a list of values 
 
 # Command: mse_matrix
 
-### No argumentsDescription:Compute MSE (Mean-Squared Error) matrix between selected images. ``` gmic image.jpg +noise 30 +noise[0] 35 +noise[0] 38 cut. 0,255 +mse_matrix ```
+### No argumentsDescription:Compute MSE (Mean-Squared Error) matrix between selected images. `gmic image.jpg +noise 30 +noise[0] 35 +noise[0] 38 cut. 0,255 +mse_matrix`
 
 ---
 
@@ -6297,7 +6311,7 @@ This command does not modify the images. It returns a value or a list of values 
 
 ## Arguments:
 
-* width>0,height>0,_overlap[%]>0,_overlap_std[%]
+- width>0,height>0,\_overlap[%]>0,\_overlap_std[%]
 
 ## Description:
 
@@ -6325,7 +6339,7 @@ gmic image.jpg +img2patches 32,0,3 mirror[-1] xy patches2img[-1] {0,[w,h]}
 
 ## Arguments:
 
-* patch_width>0,patch_height>0,patch_depth>0,x0,y0,z0,_x1,_y1,_z1,...,_xN,_yN,_zN
+- patch_width>0,patch_height>0,patch_depth>0,x0,y0,z0,\_x1,\_y1,\_z1,...,\_xN,\_yN,\_zN
 
 ## Description:
 
@@ -6341,7 +6355,7 @@ gmic image.jpg +patches 64,64,1,153,124,0,184,240,0,217,126,0,275,38,0
 
 ## Arguments:
 
-* _output_mode,_target_dim[%]>0,_normalization_mode={ 0:None | 1:Center | 2:Center+scale }
+- \_output_mode,\_target_dim[%]>0,\_normalization_mode={ 0:None | 1:Center | 2:Center+scale }
 
 ## Description:
 
@@ -6371,13 +6385,13 @@ gmic shape_dragonfly 400 mul 128 0 eval.. "i?da_push([x,y])" da_freeze. pca. 11,
 
 # Command: matchpatch
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [patch_image],patch_width>=1,_patch_height>=1,_patch_depth>=1,_nb_iterations>=0,_nb_randoms>=0,_occurence_penalization,_output_score={ 0:No | 1:Yes },_[guide]
+- [patch_image],patch*width>=1,\_patch_height>=1,\_patch_depth>=1,\_nb_iterations>=0,\_nb_randoms>=0,\_occurence_penalization,\_output_score={ 0:No | 1:Yes },*[guide]
 
 ## Description:
 
@@ -6404,7 +6418,7 @@ gmic image.jpg sample colorful +matchpatch[0] [1],3 +warp[-2] [-1],0
 
 ## Arguments:
 
-* [patch_image],_patch_width>=1,_patch_height>=1,_patch_depth>=1,_nb_iterations>=0,_nb_randoms>=0,_occurrence_penalization>=0,_output_score={ 0:No | 1:Yes },_[guide]
+- [patch_image],_patch_width>=1,\_patch_height>=1,\_patch_depth>=1,\_nb_iterations>=0,\_nb_randoms>=0,\_occurrence_penalization>=0,\_output_score={ 0:No | 1:Yes },_[guide]
 
 ## Description:
 
@@ -6422,7 +6436,7 @@ gmic image.jpg sample colorful +matchpatch_alt[0] [1],3 +warp[-2] [-1],0
 
 # Command: plot2value
 
-### No argumentsDescription:Retrieve values from selected 2D graph plots. ``` gmic 400,300,1,1,'y>300*abs(cos(x/10+2*u))' +plot2value +display_graph[-1] 400,300 ```
+### No argumentsDescription:Retrieve values from selected 2D graph plots. `gmic 400,300,1,1,'y>300*abs(cos(x/10+2*u))' +plot2value +display_graph[-1] 400,300`
 
 ---
 
@@ -6430,7 +6444,7 @@ gmic image.jpg sample colorful +matchpatch_alt[0] [1],3 +warp[-2] [-1],0
 
 ## Arguments:
 
-* _type = { -X:-X-opacity | 0:Binary | 1:Cumulative | 2:Label | 3:Retrieve coordinates },_width,_height>0,_depth>0
+- \_type = { -X:-X-opacity | 0:Binary | 1:Cumulative | 2:Label | 3:Retrieve coordinates },\_width,\_height>0,\_depth>0
 
 ## Description:
 
@@ -6475,7 +6489,7 @@ gmic 3000,2 rand 0,400 {w} {w},3 rand[-1] 0,255 append y +pointcloud 0 dilate[-1
 
 ## Arguments:
 
-* [reference],_max_value>0
+- [reference],\_max_value>0
 
 ## Description:
 
@@ -6493,7 +6507,7 @@ max_value=255.
 
 ## Arguments:
 
-* _max_value>0
+- \_max_value>0
 
 ## Description:
 
@@ -6513,7 +6527,7 @@ gmic image.jpg +noise 30 +noise[0] 35 +noise[0] 38 cut. 0,255 +psnr_matrix
 
 ## Arguments:
 
-* _threshold>=0
+- \_threshold>=0
 
 ## Description:
 
@@ -6533,7 +6547,7 @@ gmic image.jpg segment_watershed 2
 
 ## Arguments:
 
-* _resolution>=0,0<=_weight_std_max_avg<=1,_dilation,_smoothness>=0
+- \_resolution>=0,0<=\_weight_std_max_avg<=1,\_dilation,\_smoothness>=0
 
 ## Description:
 
@@ -6549,7 +6563,7 @@ resolution=256, weight_std_max=0.75, dilation=0 and smoothness=100.
 
 ## Arguments:
 
-* _boundary_conditions={ 0:Dirichlet | 1:Neumann }
+- \_boundary_conditions={ 0:Dirichlet | 1:Neumann }
 
 ## Description:
 
@@ -6569,7 +6583,7 @@ gmic shape_cupid 320 +skeleton 0
 
 ## Arguments:
 
-* size>0,_regularity>=0,_nb_iterations>0
+- size>0,\_regularity>=0,\_nb_iterations>0
 
 ## Description:
 
@@ -6592,7 +6606,7 @@ gmic image.jpg +srgb2lab slic[-1] 16 +blend shapeaverage f[-2] "j(1,0)==i && j(0
 
 ## Arguments:
 
-* [patch],_use_fourier={ 0:No | 1:Yes },_boundary_conditions
+- [patch],\_use_fourier={ 0:No | 1:Yes },\_boundary_conditions
 
 ## Description:
 
@@ -6615,7 +6629,7 @@ gmic image.jpg +crop 20%,20%,35%,35% +ssd_patch[0] [1],0,0
 
 ## Arguments:
 
-* [reference],_patch_size>0,_max_value>0
+- [reference],\_patch_size>0,\_max_value>0
 
 ## Description:
 
@@ -6641,7 +6655,7 @@ patch_size=11, and max_value=255.
 
 ## Arguments:
 
-* _patch_size>0,_max_value>0
+- \_patch_size>0,\_max_value>0
 
 ## Description:
 
@@ -6661,7 +6675,7 @@ gmic image.jpg +noise 30 +noise[0] 35 +noise[0] 38 cut. 0,255 +ssim_matrix
 
 ## Arguments:
 
-* _boundary_conditions={ 0:Dirichlet | 1:Neumann }
+- \_boundary_conditions={ 0:Dirichlet | 1:Neumann }
 
 ## Description:
 
@@ -6683,7 +6697,7 @@ gmic shape_cupid 320 +thinning
 
 ## Arguments:
 
-* N>0
+- N>0
 
 ## Description:
 
@@ -6699,7 +6713,7 @@ gmic image.jpg +tones 3
 
 ## Arguments:
 
-* _nb_levels>0,_smoothness
+- \_nb_levels>0,\_smoothness
 
 ## Description:
 
@@ -6719,7 +6733,7 @@ gmic image.jpg topographic_map 10
 
 ## Arguments:
 
-* _precision>=0
+- \_precision>=0
 
 ## Description:
 
@@ -6742,7 +6756,7 @@ gmic 256,1,1,2 rand 0,512 tsp , 512,512,1,3 repeat w#0 circle[-1] {0,I[$>]},2,1,
 
 ## Arguments:
 
-* _patch_size>=1
+- \_patch_size>=1
 
 ## Description:
 
@@ -6762,7 +6776,7 @@ gmic image.jpg +variance_patch
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],_thickness[%]>=0,_head_length[%]>=0,_head_thickness[%]>=0,_opacity,_pattern,_color1,...
+- x0[%],y0[%],x1[%],y1[%],\_thickness[%]>=0,\_head_length[%]>=0,\_head_thickness[%]>=0,\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -6786,7 +6800,7 @@ gmic 400,400,1,3 repeat 100 arrow 50%,50%,{u(100)}%,{u(100)}%,3,20,10,0.3,${-rgb
 
 ## Arguments:
 
-* x0,x1,y0,y1,_font_height>=0,_opacity,_pattern,_color1,...
+- x0,x1,y0,y1,\_font_height>=0,\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -6811,7 +6825,7 @@ gmic 400,400,1,3,255 axes -1,1,1,-1
 
 ## Arguments:
 
-* _size>0,_R,_G,_B,_ambient>=0,_diffuse>=0,_specular>=0,_shininess>=0,_light_x,_light_y,_light_z
+- \_size>0,\_R,\_G,\_B,\_ambient>=0,\_diffuse>=0,\_specular>=0,\_shininess>=0,\_light_x,\_light_y,\_light_z
 
 ## Description:
 
@@ -6831,7 +6845,7 @@ gmic repeat 9 { ball {int(1.5^($>+4))},${-rgb} } append_tiles 3,3
 
 ## Arguments:
 
-* size1>0,_size2>0,_offset1,_offset2,_angle,_opacity,_color1,...,_color2,...
+- size1>0,\_size2>0,\_offset1,\_offset2,\_angle,\_opacity,\_color1,...,\_color2,...
 
 ## Description:
 
@@ -6849,7 +6863,7 @@ gmic image.jpg chessboard 32,32,0,0,25,0.3,255,128,0,0,128,255
 
 # Command: cie1931
 
-### No argumentsDescription:Draw CIE-1931 chromaticity diagram on selected images. ``` gmic 500,400,1,3 cie1931 ```
+### No argumentsDescription:Draw CIE-1931 chromaticity diagram on selected images. `gmic 500,400,1,3 cie1931`
 
 ---
 
@@ -6857,7 +6871,7 @@ gmic image.jpg chessboard 32,32,0,0,25,0.3,255,128,0,0,128,255
 
 ## Arguments:
 
-* x[%],y[%],R[%],_opacity,_pattern,_color1,...
+- x[%],y[%],R[%],\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -6882,7 +6896,7 @@ gmic image.jpg repeat 300 circle {u(100)}%,{u(100)}%,{u(30)},0.3,${-rgb} done ci
 
 ## Arguments:
 
-* 0<=_endpoint_rate<=100,_endpoint_connectivity>=0,_spline_distmax>=0,_segment_distmax>=0,0<=_spline_anglemax<=180,_spline_roundness>=0,_area_min>=0,_allow_self_intersection={ 0:No | 1:Yes }
+- 0<=\_endpoint_rate<=100,\_endpoint_connectivity>=0,\_spline_distmax>=0,\_segment_distmax>=0,0<=\_spline_anglemax<=180,\_spline_roundness>=0,\_area_min>=0,\_allow_self_intersection={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -6898,7 +6912,7 @@ endpoint_rate=75, endpoint_connectivity=2, spline_distmax=80, segment_distmax=20
 
 ## Arguments:
 
-* [xy_coordinates],_thickness>0,_tilt,_tilt_strength[%],_is_closed={ 0:No | 1:Yes },_opacity,_color1,...
+- [xy_coordinates],\_thickness>0,\_tilt,\_tilt_strength[%],\_is_closed={ 0:No | 1:Yes },\_opacity,\_color1,...
 
 ## Description:
 
@@ -6928,13 +6942,13 @@ gmic image.jpg srand 3 16,1,1,4,u s. c,2 rbf[-2,-1] 1000,0,1 n[-2] 10,{w#0-10} n
 
 # Command: ellipse
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* x[%],y[%],R[%],r[%],_angle,_opacity,_pattern,_color1,...
+- x[%],y[%],R[%],r[%],\_angle,\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -6957,13 +6971,13 @@ gmic image.jpg repeat 300 ellipse {u(100)}%,{u(100)}%,{u(30)},{u(30)},{u(180)},0
 
 # Command: flood
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* x[%],_y[%],_z[%],_tolerance>=0,_is_high_connectivity={ 0:No | 1:Yes },_opacity,_color1,...
+- x[%],\_y[%],\_z[%],\_tolerance>=0,\_is_high_connectivity={ 0:No | 1:Yes },\_opacity,\_color1,...
 
 ## Description:
 
@@ -6983,7 +6997,7 @@ gmic image.jpg repeat 1000 flood {u(100)}%,{u(100)}%,0,20,0,1,${-rgb} done
 
 ## Arguments:
 
-* _sigma1[%],_sigma2[%],_angle
+- \_sigma1[%],\_sigma2[%],\_angle
 
 ## Description:
 
@@ -7005,7 +7019,7 @@ gmic 400,400 gaussian 100,30,45
 
 ## Arguments:
 
-* [function_image],_plot_type,_vertex_type,_ytop,_ybottom,_opacity,_pattern,_color1,...
+- [function_image],\_plot_type,\_vertex_type,\_ytop,\_ybottom,\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -7032,7 +7046,7 @@ gmic image.jpg +rows 50% blur[-1] 3 split[-1] c div[0] 1.5 graph[0] [1],2,0,0,0,
 
 ## Arguments:
 
-* size_x[%]>=0,size_y[%]>=0,_offset_x[%],_offset_y[%],_opacity,_pattern,_color1,...
+- size_x[%]>=0,size_y[%]>=0,\_offset_x[%],\_offset_y[%],\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -7063,19 +7077,19 @@ gmic 400,400,1,3,255 grid 10%,10%,0,0,0.3,0xCCCCCCCC,128,32,16
 
 # Command: image
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [sprite],_x[%|~],_y[%|~],_z[%|~],_c[%|~],_opacity,_[opacity_mask],_max_opacity_mask
+- [sprite],_x[%|~],\_y[%|~],\_z[%|~],\_c[%|~],\_opacity,_[opacity_mask],\_max_opacity_mask
 
 ## Description:
 
 Draw specified sprite on selected images.
 
-(*equivalent to shortcut command* j).
+(_equivalent to shortcut command_ j).
 
 If one of the x,y,z or c argument ends with a ~, its value is expected to be
 a centering ratio (in [0,1]) rather than a position.
@@ -7095,13 +7109,13 @@ gmic image.jpg +crop 40%,40%,60%,60% resize[-1] 200%,200%,1,3,5 frame[-1] xy,2,0
 
 ## Arguments:
 
-* [sprite],_x[%|~],_y[%|~],_z[%|~],_c[%|~],_opacity
+- [sprite],\_x[%|~],\_y[%|~],\_z[%|~],\_c[%|~],\_opacity
 
 ## Description:
 
 Draw specified sprite on selected images, considering that the sprite's last channel is the drawing's alpha.
 
-(*equivalent to shortcut command* ja).
+(_equivalent to shortcut command_ ja).
 
 If one of the x,y,z or c argument ends with a ~, its value is expected to be
 a centering ratio (in [0,1]) rather than a position.
@@ -7115,13 +7129,13 @@ x=y=z=c=0 and opacity=1.
 
 # Command: line
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,...
+- x0[%],y0[%],x1[%],y1[%],\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -7144,7 +7158,7 @@ gmic image.jpg repeat 500 line 50%,50%,{u(w)},{u(h)},0.5,${-rgb} done line 0,0,1
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],_opacity,_color1,...
+- x0[%],y0[%],x1[%],y1[%],\_opacity,\_color1,...
 
 ## Description:
 
@@ -7164,7 +7178,7 @@ gmic 512,512,1,3 repeat 100 line_aa {v([w,h,w,h])-1},1,${-rgb} done
 
 ## Arguments:
 
-* x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],_opacity,_color1,...
+- x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],\_opacity,\_color1,...
 
 ## Description:
 
@@ -7184,7 +7198,7 @@ gmic image.jpg repeat 30 { spline {u(100)}%,{u(100)}%,{u(-600,600)},{u(-600,600)
 
 ## Arguments:
 
-* x[%],y[%],R[%],_thickness>=0,_opacity,_color1,...
+- x[%],y[%],R[%],\_thickness>=0,\_opacity,\_color1,...
 
 ## Description:
 
@@ -7204,7 +7218,7 @@ gmic 400,400 repeat 15 { R:=lerp(10,190,$%) thickcircle 200,200,$R,2,1,$R } n 0,
 
 ## Arguments:
 
-* x[%],y[%],R[%],r[%],_angle,_thickness>=0,_opacity,_color1,...
+- x[%],y[%],R[%],r[%],\_angle,\_thickness>=0,\_opacity,\_color1,...
 
 ## Description:
 
@@ -7224,7 +7238,7 @@ gmic image.jpg repeat 300 thickellipse {u(100)}%,{u(100)}%,{u(50)},{u(50)},{u(18
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],_thickness,_opacity,_color1
+- x0[%],y0[%],x1[%],y1[%],\_thickness,\_opacity,\_color1
 
 ## Description:
 
@@ -7244,8 +7258,8 @@ gmic 400,400,1,3 repeat 100 thickline {u([w,h,w,h,5])},0.5,${-rgb} done
 
 ## Arguments:
 
-* N>=1,x1[%],y1[%],...,xN[%],yN[%],_thickness>=0,_opacity,_color1,...    or
-* [coords],_thickness>=0,_opacity,_color1,...
+- N>=1,x1[%],y1[%],...,xN[%],yN[%],\_thickness>=0,\_opacity,\_color1,...    or
+- [coords],\_thickness>=0,\_opacity,\_color1,...
 
 ## Description:
 
@@ -7277,7 +7291,7 @@ gmic image.jpg 2,16,1,1,'u(x?h#0:w#0)' thickpolygon[-2] [-1],5,1,255,0,255 remov
 
 ## Arguments:
 
-* x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],_thickness,_opacity,_color1,...
+- x0[%],y0[%],u0[%],v0[%],x1[%],y1[%],u1[%],v1[%],\_thickness,\_opacity,\_color1,...
 
 ## Description:
 
@@ -7297,7 +7311,7 @@ gmic image.jpg repeat 30 { thickspline {u(100)}%,{u(100)}%,{u(-600,600)},{u(-600
 
 ## Arguments:
 
-* z0r,z0i,z1r,z1i,_iteration_max>=0,_is_julia={ 0:No | 1:Yes },_c0r,_c0i,_opacity
+- z0r,z0i,z1r,z1i,\_iteration_max>=0,\_is_julia={ 0:No | 1:Yes },\_c0r,\_c0i,\_opacity
 
 ## Description:
 
@@ -7317,7 +7331,7 @@ gmic 400,400 mandelbrot -2.5,-2,2,2,1024 map 0 +blur 2 elevation3d[-1] -0.2
 
 ## Arguments:
 
-* _image_weight,_pattern_weight,_angle,_amplitude,_sharpness>=0,_anisotropy>=0,_alpha,_sigma,_cut_low>=0,_cut_high>=0
+- \_image_weight,\_pattern_weight,\_angle,\_amplitude,\_sharpness>=0,\_anisotropy>=0,\_alpha,\_sigma,\_cut_low>=0,\_cut_high>=0
 
 ## Description:
 
@@ -7339,7 +7353,7 @@ gmic image.jpg +marble ,
 
 ## Arguments:
 
-* _width>0,_height>0,_cell_size>0
+- \_width>0,\_height>0,\_cell_size>0
 
 ## Description:
 
@@ -7355,7 +7369,7 @@ gmic maze 30,20 negate normalize 0,255
 
 ## Arguments:
 
-* _cellsize>0
+- \_cellsize>0
 
 ## Description:
 
@@ -7373,7 +7387,7 @@ gmic 0 text "G'MIC",0,0,53,1,1 dilate 3 autocrop 0 frame xy,1,0 maze_mask 8 dila
 
 ## Arguments:
 
-* z0r,z0i,z1r,z1i,_angle,0<=_descent_method<=2,_iteration_max>=0,_convergence_precision>0,_expr_p(z),_expr_dp(z),_expr_d2p(z)
+- z0r,z0i,z1r,z1i,\_angle,0<=\_descent_method<=2,\_iteration_max>=0,\_convergence_precision>0,\_expr_p(z),\_expr_dp(z),\_expr_d2p(z)
 
 ## Description:
 
@@ -7396,7 +7410,7 @@ gmic 400,400 newton_fractal -1.5,-1.5,1.5,1.5,0,2,200,0.01,"z^^6 + z^^3 - 1","6*
 
 ## Arguments:
 
-* [sprite_set],_nb_scales>=1,0<_min_scale<=100,_allow_rotation={ 0:None | 1:180 deg. | 2:90 deg. | 3:Any },_spacing,_max_attempts>0
+- [sprite_set],\_nb_scales>=1,0<\_min_scale<=100,\_allow_rotation={ 0:None | 1:180 deg. | 2:90 deg. | 3:Any },\_spacing,\_max_attempts>0
 
 ## Description:
 
@@ -7428,7 +7442,7 @@ gmic shape_heart 512 negate normalize 0,255 channels -3,0 repeat 2 { ball 48,${-
 
 ## Arguments:
 
-* label_height>=0,label_R,label_G,label_B,"label1",value1,R1,G1,B1,...,"labelN",valueN,RN,GN,BN
+- label_height>=0,label_R,label_G,label_B,"label1",value1,R1,G1,B1,...,"labelN",valueN,RN,GN,BN
 
 ## Description:
 
@@ -7444,7 +7458,7 @@ gmic image.jpg piechart 25,0,0,0,"Red",55,255,0,0,"Green",40,0,255,0,"Blue",30,1
 
 ## Arguments:
 
-* _alpha,_beta,_scale>=0
+- \_alpha,\_beta,\_scale>=0
 
 ## Description:
 
@@ -7466,13 +7480,13 @@ gmic 400,400,1,3 plasma 1
 
 # Command: point
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* x[%],_y[%],_z[%],_opacity,_color1,...
+- x[%],\_y[%],\_z[%],\_opacity,\_color1,...
 
 ## Description:
 
@@ -7492,7 +7506,7 @@ gmic image.jpg repeat 10000 point {u(100)}%,{u(100)}%,0,1,${-rgb} done
 
 ## Arguments:
 
-* diameter>=0,_density,_offset1,_offset2,_angle,_aliasing,_shading,_opacity,_color,...
+- diameter>=0,\_density,\_offset1,\_offset2,\_angle,\_aliasing,\_shading,\_opacity,\_color,...
 
 ## Description:
 
@@ -7510,14 +7524,14 @@ gmic image.jpg polka_dots 10,15,0,0,20,10,1,0.5,0,128,255
 
 # Command: polygon
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* N>=1,x1[%],y1[%],...,xN[%],yN[%],_opacity,_pattern,_color1,...    or
-* [coords],_opacity,_pattern,_color1,...
+- N>=1,x1[%],y1[%],...,xN[%],yN[%],\_opacity,\_pattern,\_color1,...    or
+- [coords],\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -7552,7 +7566,7 @@ gmic image.jpg 2,16,1,1,'u(x?h#0:w#0)' polygon[-2] [-1],0.6,255,0,255 remove[-1]
 
 ## Arguments:
 
-* [function_image],_sampling[%]>0,_factor>=0,_is_arrow={ 0:No | 1:Yes },_opacity,_color1,...
+- [function_image],\_sampling[%]>0,\_factor>=0,\_is_arrow={ 0:No | 1:Yes },\_opacity,\_color1,...
 
 ## Description:
 
@@ -7584,7 +7598,7 @@ gmic image.jpg +rescale2d ,600 luminance[0] gradient[0] mul[1] -1 reverse[0,1] a
 
 ## Arguments:
 
-* x0[%],y0[%],x1[%],y1[%],_opacity,_pattern,_color1,...
+- x0[%],y0[%],x1[%],y1[%],\_opacity,\_pattern,\_color1,...
 
 ## Description:
 
@@ -7608,7 +7622,7 @@ gmic image.jpg repeat 30 { rectangle {u(100)}%,{u(100)}%,{u(100)}%,{u(100)}%,0.3
 
 ## Arguments:
 
-* 'smoothness[%]>=0','mirroring={ 0:None | 1:X | 2:Y | 3:XY }
+- 'smoothness[%]>=0','mirroring={ 0:None | 1:X | 2:Y | 3:XY }
 
 ## Description:
 
@@ -7628,7 +7642,7 @@ gmic 400,400 rorschach 3%
 
 ## Arguments:
 
-* recursion_level>=0
+- recursion_level>=0
 
 ## Description:
 
@@ -7648,7 +7662,7 @@ gmic image.jpg sierpinski 7
 
 ## Arguments:
 
-* width>0,_height>0,_is_2dcoords={ 0:No | 1:Yes }
+- width>0,\_height>0,\_is_2dcoords={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -7678,7 +7692,7 @@ gmic image.jpg spiralbw {[w,h]},1 +warp[0] [1],0,1,1 +warp[2] [1],2,1,1
 
 ## Arguments:
 
-* x0,y0,z0,x1,y1,z1,x2,y2,z2,x3,y3,z3,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,...,R3,G3,B3,...
+- x0,y0,z0,x1,y1,z1,x2,y2,z2,x3,y3,z3,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,...,R3,G3,B3,...
 
 ## Description:
 
@@ -7688,19 +7702,19 @@ Draw tetraedron with interpolated colors on selected (volumetric) images.
 
 # Command: text
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* text,_x[%|~],_y[%|~],_{ font_height[%]>=0 | custom_font },_opacity,_color1,...
+- text,_x[%|~],\_y[%|~],_{ font_height[%]>=0 | custom_font },\_opacity,\_color1,...
 
 ## Description:
 
 Draw specified colored text string on selected images.
 
-(*equivalent to shortcut command* t).
+(_equivalent to shortcut command_ t).
 
 If one of the x or y argument ends with a ~, its value is expected to be a centering ratio (in [0,1]) rather than a position.
 Usual centering ratio are { 0:left-justified | 0.5:centered | 1:right-justified }.
@@ -7732,7 +7746,7 @@ gmic 0 text "G'MIC",0,0,23,1,255
 
 ## Arguments:
 
-* text,_x[%|~],_y[%|~],{ _font_height[%]>0 | custom_font },_outline>=0,_opacity,_color1,...
+- text,\_x[%|~],\_y[%|~],{ \_font_height[%]>0 | custom_font },\_outline>=0,\_opacity,\_color1,...
 
 ## Description:
 
@@ -7756,7 +7770,7 @@ gmic image.jpg text_outline "Hi there!",10,10,63,3
 
 ## Arguments:
 
-* x0,y0,x1,y1,x2,y2,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,...
+- x0,y0,x1,y1,x2,y2,R0,G0,B0,...,R1,G1,B1,...,R2,G2,B2,...
 
 ## Description:
 
@@ -7772,7 +7786,7 @@ gmic image.jpg triangle_shade 20,20,400,100,120,200,255,0,0,0,255,0,0,0,255
 
 ## Arguments:
 
-* _scale>0,_radius>=0,_pattern_type={ 0:Straight | 1:Curved }
+- \_scale>0,\_radius>=0,\_pattern_type={ 0:Straight | 1:Curved }
 
 ## Description:
 
@@ -7792,7 +7806,7 @@ gmic 400,300 truchet ,
 
 ## Arguments:
 
-* _radius>0,_octaves={ 1,2,3...,12 },_alpha>0,_difference={ -10,10 },_mode={ 0,1,2,3 }
+- \_radius>0,\_octaves={ 1,2,3...,12 },\_alpha>0,\_difference={ -10,10 },\_mode={ 0,1,2,3 }
 
 ## Description:
 
@@ -7812,7 +7826,7 @@ gmic 400,400,1,3 turbulence 16
 
 # Command: yinyang
 
-### No argumentsDescription:Draw a yin-yang symbol on selected images. ``` gmic 400,400 yinyang ```
+### No argumentsDescription:Draw a yin-yang symbol on selected images. `gmic 400,400 yinyang`
 
 ---
 
@@ -7820,7 +7834,7 @@ gmic 400,400,1,3 turbulence 16
 
 ## Arguments:
 
-* _min_box_size>=1,_max_box_size>=0,_initial_density>=0,_min_spacing>0
+- \_min_box_size>=1,\_max_box_size>=0,\_initial_density>=0,\_min_spacing>0
 
 ## Description:
 
@@ -7842,7 +7856,7 @@ gmic image.jpg boxfitting ,
 
 ## Arguments:
 
-* [brush],_brush_nb_sizes>=1,0<=_brush_min_size_factor<=1,_brush_nb_orientations>=1,_brush_light_type,0<=_brush_light_strength<=1,_brush_opacity,_painting_density[%]>=0,0<=_painting_contours_coherence<=1,0<=_painting_orientation_coherence<=1,_painting_coherence_alpha[%]>=0,_painting_coherence_sigma[%]>=0,_painting_primary_angle,0<=_painting_angle_dispersion<=1
+- [brush],\_brush_nb_sizes>=1,0<=\_brush_min_size_factor<=1,\_brush_nb_orientations>=1,\_brush_light_type,0<=\_brush_light_strength<=1,\_brush_opacity,\_painting_density[%]>=0,0<=\_painting_contours_coherence<=1,0<=\_painting_orientation_coherence<=1,\_painting_coherence_alpha[%]>=0,\_painting_coherence_sigma[%]>=0,\_painting_primary_angle,0<=\_painting_angle_dispersion<=1
 
 ## Description:
 
@@ -7864,7 +7878,7 @@ gmic image.jpg 40,40 gaussian[-1] 10,4 spread[-1] 10,0 brushify[0] [1],1
 
 ## Arguments:
 
-* _smoothness,_sharpening,_threshold>=0,_thickness>=0,_color>=0,quantization>0
+- \_smoothness,\_sharpening,\_threshold>=0,\_thickness>=0,\_color>=0,quantization>0
 
 ## Description:
 
@@ -7884,7 +7898,7 @@ gmic image.jpg cartoon 3,50,10,0.25,3,16
 
 ## Arguments:
 
-* _count>0,_radius>=0,_opacity>=0
+- \_count>0,\_radius>=0,\_opacity>=0
 
 ## Description:
 
@@ -7904,7 +7918,7 @@ gmic image.jpg +color_ellipses ,,0.15
 
 ## Arguments:
 
-* _density>=0,0<=_thickness<=50,_max_angle,_opacity,_smoothness>=0
+- \_density>=0,0<=\_thickness<=50,\_max_angle,\_opacity,\_smoothness>=0
 
 ## Description:
 
@@ -7924,7 +7938,7 @@ gmic image.jpg cubism ,
 
 ## Arguments:
 
-* _amplitude>=0
+- \_amplitude>=0
 
 ## Description:
 
@@ -7944,7 +7958,7 @@ gmic image.jpg draw_whirl ,
 
 ## Arguments:
 
-* _offset_x[%],_offset_y[%],_smoothness[%]>=0,curvature_x>=0,curvature_y>=0,_expand_size={ 0:No | 1:Yes },_output_separate_layers={ 0:No | 1:Yes }
+- \_offset_x[%],\_offset_y[%],\_smoothness[%]>=0,curvature_x>=0,curvature_y>=0,\_expand_size={ 0:No | 1:Yes },\_output_separate_layers={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -7964,7 +7978,7 @@ gmic image.jpg drop_shadow 10,20,5,0.5 display_rgba
 
 ## Arguments:
 
-* _offset_x[%],_offset_y[%],_smoothness[%]>=0,curvature_x>=0,curvature_y>=0,_expand_size={ 0:No | 1:Yes },_output_separate_layers={ 0:No | 1:Yes }
+- \_offset_x[%],\_offset_y[%],\_smoothness[%]>=0,curvature_x>=0,curvature_y>=0,\_expand_size={ 0:No | 1:Yes },\_output_separate_layers={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -7984,7 +7998,7 @@ gmic image.jpg drop_shadow 10,20,5,0.5 display_rgba
 
 ## Arguments:
 
-* _R[%]>0,_r[%]>0,_smoothness[%]>=0,_opacity,_outline>0,_density>0
+- \_R[%]>0,\_r[%]>0,\_smoothness[%]>=0,\_opacity,\_outline>0,\_density>0
 
 ## Description:
 
@@ -8004,7 +8018,7 @@ gmic image.jpg ellipsionism ,
 
 ## Arguments:
 
-* _edges>=0,0<=_attenuation<=1,_smoothness>=0,_threshold>=0,_nb_frames>0,_starting_frame>=0,frame_skip>=0
+- \_edges>=0,0<=\_attenuation<=1,\_smoothness>=0,\_threshold>=0,\_nb_frames>0,\_starting_frame>=0,frame_skip>=0
 
 ## Description:
 
@@ -8024,7 +8038,7 @@ gmic image.jpg fire_edges ,
 
 ## Arguments:
 
-* 0<=detail_level<=1
+- 0<=detail_level<=1
 
 ## Description:
 
@@ -8044,7 +8058,7 @@ gmic image.jpg fractalize ,
 
 ## Arguments:
 
-* _amplitude>=0
+- \_amplitude>=0
 
 ## Description:
 
@@ -8064,7 +8078,7 @@ gmic image.jpg glow ,
 
 ## Arguments:
 
-* nb_levels>=2,_size_dark>=2,_size_bright>=2,_shape={ 0:Square | 1:Diamond | 2:Circle | 3:inv-square | 4:inv-diamond | 5:inv-circle },_smoothness[%]>=0
+- nb_levels>=2,\_size_dark>=2,\_size_bright>=2,\_shape={ 0:Square | 1:Diamond | 2:Circle | 3:inv-square | 4:inv-diamond | 5:inv-circle },\_smoothness[%]>=0
 
 ## Description:
 
@@ -8084,7 +8098,7 @@ gmic image.jpg halftone ,
 
 ## Arguments:
 
-* _amplitude>=0,_density>=0,_opacity,0<=_edge_threshold<=100,_is_fast={ 0:No | 1:Yes }
+- \_amplitude>=0,\_density>=0,\_opacity,0<=\_edge_threshold<=100,\_is_fast={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8104,7 +8118,7 @@ gmic image.jpg +hardsketchbw 200,70,0.1,10 median[-1] 2 +local reverse blur[-1] 
 
 ## Arguments:
 
-* _density>=0
+- \_density>=0
 
 ## Description:
 
@@ -8124,7 +8138,7 @@ gmic image.jpg hearts ,
 
 ## Arguments:
 
-* _density>=0,_radius>0,0<=_threshold<=100,0<=_opacity<=1,_votesize[%]>0
+- \_density>=0,\_radius>0,0<=\_threshold<=100,0<=\_opacity<=1,\_votesize[%]>0
 
 ## Description:
 
@@ -8144,7 +8158,7 @@ gmic image.jpg +houghsketchbw ,
 
 ## Arguments:
 
-* 100<=_density<=0,_center_x[%],_center_y[%],_ray_length>=0,_ray_attenuation>=0
+- 100<=\_density<=0,\_center_x[%],\_center_y[%],\_ray_length>=0,\_ray_attenuation>=0
 
 ## Description:
 
@@ -8164,7 +8178,7 @@ gmic image.jpg +lightrays , + cut 0,255
 
 ## Arguments:
 
-* _ambient_light,_specular_lightness,_specular_size,_darkness,_light_smoothness,_xl,_yl,_zl,_zscale,_opacity_is_heightmap={ 0:No | 1:Yes }
+- \_ambient_light,\_specular_lightness,\_specular_size,\_darkness,\_light_smoothness,\_xl,\_yl,\_zl,\_zscale,\_opacity_is_heightmap={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8183,7 +8197,7 @@ gmic image.jpg blur 2 light_relief 0.3,4,0.1,0
 
 ## Arguments:
 
-* 0<=_density<=100,_spreading>=0,_resolution[%]>0,_line_opacity>=0,_line_precision>0,_mode={ 0:Subtractive | 1:Additive }
+- 0<=\_density<=100,\_spreading>=0,\_resolution[%]>0,\_line_opacity>=0,\_line_precision>0,\_mode={ 0:Subtractive | 1:Additive }
 
 ## Description:
 
@@ -8205,7 +8219,7 @@ gmic image.jpg linify 60
 
 ## Arguments:
 
-* 0<=_density<=100
+- 0<=\_density<=100
 
 ## Description:
 
@@ -8223,7 +8237,7 @@ gmic image.jpg mosaic , +fill "I!=J(1) || I!=J(0,1)?[0,0,0]:I"
 
 # Command: old_photo
 
-### No argumentsDescription:Apply old photo effect on selected images. ``` gmic image.jpg old_photo ```
+### No argumentsDescription:Apply old photo effect on selected images. `gmic image.jpg old_photo`
 
 ---
 
@@ -8231,7 +8245,7 @@ gmic image.jpg mosaic , +fill "I!=J(1) || I!=J(0,1)?[0,0,0]:I"
 
 ## Arguments:
 
-* _size>=0,_amplitude>=0
+- \_size>=0,\_amplitude>=0
 
 ## Description:
 
@@ -8251,7 +8265,7 @@ gmic image.jpg pencilbw ,
 
 ## Arguments:
 
-* _ordering={ +:Increasing | -:Decreasing },_axis={ x | y | z | xy | yx },_[sorting_criterion],_[mask]
+- _ordering={ +:Increasing | -:Decreasing },\_axis={ x | y | z | xy | yx },_[sorting_criterion],\_[mask]
 
 ## Description:
 
@@ -8273,7 +8287,7 @@ gmic image.jpg +norm +ge[-1] 30% +pixelsort[0] +,y,[1],[2]
 
 ## Arguments:
 
-* _size1>=0,_size2>=0
+- \_size1>=0,\_size2>=0
 
 ## Description:
 
@@ -8293,7 +8307,7 @@ gmic image.jpg to_rgba polaroid 5,30 rotate 20 drop_shadow , drgba
 
 ## Arguments:
 
-* _warp_amplitude>=0,_smoothness[%]>=0,_min_area[%]>=0,_resolution_x[%]>0,_resolution_y[%]>0
+- \_warp_amplitude>=0,\_smoothness[%]>=0,\_min_area[%]>=0,\_resolution_x[%]>0,\_resolution_y[%]>0
 
 ## Description:
 
@@ -8313,7 +8327,7 @@ gmic image.jpg +polygonize 100,10 fill[-1] "I!=J(1) || I!=J(0,1)?[0,0,0]:I"
 
 ## Arguments:
 
-* 0<=_edge_threshold<=100,0<=_edge_shade<=100,_edge_thickness>=0,_edge_antialiasing>=0,0<=_posterization_level<=15,_posterization_antialiasing>=0
+- 0<=\_edge_threshold<=100,0<=\_edge_shade<=100,\_edge_thickness>=0,\_edge_antialiasing>=0,0<=\_posterization_level<=15,\_posterization_antialiasing>=0
 
 ## Description:
 
@@ -8333,7 +8347,7 @@ gmic image.jpg poster_edges ,
 
 ## Arguments:
 
-* _smoothness>=0
+- \_smoothness>=0
 
 ## Description:
 
@@ -8353,7 +8367,7 @@ gmic image.jpg poster_hope ,
 
 ## Arguments:
 
-* 0<=_amplitude<=100,_0<=thickness<=100,_sharpness>=0,_nb_orientations>0,_offset,_color_mode={ 0:Darker | 1:Brighter }
+- 0<=\_amplitude<=100,\_0<=thickness<=100,\_sharpness>=0,\_nb_orientations>0,\_offset,\_color_mode={ 0:Darker | 1:Brighter }
 
 ## Description:
 
@@ -8383,7 +8397,7 @@ gmic image.jpg normalize_local 10,16 rodilius 10,4,400,16 smooth 60,0,1,1,4 norm
 
 ## Arguments:
 
-* _nb_angles>0,_start_angle,_angle_range>=0,_length>=0,_threshold>=0,_opacity,_bgfactor>=0,_density>0,_sharpness>=0,_anisotropy>=0,_smoothness>=0,_coherence>=0,_is_boost={ 0:No | 1:Yes },_is_curved={ 0:No | 1:Yes }
+- \_nb_angles>0,\_start_angle,\_angle_range>=0,\_length>=0,\_threshold>=0,\_opacity,\_bgfactor>=0,\_density>0,\_sharpness>=0,\_anisotropy>=0,\_smoothness>=0,\_coherence>=0,\_is_boost={ 0:No | 1:Yes },\_is_curved={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8403,7 +8417,7 @@ gmic image.jpg +sketchbw 1 reverse blur[-1] 3 blend[-2,-1] overlay
 
 ## Arguments:
 
-* _size>0
+- \_size>0
 
 ## Description:
 
@@ -8423,7 +8437,7 @@ gmic image.jpg sponge ,
 
 ## Arguments:
 
-* _edges[%]>=0, shading>=0, is_thin_separators={ 0:No | 1:Yes }
+- \_edges[%]>=0, shading>=0, is_thin_separators={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8443,7 +8457,7 @@ gmic image.jpg stained_glass 20%,1 cut 0,20
 
 ## Arguments:
 
-* _density[%]>=0,_depth>=0,_size>0,_nb_branches>=1,0<=_thickness<=1,_smoothness[%]>=0,_R,_G,_B,_opacity
+- \_density[%]>=0,\_depth>=0,\_size>0,\_nb_branches>=1,0<=\_thickness<=1,\_smoothness[%]>=0,\_R,\_G,\_B,\_opacity
 
 ## Description:
 
@@ -8463,7 +8477,7 @@ gmic image.jpg stars ,
 
 ## Arguments:
 
-* _radius[%]>=0,_smoothness>=0,_iterations>=0
+- \_radius[%]>=0,\_smoothness>=0,\_iterations>=0
 
 ## Description:
 
@@ -8483,7 +8497,7 @@ gmic image.jpg +norm stencil. 2,1,4 +mul rm[0]
 
 ## Arguments:
 
-* _edges>=0,_smoothness>=0
+- \_edges>=0,\_smoothness>=0
 
 ## Description:
 
@@ -8503,7 +8517,7 @@ gmic image.jpg +stencilbw 40,4
 
 ## Arguments:
 
-* [style_image],_fidelity_finest,_fidelity_coarsest,_fidelity_smoothness_finest>=0,_fidelity_smoothnes_coarsest>=0,0<=_fidelity_chroma<=1,_init_type,_init_resolution>=0,init_max_gradient>=0,_patch_size_analysis>0,_patch_size_synthesis>0,_patch_size_synthesis_final>0,_nb_matches_finest>=0,_nb_matches_coarsest>=0,_penalize_repetitions>=0,_matching_precision>=0,_scale_factor>1,_skip_finest_scales>=0,_"image_matching_command"
+- [style_image],_fidelity_finest,\_fidelity_coarsest,\_fidelity_smoothness_finest>=0,\_fidelity_smoothnes_coarsest>=0,0<=\_fidelity_chroma<=1,\_init_type,\_init_resolution>=0,init_max_gradient>=0,\_patch_size_analysis>0,\_patch_size_synthesis>0,\_patch_size_synthesis_final>0,\_nb_matches_finest>=0,\_nb_matches_coarsest>=0,\_penalize_repetitions>=0,\_matching_precision>=0,\_scale_factor>1,\_skip_finest_scales>=0,_"image_matching_command"
 
 ## Description:
 
@@ -8522,7 +8536,7 @@ fidelity_finest=0.5, fidelity_coarsest=2, fidelity_smoothness_finest=3, fidelity
 
 ## Arguments:
 
-* _scale>0
+- \_scale>0
 
 ## Description:
 
@@ -8542,7 +8556,7 @@ gmic image.jpg +tetris 10
 
 ## Arguments:
 
-* _M>0,_N>0,_smoothness>=0,_color>=0
+- \_M>0,\_N>0,\_smoothness>=0,\_color>=0
 
 ## Description:
 
@@ -8562,7 +8576,7 @@ gmic image.jpg warhol 3,3,3,40
 
 ## Arguments:
 
-* _density>=0,0<=_thickness<=100,0<=_shadow<=100,_shading>=0,_fibers_amplitude>=0,_fibers_smoothness>=0,_angle,-1<=_x_curvature<=1,-1<=_y_curvature<=1
+- \_density>=0,0<=\_thickness<=100,0<=\_shadow<=100,\_shading>=0,\_fibers_amplitude>=0,\_fibers_smoothness>=0,\_angle,-1<=\_x_curvature<=1,-1<=\_y_curvature<=1
 
 ## Description:
 
@@ -8572,7 +8586,7 @@ angle can be { 0:0 deg. | 1:22.5 deg. | 2:45 deg. | 3:67.5 deg. }.
 
 ## Default values:
 
-density=6, thickness=65, shadow=40, shading=0.5, fibers_amplitude=0, _'fibers_smoothness=0', angle=0 and curvature_x=curvature_y=0
+density=6, thickness=65, shadow=40, shading=0.5, fibers*amplitude=0, *'fibers_smoothness=0', angle=0 and curvature_x=curvature_y=0
 
 ```
 gmic image.jpg weave ,
@@ -8584,7 +8598,7 @@ gmic image.jpg weave ,
 
 ## Arguments:
 
-* _texture>=0,_smoothness>=0,_darkness>=0,_lightness>=0
+- \_texture>=0,\_smoothness>=0,\_darkness>=0,\_lightness>=0
 
 ## Description:
 
@@ -8604,7 +8618,7 @@ gmic image.jpg whirls ,
 
 ## Arguments:
 
-* _amplitude[%]>=0,_interpolation
+- \_amplitude[%]>=0,\_interpolation
 
 ## Description:
 
@@ -8626,7 +8640,7 @@ gmic image.jpg +deform[0] 10 +deform[0] 20
 
 ## Arguments:
 
-* _center_x[%],_center_y[%],_stretch_factor>0,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_center_x[%],\_center_y[%],\_stretch_factor>0,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8652,7 +8666,7 @@ gmic image.jpg +euclidean2polar ,
 
 ## Arguments:
 
-* _center_x,_center_y,0<=_radius<=100,_amplitude>=0
+- \_center_x,\_center_y,0<=\_radius<=100,\_amplitude>=0
 
 ## Description:
 
@@ -8672,7 +8686,7 @@ gmic image.jpg +fisheye ,
 
 ## Arguments:
 
-* _amplitude,_frequency,_offset_r[%],_angle,_center_x[%],_center_y[%],_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_amplitude,\_frequency,\_offset_r[%],\_angle,\_center_x[%],\_center_y[%],\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8692,7 +8706,7 @@ gmic image.jpg +flower ,
 
 ## Arguments:
 
-* _center_x[%],_center_y[%],_radius,_angle,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_center_x[%],\_center_y[%],\_radius,\_angle,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8712,7 +8726,7 @@ gmic image.jpg kaleidoscope ,
 
 ## Arguments:
 
-* _width>0,_height>0,_radius,_dilation>0,_fading>=0,_fading_power>=0
+- \_width>0,\_height>0,\_radius,\_dilation>0,\_fading>=0,\_fading_power>=0
 
 ## Description:
 
@@ -8738,7 +8752,7 @@ gmic image.jpg map_sphere ,
 
 ## Arguments:
 
-* _center_x[%],_center_y[%],_stretch_factor>0,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_center_x[%],\_center_y[%],\_stretch_factor>0,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8758,7 +8772,7 @@ gmic image.jpg +euclidean2polar ,
 
 ## Arguments:
 
-* _amplitude,_density>=0,_wavelength>=0,_merging_steps>=0
+- \_amplitude,\_density>=0,\_wavelength>=0,\_merging_steps>=0
 
 ## Description:
 
@@ -8778,7 +8792,7 @@ gmic image.jpg +raindrops ,
 
 ## Arguments:
 
-* _amplitude,_bandwidth,_shape={ 0:Block | 1:Triangle | 2:Sine | 3:Sine+ | 4:Random },_angle,_offset
+- \_amplitude,\_bandwidth,\_shape={ 0:Block | 1:Triangle | 2:Sine | 3:Sine+ | 4:Random },\_angle,\_offset
 
 ## Description:
 
@@ -8798,7 +8812,7 @@ gmic image.jpg +ripple ,
 
 ## Arguments:
 
-* _center_x[%],_center_y[%],_tiles>0,_smoothness[%]>=0,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_center_x[%],\_center_y[%],\_tiles>0,\_smoothness[%]>=0,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8818,7 +8832,7 @@ gmic image.jpg +rotoidoscope ,
 
 ## Arguments:
 
-* _radius[%]>=0,_strength,_smoothness[%]>=0,_center_x[%],_center_y[%],_ratio_x/y>0,_angle,_interpolation
+- \_radius[%]>=0,\_strength,\_smoothness[%]>=0,\_center_x[%],\_center_y[%],\_ratio_x/y>0,\_angle,\_interpolation
 
 ## Description:
 
@@ -8838,7 +8852,7 @@ gmic image.jpg grid 5%,5%,0,0,0.6,255 spherize ,
 
 ## Arguments:
 
-* _x[%],_y[%],_angle,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror },_is_antisymmetry={ 0:No | 1:Yes },_swap_sides={ 0:No | 1:Yes }
+- \_x[%],\_y[%],\_angle,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror },\_is_antisymmetry={ 0:No | 1:Yes },\_swap_sides={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8858,7 +8872,7 @@ gmic image.jpg +symmetrize 50%,50%,45 +symmetrize[-1] 50%,50%,-45
 
 ## Arguments:
 
-* "expr_radius",_"expr_angle",_center_x[%],_center_y[%],_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- "expr*radius",*"expr_angle",\_center_x[%],\_center_y[%],\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8878,7 +8892,7 @@ gmic image.jpg +transform_polar[0] R*(r/R)^2,a +transform_polar[0] r,2*a
 
 ## Arguments:
 
-* _amplitude,_center_x[%],_center_y[%],_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_amplitude,\_center_x[%],\_center_y[%],\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8896,13 +8910,13 @@ gmic image.jpg twirl 0.6
 
 # Command: warp
 
-|  |  |
-| --- | --- |
-|  | Built-in command |
+|     |                  |
+| --- | ---------------- |
+|     | Built-in command |
 
 ## Arguments:
 
-* [warping_field],_mode,_interpolation,_boundary_conditions,_nb_frames>0
+- [warping_field],\_mode,\_interpolation,\_boundary_conditions,\_nb_frames>0
 
 ## Description:
 
@@ -8928,7 +8942,7 @@ gmic image.jpg 100%,100%,1,2,'X=x/w-0.5;Y=y/h-0.5;R=(X*X+Y*Y)^0.5;A=atan2(Y,X);1
 
 ## Arguments:
 
-* [displacement_map],patch_width>=1,_patch_height>=1,_patch_depth>=1,_std_factor>0,_boundary_conditions,_fast_approximation={ 0:No | 1:Yes }
+- [displacement_map],patch_width>=1,\_patch_height>=1,\_patch_depth>=1,\_std_factor>0,\_boundary_conditions,\_fast_approximation={ 0:No | 1:Yes }
 
 ## Description:
 
@@ -8948,7 +8962,7 @@ std_factor=0.3, boundary_conditions=3 and fast_approximation=0.
 
 ## Arguments:
 
-* _x-angle,_y-angle,_zoom>0,_x-center,_y-center,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_x-angle,\_y-angle,\_zoom>0,\_x-center,\_y-center,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -8968,7 +8982,7 @@ gmic image.jpg warp_perspective ,
 
 ## Arguments:
 
-* xs0[%],ys0[%],xt0[%],yt0[%],...,xsN[%],ysN[%],xtN[%],ytN[%]
+- xs0[%],ys0[%],xt0[%],yt0[%],...,xsN[%],ysN[%],xtN[%],ytN[%]
 
 ## Description:
 
@@ -8987,7 +9001,7 @@ gmic image.jpg +warp_rbf 0,0,0,0,100%,0,100%,0,100%,100%,100%,100%,0,100%,0,100%
 
 ## Arguments:
 
-* [displacement_map],_sigma[%]>0,_blend_dimension={ 0:Auto | 1:1D | 2:2D | 3:3D }
+- [displacement_map],\_sigma[%]>0,\_blend_dimension={ 0:Auto | 1:1D | 2:2D | 3:3D }
 
 ## Description:
 
@@ -9007,7 +9021,7 @@ gmic sp colorful,512 100%,100%,1,2,[x,y] l. { s xy,8 sort_list +,u append_tiles 
 
 ## Arguments:
 
-* _amplitude,_smoothness>=0,_angle
+- \_amplitude,\_smoothness>=0,\_angle
 
 ## Description:
 
@@ -9027,7 +9041,7 @@ gmic image.jpg water ,
 
 ## Arguments:
 
-* _amplitude>=0,_frequency>=0,_center_x,_center_y
+- \_amplitude>=0,\_frequency>=0,\_center_x,\_center_y
 
 ## Description:
 
@@ -9047,7 +9061,7 @@ gmic image.jpg wave ,
 
 ## Arguments:
 
-* _amplitude>=0,_angle,0<=_attenuation<=1,_threshold
+- \_amplitude>=0,\_angle,0<=\_attenuation<=1,\_threshold
 
 ## Description:
 
@@ -9067,7 +9081,7 @@ gmic image.jpg +wind ,
 
 ## Arguments:
 
-* _factor,_cx,_cy,_cz,_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
+- \_factor,\_cx,\_cy,\_cz,\_boundary_conditions={ 0:Dirichlet | 1:Neumann | 2:Periodic | 3:Mirror }
 
 ## Description:
 
@@ -9087,7 +9101,7 @@ gmic image.jpg +zoom[0] 0.6 +zoom[0] 1.5
 
 ## Arguments:
 
-* 0<=_density<=100,_is_relief={ 0:No | 1:Yes },_opacity,_color1,...
+- 0<=\_density<=100,\_is_relief={ 0:No | 1:Yes },\_opacity,\_color1,...
 
 ## Description:
 
@@ -9107,7 +9121,7 @@ gmic image.jpg +cracks ,
 
 ## Arguments:
 
-* _density>0,_darkness>=0,_lightness>=0
+- \_density>0,\_darkness>=0,\_lightness>=0
 
 ## Description:
 
@@ -9127,7 +9141,7 @@ gmic image.jpg +light_patch 20,0.9,4
 
 ## Arguments:
 
-* _scale_x>0,_scale_y>0,_scale_z>0
+- \_scale_x>0,\_scale_y>0,\_scale_z>0
 
 ## Description:
 
@@ -9147,7 +9161,7 @@ gmic image.jpg +pixelize ,
 
 ## Arguments:
 
-* _amplitude,_bandwidth,_shape={ 0:Block | 1:Triangle | 2:Sine | 3:Sine+ | 4:Random },_angle,_offset
+- \_amplitude,\_bandwidth,\_shape={ 0:Block | 1:Triangle | 2:Sine | 3:Sine+ | 4:Random },\_angle,\_offset
 
 ## Description:
 
@@ -9167,7 +9181,7 @@ gmic image.jpg +scanlines ,
 
 ## Arguments:
 
-* _frequency>=0,_direction={ 0:Horizontal | 1:Vertical },_darkness>=0,_lightness>=0
+- \_frequency>=0,\_direction={ 0:Horizontal | 1:Vertical },\_darkness>=0,\_lightness>=0
 
 ## Description:
 
@@ -9187,7 +9201,7 @@ gmic image.jpg +shade_stripes 30
 
 ## Arguments:
 
-* _opacity>=0
+- \_opacity>=0
 
 ## Description:
 
@@ -9205,7 +9219,7 @@ gmic image.jpg +shadow_patch 0.4
 
 # Command: shuffle
 
-### No argumentsDescription:Shuffle vectors of selected images with Fisher-Yates algorithm, as described in <https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle>. ``` gmic uniform_distribution 8,3 shuffle ```
+### No argumentsDescription:Shuffle vectors of selected images with Fisher-Yates algorithm, as described in <https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle>. `gmic uniform_distribution 8,3 shuffle`
 
 ---
 
@@ -9213,7 +9227,7 @@ gmic image.jpg +shadow_patch 0.4
 
 ## Arguments:
 
-* _dx[%]>=0,_dy[%]>=0,_dz[%]>=0
+- \_dx[%]>=0,\_dy[%]>=0,\_dz[%]>=0
 
 ## Description:
 
@@ -9233,7 +9247,7 @@ gmic image.jpg +spread 3
 
 ## Arguments:
 
-* _frequency>=0
+- \_frequency>=0
 
 ## Description:
 
@@ -9253,7 +9267,7 @@ gmic image.jpg +stripes_y ,
 
 ## Arguments:
 
-* _amplitude>=0,_fibrousness>=0,_emboss_level>=0
+- \_amplitude>=0,\_fibrousness>=0,\_emboss_level>=0
 
 ## Description:
 
@@ -9271,7 +9285,7 @@ gmic image.jpg +texturize_canvas ,
 
 # Command: texturize_paper
 
-### No argumentsDescription:Add paper texture to selected images. ``` gmic image.jpg +texturize_paper ```
+### No argumentsDescription:Add paper texture to selected images. `gmic image.jpg +texturize_paper`
 
 ---
 
@@ -9279,7 +9293,7 @@ gmic image.jpg +texturize_canvas ,
 
 ## Arguments:
 
-* _strength>=0,0<=_radius_min<=100,0<=_radius_max<=100
+- \_strength>=0,0<=\_radius_min<=100,0<=\_radius_max<=100
 
 ## Description:
 
@@ -9299,7 +9313,7 @@ gmic image.jpg vignette ,
 
 ## Arguments:
 
-* _text,0<_opacity<1,_{ size>0 | font },_angle,_mode={ 0:Remove | 1:Add },_smoothness>=0
+- _text,0<\_opacity<1,_{ size>0 | font },\_angle,\_mode={ 0:Remove | 1:Add },\_smoothness>=0
 
 ## Description:
 
@@ -9319,8 +9333,8 @@ gmic image.jpg watermark_visible ,0.7
 
 ## Arguments:
 
-* [layer],blending_mode,_opacity[%],_selection_is={ 0:Base-layers | 1:Top-layers }    or
-* blending_mode,_opacity[%]
+- [layer],blending_mode,\_opacity[%],\_selection_is={ 0:Base-layers | 1:Top-layers }    or
+- blending_mode,\_opacity[%]
 
 ## Description:
 
@@ -9396,8 +9410,8 @@ gmic command "ex : $""=arg repeat $""# +blend[0,1] ${arg{$>+1}} text_outline[-1]
 
 ## Arguments:
 
-* [layer],blending_mode,_opacity[%],_selection_is={ 0:Base-layers | 1:Top-layers }    or
-* blending_mode,_opacity[%]
+- [layer],blending_mode,\_opacity[%],\_selection_is={ 0:Base-layers | 1:Top-layers }    or
+- blending_mode,\_opacity[%]
 
 ## Description:
 
@@ -9407,7 +9421,7 @@ gmic command "ex : $""=arg repeat $""# +blend[0,1] ${arg{$>+1}} text_outline[-1]
 
 ## Arguments:
 
-* smoothness[%]>=0
+- smoothness[%]>=0
 
 ## Description:
 
@@ -9423,7 +9437,7 @@ gmic image.jpg testimage2d {w},{h} +blend_edges 0.8
 
 ## Arguments:
 
-* [fading_shape]
+- [fading_shape]
 
 ## Description:
 
@@ -9437,7 +9451,7 @@ gmic image.jpg testimage2d {w},{h} 100%,100%,1,1,'cos(y/10)' normalize[-1] 0,1 +
 
 # Command: blend_median
 
-### No argumentsDescription:Blend selected images together using median mode. ``` gmic image.jpg testimage2d {w},{h} +mirror[0] y +blend_median ```
+### No argumentsDescription:Blend selected images together using median mode. `gmic image.jpg testimage2d {w},{h} +mirror[0] y +blend_median`
 
 ---
 
@@ -9445,7 +9459,7 @@ gmic image.jpg testimage2d {w},{h} 100%,100%,1,1,'cos(y/10)' normalize[-1] 0,1 +
 
 ## Arguments:
 
-* _is_mixed_mode={ 0:No | 1:Yes },_inner_fading[%]>=0,_outer_fading[%]>=0
+- \_is_mixed_mode={ 0:No | 1:Yes },\_inner_fading[%]>=0,\_outer_fading[%]>=0
 
 ## Description:
 
@@ -9461,7 +9475,7 @@ is_mixed=0, inner_fading=0 and outer_fading=100%.
 
 ## Arguments:
 
-* 0<=_start<=100,0<=_end<=100
+- 0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9481,7 +9495,7 @@ gmic image.jpg testimage2d {w},{h} +fade_diamond 80,85
 
 ## Arguments:
 
-* _angle,0<=_start<=100,0<=_end<=100
+- \_angle,0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9501,7 +9515,7 @@ gmic image.jpg testimage2d {w},{h} +fade_linear 45,48,52
 
 ## Arguments:
 
-* 0<=_start<=100,0<=_end<=100
+- 0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9521,7 +9535,7 @@ gmic image.jpg testimage2d {w},{h} +fade_radial 30,70
 
 ## Arguments:
 
-* 0<=_start<=100,0<=_end<=100
+- 0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9541,7 +9555,7 @@ gmic image.jpg testimage2d {w},{h} +fade_x 30,70
 
 ## Arguments:
 
-* 0<=_start<=100,0<=_end<=100
+- 0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9561,7 +9575,7 @@ gmic image.jpg testimage2d {w},{h} +fade_y 30,70
 
 ## Arguments:
 
-* 0<=_start<=100,0<=_end<=100
+- 0<=\_start<=100,0<=\_end<=100
 
 ## Description:
 
@@ -9577,7 +9591,7 @@ start=30 and end=70.
 
 ## Arguments:
 
-* [base_image],0<=_minimize_alpha<=1
+- [base_image],0<=\_minimize_alpha<=1
 
 ## Description:
 

@@ -5,15 +5,13 @@ import os
 import tempfile
 from PIL import Image
 from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 
 # ================= 配置區域 =================
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=GEMINI_API_KEY)
-print(GEMINI_API_KEY)
+# print(GEMINI_API_KEY)
 
-GMIC_PATH = Path(__file__).parent / "gmic"
+GMIC_PATH = Path(__file__).parent / "gmic" / "gmic"
 
 # ================= 定義 G'MIC 指令參考 (給 AI 的知識庫) =================
 # 這裡定義你希望系統支援的效果，以及對應的 G'MIC 語法
@@ -41,7 +39,7 @@ GMIC_REFERENCE = """
 
 # ================= AI 處理邏輯 =================
 def get_gmic_command_from_gemini(user_prompt):
-    model = genai.GenerativeModel('gemini-1.5-flash') # 使用 Flash 模型速度較快
+    model = genai.GenerativeModel('gemini-2.5-flash-lite') # 使用 Flash 模型速度較快
     
     full_prompt = f"{GMIC_REFERENCE}\n\n使用者需求: {user_prompt}\n輸出的 G'MIC 參數:"
     
@@ -64,7 +62,7 @@ def apply_gmic_effect(input_image_path, output_image_path, gmic_args):
     # 我們將指令拆解以避免 Shell Injection (雖然參數來自 Gemini，但仍需小心)
     
     cmd = [str(GMIC_PATH), input_image_path] + gmic_args.split() + ["-o", output_image_path]
-    
+    print(cmd)
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         return True, result.stdout
