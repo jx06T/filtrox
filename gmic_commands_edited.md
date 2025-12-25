@@ -443,3 +443,114 @@ gmic image.jpg +watermark_visible "Copyright 2024",0.3,50,25
 ```bash
 gmic image.jpg +upscale_smart 200%,200%,2,10
 ```
+---
+
+# 11. Vignetting (暗角)
+Used to darken the edges of an image to focus the viewer's attention on the center.
+
+## Command: vignette
+
+## Arguments:
+* _strength>=0, 0<=_radius_min<=100, 0<=_radius_max<=100
+
+## Description:
+Adds a classic darkening effect to the corners of the image. 
+- **Strength**: How dark the corners become.
+- **Radius Min/Max**: Defines where the darkening starts and ends (as a percentage of the image size).
+
+```bash
+gmic image.jpg +vignette 100,70,90
+```
+
+---
+
+# 12. Glow & Bloom (光暈與柔光)
+It is used to increase the atmosphere of the picture, especially to make the highlight area exude a dreamy atmosphere.
+
+## Command: glow
+
+## Arguments:
+* _amplitude>=0
+
+## Description:
+Adds a soft, romantic glow to the entire image. It works by blurring the highlights and blending them back. This is similar to a "Soft Focus" or "Dreamy" filter.
+
+```bash
+gmic image.jpg +glow 1.5%
+```
+
+---
+
+## Command: blur_bloom
+
+## Arguments:
+* _amplitude>=0, _ratio>=0, _nb_iter>=0
+
+## Description:
+Creates a more sophisticated cinematic glow (Bloom). It simulates light bleeding from bright sources. 
+- **Amplitude**: Intensity of the effect.
+- **Ratio/Iter**: Controls the spread and smoothness of the light bleeding.
+
+```bash
+gmic image.jpg +blur_bloom 2,2,5
+```
+
+---
+
+# 13. Blur (模糊效果)
+Simulates blur outside of lens focus, or can be used to add a sense of dynamics.
+## Command: blur
+
+## Arguments:
+* std_deviation[%]>=0, _boundary_conditions, _kernel
+
+## Description:
+General purpose Gaussian blur. Used to soften the entire image or specific parts. 
+- **Std_deviation**: The strength of the blur (radius).
+
+```bash
+gmic image.jpg +blur 5
+```
+
+---
+
+## Command: blur_radial
+
+## Arguments:
+* amplitude[%], _center_x[%], _center_y[%]
+
+## Description:
+**Zoom/Spin Blur.** Creates a blur that radiates from a center point. It creates a sense of fast movement or explosion towards the viewer.
+
+```bash
+gmic image.jpg +blur_radial 2%,50%,50%
+```
+
+---
+
+## Command: blur_linear
+
+## Arguments:
+* amplitude1[%], _amplitude2[%], _angle
+
+## Description:
+**Motion Blur.** Simulates the effect of the camera or the subject moving in a straight line during exposure.
+- **Angle**: The direction of the movement (in degrees).
+
+```bash
+gmic image.jpg +blur_linear 10,0,45
+```
+
+---
+
+## Command: blur_selective
+
+## Arguments:
+* sigma>=0, _edges>0, _nb_scales>0
+
+## Description:
+**Surface Blur.** Blurs the image while attempting to preserve sharp edges. This is often used for skin smoothing or noise reduction without losing detail.
+
+```bash
+gmic image.jpg +blur_selective 5,0.5,5
+```
