@@ -50,23 +50,6 @@ gmic image.jpg +balance_gamma 128,128,128
 
 ---
 
-
-## Command: mix_rgb
-
-## Arguments:
-
-- a11, a12, a13, a21, a22, a23, a31, a32, a33
-
-## Description:
-
-An RGB channel mixer. Functions like the "Calibration" panel in Lightroom, allowing for precise control over how red, green, and blue primary channels are blended.
-
-```
-gmic image.jpg +mix_rgb 0.9,0.1,0,0.1,0.9,0,0,0,1
-```
-
----
-
 # 3. Presence & Detail (Sharpening & Denoise)
 
 ## Command: sharpen
@@ -229,4 +212,234 @@ Converts the color image to a grayscale intensity map. Essential for creating "L
 
 ```
 gmic image.jpg +luminance
+```
+
+# 6. Geometric & Lens Distortions (幾何與鏡頭扭曲)
+用於修正透視問題或進行創意形變（例如液化效果）。
+
+## Command: fisheye
+
+## Arguments:
+* center_x, center_y, radius, amplitude
+
+## Description:
+Simulates a fisheye lens effect or corrects it. It creates a spherical distortion centered on a specific point.
+
+```bash
+gmic image.jpg +fisheye 50,50,50,1.5
+```
+
+---
+
+## Command: twirl
+
+## Arguments:
+* amplitude, center_x, center_y
+
+## Description:
+Rotates pixels around a center point, creating a whirlpool effect. Useful for creative abstract edits.
+
+```bash
+gmic image.jpg +twirl 1.0,50%,50%
+```
+
+---
+
+## Command: deform
+
+## Arguments:
+* amplitude, interpolation
+
+## Description:
+Applies a random, smooth "liquid" deformation. In photo editing, this can be used to add subtle organic variety or "warp" certain areas.
+
+```bash
+gmic image.jpg +deform 10,1
+```
+
+---
+
+## Command: spherize
+
+## Arguments:
+* radius, strength, center_x, center_y
+
+## Description:
+Wraps the image around a 3D sphere shape. Often used to create "crystal ball" effects or to correct bloated lens distortion.
+
+```bash
+gmic image.jpg +spherize 50%,1.5,50%,50%
+```
+
+---
+
+# 7. Advanced Retouching (進階人像與修復)
+這些是專業修圖師在 Lightroom 之外，通常需要到 Photoshop 才能完成的操作。
+
+## Command: split_freq
+
+## Arguments:
+* smoothness
+
+## Description:
+**Frequency Separation.** Splits the image into "Low Frequency" (colors/tones) and "High Frequency" (texture/details). Essential for high-end skin retouching.
+
+```bash
+gmic image.jpg split_freq 2%
+```
+
+---
+
+## Command: inpaint
+
+## Arguments:
+* [mask]
+
+## Description:
+**Content-Aware Fill.** Removes unwanted objects from a photo (like power lines or skin blemishes) by reconstructing the area based on surrounding pixels.
+
+```bash
+gmic image.jpg mask.png +inpaint[0] [1]
+```
+
+---
+
+## Command: solidify
+
+## Description:
+Fills in transparent or "missing" areas of an image with a smooth color gradient based on the edges. Great for fixing edges after a heavy rotation or warp.
+
+```bash
+gmic image.jpg +solidify 75%
+```
+
+---
+
+# 8. Lighting & Atmospheric Effects (光影與大氣)
+用於增加照片的氛圍感（例如光暈、光束）。
+
+## Command: lightrays
+
+## Arguments:
+* density, center_x, center_y, ray_length, ray_attenuation
+
+## Description:
+**Volumetric Lighting.** Generates "God Rays" or light beams emanating from a light source or bright edges in the photo.
+
+```bash
+gmic image.jpg +lightrays 50%,50%,50%,0.9,0.5
+```
+
+---
+
+## Command: blur_bloom
+
+## Arguments:
+* amplitude, ratio, nb_iter
+
+## Description:
+Creates a soft, ethereal glow on the highlights. Similar to using a "Mist" or "Pro-Mist" filter on a lens.
+
+```bash
+gmic image.jpg +blur_bloom 1,2,5
+```
+
+---
+
+## Command: glow
+
+## Arguments:
+* amplitude
+
+## Description:
+Adds a romantic, soft-focus glow to the entire image. Popular in wedding and dream-style photography.
+
+```bash
+gmic image.jpg +glow 1.5%
+```
+
+---
+
+# 9. Texture & Analog Feel (質感與底片感疊加)
+增加照片的物質層次感。
+
+## Command: texturize_paper
+
+## Description:
+Overlays a realistic paper texture onto the image. Ideal for making digital photos look like printed art.
+
+```bash
+gmic image.jpg +texturize_paper
+```
+
+---
+
+## Command: texturize_canvas
+
+## Arguments:
+* amplitude, fibrousness, emboss_level
+
+## Description:
+Simulates a painting on canvas. It adds a woven fiber texture and subtle relief lighting.
+
+```bash
+gmic image.jpg +texturize_canvas 20,3,0.6
+```
+
+---
+
+## Command: noise
+
+## Arguments:
+* amplitude, noise_type
+
+## Description:
+**Film Grain.** While technically "noise," using Gaussian noise (type 0) at low amplitudes is the standard way to simulate film grain.
+
+```bash
+gmic image.jpg +noise 5,2
+```
+
+---
+
+## Command: halftone
+
+## Arguments:
+* nb_levels, size_dark, size_bright, shape
+
+## Description:
+Converts the image into a "dot" pattern. Used for pop-art styles or newspaper print effects.
+
+```bash
+gmic image.jpg +halftone 5,8,8,2
+```
+
+---
+
+# 10. Utility & Finishing (實用工具)
+
+## Command: watermark_visible
+
+## Arguments:
+* text, opacity, size, angle
+
+## Description:
+Adds a visible text watermark. Unlike simple text, this can be blended more naturally with the image values.
+
+```bash
+gmic image.jpg +watermark_visible "Copyright 2024",0.3,50,25
+```
+
+---
+
+## Command: upscale_smart
+
+## Arguments:
+* width, height, smoothness, sharpening
+
+## Description:
+**AI Upscaling.** Enlarges an image while attempting to preserve edges and remove pixelation artifacts.
+
+```bash
+gmic image.jpg +upscale_smart 200%,200%,2,10
 ```
