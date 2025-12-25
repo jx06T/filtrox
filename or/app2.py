@@ -23,7 +23,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 GMIC_PATH = Path(__file__).parent / "gmic" / "gmic" 
 
 # 設定參考文件路徑
-REFERENCE_FILE = Path(__file__).parent / "gmic_commands_final.md"
+REFERENCE_FILE = Path(__file__).parent / "gmic_commands_edited.md"
 
 # ================= 1. 初始化 Session State =================
 if 'processed_image' not in st.session_state:
@@ -59,19 +59,20 @@ def get_gmic_command_from_gemini(user_prompt):
     model = genai.GenerativeModel('gemini-2.5-flash') 
     
     system_prompt = f"""
-    你是一個 G'MIC 指令轉換專家。
-    請閱讀以下 G'MIC 指令參考文件，並根據使用者的自然語言需求，生成對應的 G'MIC 參數。
+   You are a G'MIC command conversion expert.
+    Please read the following G'MIC command reference documentation, and based on the user's natural language request, generate the corresponding G'MIC parameters.
 
-    --- 參考文件開始 ---
+    --- Reference Documentation Start ---
     {GMIC_KNOWLEDGE_BASE}
-    --- 參考文件結束 ---
+    --- Reference Documentation End ---
 
-    規則：
-    1. **只輸出參數部分**，不需要 `gmic` 開頭，也不需要 `input.jpg` 或 `-o output.jpg`。
-    2. 例如使用者說「我要素描感」，參考文件若顯示 `gmic img.jpg -fx_pencil 10`，你只需輸出 `-fx_pencil 10`(請注意若要使用預設參數也需要完整的給出參數)。
-    3. 如果需要組合多個效果，請用空格分隔，例如 `-blur 2 -sharpen 50`。
-    4. 不要輸出 Markdown 程式碼符號 (如 ```bash)。
-    5. 務必確認每一個使用的指令都是在文件提到的，有些效果需要嘗試使用不同參數組合來達成。
+    Rules:
+    1. **Output only the parameter portion**. Do not include the `gmic` prefix, and do not include `input.jpg` or `-o output.jpg`.
+    2. For example, if the user says "I want a sketch-like effect" and the reference shows `gmic img.jpg -fx_pencil 10`, you should output only `-fx_pencil 10` (note that even when using default values, all required parameters must be fully specified).
+    3. If multiple effects are required, separate them with spaces, for example: `-blur 2 -sharpen 50`.
+    4. Do not output Markdown code block symbols (such as ```bash).
+    5. Ensure that every command used is explicitly mentioned in the reference documentation. Some effects may require experimenting with different parameter combinations to achieve the desired result.
+    6. You must minimize the impact of using `clut` on the image as much as possible. All effects should first be achieved using other basic adjustment commands, and `clut` should only be used as a last resort. Additionally, try to utilize as many basic adjustment commands as possible before considering `clut`.
     """
     
     chat = model.start_chat(history=[])

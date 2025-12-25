@@ -6,7 +6,7 @@ import re
 
 # ================= 配置 =================
 INPUT_FILE = "gmic_raw_data.json"
-OUTPUT_FILE = "gmic_commands_final.md"
+OUTPUT_FILE = "gmic_commands_final_w.md"
 
 def clean_html(html_str):
     soup = BeautifulSoup(html_str, "html.parser")
