@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).parent
 GMIC_BIN = BASE_DIR / "gmic" / "gmic"
 REF_FILE = BASE_DIR / "gmic_commands_edited.md"
 
-@st.cache_data
+# @st.cache_data
 def load_reference():
     return REF_FILE.read_text(encoding="utf-8") if REF_FILE.exists() else "No reference data."
 
