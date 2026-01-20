@@ -2,7 +2,7 @@ import os
 import re
 from pathlib import Path
 
-from ai_engine import AIEngine
+from src_gmic.ai_engine import AIEngine
 
 
 def _load_secrets(path: Path) -> dict:

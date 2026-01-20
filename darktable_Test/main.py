@@ -10,7 +10,7 @@ import sys
 import zlib
 from ctypes import c_float, c_int32
 from typing import Any, Dict, Optional, Tuple
-from ai_engine import AIEngine, load_engine_from_env
+from src_gmic.ai_engine import AIEngine, load_engine_from_env
 
 # =========================
 # Fixed format rules (based on your sample XMP)
