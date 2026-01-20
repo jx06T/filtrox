@@ -2,7 +2,7 @@ import json
 import re
 from typing import List, Dict, Any, Optional
 
-from llm_backend import BaseLLM , Gemini
+from .llm_backend import BaseLLM , Gemini
 from dotenv import load_dotenv
 
 # 假設這是從您的 Snippet 3 引入的

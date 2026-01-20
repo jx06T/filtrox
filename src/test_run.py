@@ -46,6 +46,7 @@ def main():
         return
 
     print(f"✅ AI 生成了 {len(variations)} 組方案。")
+    print(variations)
 
     # 5. 執行第一組方案
     target_var = variations[0]
@@ -58,12 +59,12 @@ def main():
     
     try:
         print("🎨 開始渲染圖片...")
-        processor.apply_effect(
+        o = processor.apply_effect(
             input_path=INPUT_IMAGE,
             ai_params=target_var['parameters'],
             output_path=output_filename
         )
-        print(f"✨ 成功！結果已存為: {output_filename}")
+        print(f"✨ 成功！結果已存為: {o}")
         
     except Exception as e:
         print(f"❌ 渲染失敗: {e}")

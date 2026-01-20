@@ -1,7 +1,7 @@
 import os
 import subprocess
 import tempfile
-from dt_patcher import XMPPatcher
+from .dt_patcher import XMPPatcher
 
 # 使用您提供的、確定可運作的完整 XMP 作為模板
 DEFAULT_XMP_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
