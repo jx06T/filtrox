@@ -1,0 +1,25 @@
+{
+  "threshold": 0.10,
+  "smoothing_hue": 1.00,
+  "contrast": 0.00,
+
+  "white_level": 1.00,
+  "chroma_size": 1.50,
+  "param_size": 1.00,
+  "use_filter": true,
+
+  "sat": {
+    "red": 1.0, "orange": 1.0, "yellow": 1.0, "green": 1.0,
+    "cyan": 1.0, "blue": 1.0, "lavender": 1.0, "magenta": 1.0
+  },
+  "hue": {
+    "red": 0.0, "orange": 0.0, "yellow": 0.0, "green": 0.0,
+    "cyan": 0.0, "blue": 0.0, "lavender": 0.0, "magenta": 0.0
+  },
+  "bright": {
+    "red": 1.0, "orange": 1.0, "yellow": 1.0, "green": 1.0,
+    "cyan": 1.0, "blue": 1.0, "lavender": 1.0, "magenta": 1.0
+  },
+
+  "hue_shift": 0.0
+}

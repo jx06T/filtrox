@@ -7,3 +7,5 @@
 gmic
 
 cd
+
+__pycache__/

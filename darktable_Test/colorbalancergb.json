@@ -1,0 +1,46 @@
+{
+  "shadows_Y": -0.05,
+  "shadows_C": 0.055,
+  "shadows_H": 225.0,
+
+  "midtones_Y": -0.02,
+  "midtones_C": 0.030,
+  "midtones_H": 225.0,
+
+  "highlights_Y": 0.00,
+  "highlights_C": 0.012,
+  "highlights_H": 50.0,
+
+  "global_Y": -0.01,
+  "global_C": 0.012,
+  "global_H": 225.0,
+
+  "shadows_weight": 1.20,
+  "white_fulcrum": 0.02,
+  "highlights_weight": 0.98,
+
+  "chroma_shadows": 0.045,
+  "chroma_highlights": -0.03,
+  "chroma_global": -0.015,
+  "chroma_midtones": 0.015,
+
+  "saturation_global": -0.055,
+  "saturation_highlights": -0.02,
+  "saturation_midtones": -0.045,
+  "saturation_shadows": -0.02,
+
+  "hue_angle": 2.0,
+
+  "brilliance_global": -0.02,
+  "brilliance_highlights": -0.03,
+  "brilliance_midtones": -0.01,
+  "brilliance_shadows": -0.01,
+
+  "mask_grey_fulcrum": 0.1845,
+
+  "vibrance": -0.14,
+  "grey_fulcrum": 0.1845,
+  "contrast": 0.20,
+
+  "saturation_formula": 1
+}

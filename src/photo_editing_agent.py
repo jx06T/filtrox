@@ -1,0 +1,169 @@
+import json
+import re
+from typing import List, Dict, Any, Optional
+
+from llm_backend import BaseLLM , Gemini
+from dotenv import load_dotenv
+
+# 假設這是從您的 Snippet 3 引入的
+# from ai_engine_module import AIEngine 
+
+
+class PhotoEditingAgent:
+    """
+    專門用於控制 Darktable 'colorbalancergb' 模組的 AI 代理
+    """
+    def __init__(self, llm_provider: BaseLLM):
+        self.llm = llm_provider
+        
+        # === 關鍵：這裡的 Schema 必須嚴格對應 Darktable C Struct 的變數名 ===
+        # 參考前面的 binary layout 代碼：FIELD_ORDER_32F
+        self.param_schema = {
+            # --- 4-Way Controls (Shadows, Midtones, Highlights, Global) ---
+            # C = Chroma (Saturation), Y = Luminance (Brightness), H = Hue
+            "global_C": "float (-0.5 to 0.5) - Global Saturation adjustment",
+            "global_Y": "float (-0.5 to 0.5) - Global Brightness",
+            "global_H": "float (-180 to 180) - Global Hue Tint",
+            
+            "shadows_C": "float (-0.5 to 0.5) - Shadows Saturation",
+            "shadows_Y": "float (-0.3 to 0.3) - Shadows Brightness",
+            "shadows_H": "float (0 to 360) - Shadows Hue Tint",
+            
+            "midtones_C": "float (-0.5 to 0.5) - Midtones Saturation",
+            "midtones_Y": "float (-0.3 to 0.3) - Midtones Brightness",
+            "midtones_H": "float (0 to 360) - Midtones Hue Tint",
+            
+            "highlights_C": "float (-0.5 to 0.5) - Highlights Saturation",
+            "highlights_Y": "float (-0.3 to 0.3) - Highlights Brightness",
+            "highlights_H": "float (0 to 360) - Highlights Hue Tint",
+            
+            # --- Master Controls ---
+            "contrast": "float (-0.5 to 0.5) - Global Contrast center",
+            "vibrance": "float (-0.5 to 0.5) - Smart saturation (Vibrance)",
+            "saturation_global": "float (0.0 to 2.0) - Linear Saturation Multiplier (Default 1.0)",
+            
+            # --- Optional (Fulcrums) ---
+            # "white_fulcrum": "float - Defines what is considered white (Default 0.0)"
+        }
+
+    def _get_system_instruction(self) -> str:
+        """
+        System Prompt: 教導 AI 成為 Darktable 專家
+        """
+        return f"""
+You are an expert Colorist utilizing Darktable's "Color Balance RGB" module.
+Your task is to translate user requests into precise technical parameters.
+
+**Output Schema (Available Parameters):**
+{json.dumps(self.param_schema, indent=2)}
+
+**Strict Rules:**
+1. **Output ONLY valid JSON**. No Markdown, no conversation.
+2. Root key must be "variations" containing a list of 3 objects.
+3. Each object must have "name", "reasoning", and "parameters".
+4. Inside "parameters", **USE ONLY** the keys defined in the schema above. Do NOT invent keys like 'exposure' (use 'global_Y' instead) or 'temp' (use 'global_H' with orange/blue hue).
+5. If a parameter is not needed, do not include it (it will default to 0).
+"""
+
+    def _clean_json_output(self, raw_text: str) -> str:
+        """清理 LLM 的輸出"""
+        text = raw_text.strip()
+        pattern = r"```(?:json)?\s*(.*?)\s*```"
+        match = re.search(pattern, text, re.DOTALL)
+        if match:
+            text = match.group(1)
+        return text
+
+    def _execute_prompt(self, task_prompt: str) -> List[Dict[str, Any]]:
+        """執行 Prompt 並解析結果"""
+        full_prompt = f"{self._get_system_instruction()}\n\n---\n\n{task_prompt}"
+        
+        raw_response = self.llm.generate_text(full_prompt)
+        
+        try:
+            clean_json = self._clean_json_output(raw_response)
+            data = json.loads(clean_json)
+            
+            if "variations" not in data or not isinstance(data["variations"], list):
+                # 容錯處理：如果 AI 忘記包 variations，但給了 list
+                if isinstance(data, list):
+                    return data
+                raise ValueError("JSON missing 'variations' key")
+                
+            return data["variations"]
+        except Exception as e:
+            print(f"❌ Agent JSON Parse Error: {e}\nRaw: {raw_response[:200]}")
+            return []
+
+    # ================= 業務場景方法 =================
+
+    def cold_start(self, user_request: str) -> List[Dict]:
+        """場景 1: 冷啟動 (Cold Start)"""
+        prompt = f"""
+        **Task: Cold Start Generation**
+        User Request: "{user_request}"
+        
+        Goal: Generate 3 DISTINCT visual styles using strictly Color Balance RGB parameters.
+        Example: 
+        - If request is "Warm Cinematic", focus on 'midtones_H' (orange) and 'shadows_H' (teal).
+        - If request is "High Contrast B&W", set 'saturation_global' to 0 and boost 'contrast'.
+        """
+        return self._execute_prompt(prompt)
+
+    def auto_iterate(self, current_params: Dict) -> List[Dict]:
+        """場景 2: 自動迭代 (Auto Iteration) - 不需提示詞"""
+        prompt = f"""
+        **Task: Refinement (Auto-Iteration)**
+        The user selected this specific style:
+        {json.dumps(current_params)}
+        
+        Goal: Generate 3 variations based on this baseline:
+        1. "Polished": Keep the vibe but fix potential issues (e.g. check if skin tones/midtones look natural).
+        2. "Intensified": Push the color grading stronger (increase Chroma/Contrast values).
+        3. "Softened": Reduce the effect intensity (bring values closer to 0).
+        """
+        return self._execute_prompt(prompt)
+
+    def text_refine(self, current_params: Dict, user_feedback: str) -> List[Dict]:
+        """場景 3: 指定修飾 (Text Refinement)"""
+        prompt = f"""
+        **Task: Specific Adjustment**
+        Base Parameters: {json.dumps(current_params)}
+        User Feedback: "{user_feedback}"
+        
+        Goal: Apply the feedback to the Base Parameters.
+        Generate 3 versions: Subtle change, Moderate change, Strong change.
+        """
+        return self._execute_prompt(prompt)
+    
+
+
+if __name__ == "__main__":
+    import os
+    
+    # 1. 設置 API Key
+    load_dotenv()  
+    api_key = os.getenv("GEMINI_API_KEY")
+    
+    # 2. 初始化 Infrastructure
+    llm_service = Gemini(api_key=api_key)
+    
+    # 3. 初始化 Agent (注入 GeminiService)
+    agent = PhotoEditingAgent(llm_provider=llm_service)
+    
+    # 4. 測試 Cold Start
+    print("🤖 正在生成 '賽博龐克' 風格...")
+    variations = agent.cold_start("Cyberpunk style, neon lights")
+    
+    if variations:
+        selected = variations[0]
+        print(f"\n✅ 選擇方案: {selected['name']}")
+        print(f"📝 理由: {selected['reasoning']}")
+        print(f"🔧 參數: {json.dumps(selected['parameters'], indent=2)}")
+        
+        # 5. 測試 Auto Iterate (假設使用者點了這張圖)
+        print("\n🤖 正在基於選擇進行自動迭代...")
+        refined_vars = agent.auto_iterate(selected['parameters'])
+        
+        for idx, var in enumerate(refined_vars):
+            print(f"  > 變體 {idx+1}: {var['name']} - {var['reasoning']}")
