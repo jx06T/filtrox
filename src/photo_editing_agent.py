@@ -47,23 +47,11 @@ class PhotoEditingAgent:
         }
 
     def _get_system_instruction(self) -> str:
-        """
-        System Prompt: 教導 AI 成為 Darktable 專家
-        """
-        return f"""
-You are an expert Colorist utilizing Darktable's "Color Balance RGB" module.
-Your task is to translate user requests into precise technical parameters.
-
-**Output Schema (Available Parameters):**
-{json.dumps(self.param_schema, indent=2)}
-
-**Strict Rules:**
-1. **Output ONLY valid JSON**. No Markdown, no conversation.
-2. Root key must be "variations" containing a list of 3 objects.
-3. Each object must have "name", "reasoning", and "parameters".
-4. Inside "parameters", **USE ONLY** the keys defined in the schema above. Do NOT invent keys like 'exposure' (use 'global_Y' instead) or 'temp' (use 'global_H' with orange/blue hue).
-5. If a parameter is not needed, do not include it (it will default to 0).
-"""
+        # load from system_prompt.md
+        system_prompt = ""
+        with open("system_prompt.md", "r", encoding="utf-8") as f:
+            system_prompt = f.read()
+        return system_prompt
 
     def _clean_json_output(self, raw_text: str) -> str:
         """清理 LLM 的輸出"""
@@ -77,23 +65,15 @@ Your task is to translate user requests into precise technical parameters.
     def _execute_prompt(self, task_prompt: str) -> List[Dict[str, Any]]:
         """執行 Prompt 並解析結果"""
         full_prompt = f"{self._get_system_instruction()}\n\n---\n\n{task_prompt}"
-        
+
         raw_response = self.llm.generate_text(full_prompt)
-        
-        try:
-            clean_json = self._clean_json_output(raw_response)
-            data = json.loads(clean_json)
-            
-            if "variations" not in data or not isinstance(data["variations"], list):
-                # 容錯處理：如果 AI 忘記包 variations，但給了 list
-                if isinstance(data, list):
-                    return data
-                raise ValueError("JSON missing 'variations' key")
-                
-            return data["variations"]
-        except Exception as e:
-            print(f"❌ Agent JSON Parse Error: {e}\nRaw: {raw_response[:200]}")
-            return []
+        raw_response = raw_response.replace('```json', '')  # 有時候會多個 json 標籤，先替換掉
+        raw_response = raw_response.replace('```', '')
+        print(raw_response)
+
+        raw_json = json.loads(self._clean_json_output(raw_response))
+
+        return raw_json['configs']
 
     # ================= 業務場景方法 =================
 

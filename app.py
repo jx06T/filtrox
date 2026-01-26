@@ -68,10 +68,11 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
             st.error("AI 生成參數失敗，請檢查 API 狀態。")
             return
 
+        print(variations_data)
+        
         # 2. 渲染圖片並儲存
         new_variations = []
         session_path = Path(BASE_SAVE_DIR) / st.session_state.session_id
-        
         for i, var in enumerate(variations_data):
             # 檔名規範: {原圖名}_gen{第幾代}_{第幾張}.jpg
             stem = Path(st.session_state.original_path).stem
@@ -83,13 +84,13 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
             try:
                 processor.apply_effect(
                     input_path=input_img_path,
-                    ai_params=var['parameters'],
+                    ai_params=var,
                     output_path=output_img_path
                 )
                 new_variations.append({
-                    "name": var['name'],
-                    "reasoning": var['reasoning'],
-                    "params": var['parameters'],
+                    "name": "name",
+                    "reasoning": "reasoning",
+                    "params": var,
                     "path": output_img_path
                 })
             except Exception as e:
