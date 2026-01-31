@@ -75,6 +75,24 @@ class PhotoEditingAgent:
 
         return raw_json['configs']
 
+    def _format_disliked_factors(self, disliked_factors: Optional[Dict[str, List[float]]]) -> str:
+        if not disliked_factors:
+            return ""
+        compact = {k: v for k, v in disliked_factors.items() if isinstance(v, list) and v}
+        if not compact:
+            return ""
+        return f"\nDisliked factor values (avoid these numbers or close neighbors): {json.dumps(compact)}"
+
+    def _format_preferred_factors(self, preferred_factors: Optional[Dict[str, float]]) -> str:
+        if not preferred_factors:
+            return ""
+        return f"\nPreferred factor center (stay close to these values): {json.dumps(preferred_factors)}"
+
+    def _format_variation_scale(self, variation_scale: Optional[float]) -> str:
+        if variation_scale is None:
+            return ""
+        return f"\nVariation scale: {variation_scale} (lower means smaller changes around preferred factors)."
+
     # ================= 業務場景方法 =================
 
     def cold_start(self, user_request: str) -> List[Dict]:
@@ -90,29 +108,52 @@ class PhotoEditingAgent:
         """
         return self._execute_prompt(prompt)
 
-    def auto_iterate(self, current_params: Dict) -> List[Dict]:
+    def auto_iterate(
+        self,
+        current_params: Dict,
+        disliked_factors: Optional[Dict[str, List[float]]] = None,
+        preferred_factors: Optional[Dict[str, float]] = None,
+        variation_scale: Optional[float] = None,
+    ) -> List[Dict]:
         """場景 2: 自動迭代 (Auto Iteration) - 不需提示詞"""
         prompt = f"""
         **Task: Refinement (Auto-Iteration)**
         The user selected this specific style:
         {json.dumps(current_params)}
+        {self._format_disliked_factors(disliked_factors)}
+        {self._format_preferred_factors(preferred_factors)}
+        {self._format_variation_scale(variation_scale)}
         
         Goal: Generate 3 variations based on this baseline:
         1. "Polished": Keep the vibe but fix potential issues (e.g. check if skin tones/midtones look natural).
         2. "Intensified": Push the color grading stronger (increase Chroma/Contrast values).
         3. "Softened": Reduce the effect intensity (bring values closer to 0).
+        Keep variations closer to preferred factors as iterations increase.
+        Always include the required "factors" object for each config.
         """
         return self._execute_prompt(prompt)
 
-    def text_refine(self, current_params: Dict, user_feedback: str) -> List[Dict]:
+    def text_refine(
+        self,
+        current_params: Dict,
+        user_feedback: str,
+        disliked_factors: Optional[Dict[str, List[float]]] = None,
+        preferred_factors: Optional[Dict[str, float]] = None,
+        variation_scale: Optional[float] = None,
+    ) -> List[Dict]:
         """場景 3: 指定修飾 (Text Refinement)"""
         prompt = f"""
         **Task: Specific Adjustment**
         Base Parameters: {json.dumps(current_params)}
         User Feedback: "{user_feedback}"
+        {self._format_disliked_factors(disliked_factors)}
+        {self._format_preferred_factors(preferred_factors)}
+        {self._format_variation_scale(variation_scale)}
         
         Goal: Apply the feedback to the Base Parameters.
         Generate 3 versions: Subtle change, Moderate change, Strong change.
+        Keep variations closer to preferred factors as iterations increase.
+        Always include the required "factors" object for each config.
         """
         return self._execute_prompt(prompt)
     

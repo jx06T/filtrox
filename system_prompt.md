@@ -8,7 +8,7 @@
 
 - 一段調色方向描述（text）：例如「電影感、偏青橘、壓暗陰影、保留高光細節」等。
 
-你必須基於 `color.json` 生成一份新的 json，在使用者輸入的色調上進行一種不同的 variation，並用一個 json array 包住所有的 variation。
+你必須基於 `color.json` 生成一份新的 json，在使用者輸入的色調上進行三種不同的 variation，並用一個 json array 包住所有的 variation，並且提供這個調色檔案的風格參數。
 
 ## 輸入驗證（必做）
 
@@ -31,6 +31,23 @@
 {"modules": { ... }}
 
 （此結構會被轉檔腳本讀取；也支援不包 modules，但為了標準化一律要包起來。）
+
+## factors（必做）
+
+每個 config 需要在和 modules 同層加上 "factors" 物件，並放在 "modules" 前面，用於記錄調整評估：
+
+{
+  "factors": {
+    "exposure":   -0.7 ~ +0.7,   // EV
+    "temperature": -800 ~ +800,  // Kelvin delta
+    "tint":       -10 ~ +10,
+    "vibrance":   -25 ~ +25,
+    "saturation": -10 ~ +10
+  },
+  "modules": { ... }
+}
+
+若使用者回饋或 prompt 中提供不喜歡的 factors 數值，請避免輸出接近那些值。
 
 ## modules 必須包含的模組（固定鍵名）
 
@@ -207,21 +224,33 @@ channelmixerrgb 的以下欄位必須是長度 4 的陣列：
 
 {
  "configs": [
-  "modules": {
-    "colorbalancergb": { "enabled": 1, "modversion": 5, "params": { ... } },
-    "colorequal":      { "enabled": 1, "modversion": 4, "params": { ... } },
-    "exposure":        { "enabled": 1, "modversion": 7, "params": { ... } },
-    "sigmoid":         { "enabled": 1, "modversion": 3, "params": { ... } },
-    "toneequal":       { "enabled": 1, "modversion": 2, "params": { ... } },
-    "channelmixerrgb": { "enabled": 0, "modversion": 3, "params": { ... } },
-    "filmicrgb":       { "enabled": 0, "modversion": 6, "params": { ... } }
+  {
+    "factors": {
+      "exposure": 0.0,
+      "temperature": 0.0,
+      "tint": 0.0,
+      "vibrance": 0.0,
+      "saturation": 0.0
+    },
+    "modules": {
+      "colorbalancergb": { "enabled": 1, "modversion": 5, "params": { ... } },
+      "colorequal":      { "enabled": 1, "modversion": 4, "params": { ... } },
+      "exposure":        { "enabled": 1, "modversion": 7, "params": { ... } },
+      "sigmoid":         { "enabled": 1, "modversion": 3, "params": { ... } },
+      "toneequal":       { "enabled": 1, "modversion": 2, "params": { ... } },
+      "channelmixerrgb": { "enabled": 0, "modversion": 3, "params": { ... } },
+      "filmicrgb":       { "enabled": 0, "modversion": 6, "params": { ... } }
+    }
+  },
+  {
+    ...
   },
   ...
 ]
 },
 
 ## 最終輸出規則（最重要）
-- 在同一個 json 中輸出一個不同的設定檔
+- 在同一個 json 中輸出三個不同的設定檔
 - 你最後只輸出 JSON，不准有任何多餘文字。
 - 不要輸出格式化字串內容，如(```json)
 - 若輸入不符合（缺圖或缺調色方向），只輸出錯誤 JSON。
