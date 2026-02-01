@@ -1,48 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-darktable XMP patcher (dt 5.4.x style)
-
-- Reads a JSON config with module structs (or params_hex / params_gz passthrough)
-- Patches matching <rdf:li ... darktable:operation="..."> tags in the XMP history
-- Optionally inserts missing operations at the end of history
-
-Tested to be robust against:
-- UTF-8 BOM (<?xml ...?> preceded by BOM/whitespace)
-- multiline <rdf:li .../> tags
-"""
 
 import argparse
 import base64
 import ctypes
-import json
 import os
+import json
 import re
 import sys
 import zlib
 from ctypes import c_float, c_int32
-from typing import Any, Dict, Optional, Tuple, List
+from typing import Any, Dict, Optional, Tuple
 
-
-# ==========
-# Encoding rules (based on your samples)
-# ==========
-HEX_OPS = {
-    "exposure",
-    "sigmoid",
-    "toneequal",
-    "temperature",
-    "diffuse",
-    "hazeremoval",
-    "vignette",
-    "grain",
-}
+# =========================
+# Fixed format rules (based on your sample XMP)
+# =========================
+HEX_OPS = {"exposure", "sigmoid", "toneequal"}  # IMPORTANT: tone equalizer = toneequal
 
 
 def dt_encode_gz(raw: bytes, level: int = 9) -> str:
     comp = zlib.compress(raw, level=level)
     clen = len(comp)
-    if clen <= 0:
+    if clen == 0:
         raise ValueError("zlib produced empty output")
     factor = min((len(raw) // clen) + 1, 99)
     return f"gz{factor:02d}" + base64.b64encode(comp).decode("ascii")
@@ -56,17 +35,16 @@ def encode_params(op: str, raw: bytes, force_format: Optional[str] = None) -> st
         return raw.hex()
     if force_format == "gz":
         return dt_encode_gz(raw)
-
+    # default: follow fixed rules
     if op in HEX_OPS:
         return raw.hex()
     return dt_encode_gz(raw)
 
 
-# ==========
-# File utils
-# ==========
+# =========================
+# Robust: find ONLY the start tag of rdf:li (multiline OK)
+# =========================
 def read_text_keep_newlines(path: str) -> str:
-    # utf-8-sig strips BOM if present (fixes "XML declaration not at start")
     with open(path, "r", encoding="utf-8-sig", newline="") as f:
         return f.read()
 
@@ -84,15 +62,20 @@ def read_json_allow_fenced(path: str) -> Dict[str, Any]:
     return json.loads(text)
 
 
-# ==========
-# XMP tag editing
-# ==========
 def find_rdf_li_start_tag(doc: str, operation: str) -> Optional[Tuple[int, int, str]]:
     """
     Returns (start_idx, end_idx, tag_text) where tag_text is from '<rdf:li' up to the first '>'.
+
+    Works for BOTH:
+      <rdf:li ... />
+      <rdf:li ... >
+        ...
+      </rdf:li>
+
     Handles multiline attributes.
     """
     op = re.escape(operation)
+    # Capture the whole start tag ending at the first '>'
     pat = re.compile(
         rf'(<rdf:li\b[^>]*\bdarktable:operation=(["\']){op}\2[^>]*>)',
         flags=re.DOTALL
@@ -120,10 +103,8 @@ def replace_or_insert_attr(tag: str, attr: str, value: str) -> str:
     return tag
 
 
-def patch_operation(doc: str, operation: str,
-                    enabled: Optional[int],
-                    modversion: Optional[int],
-                    params: Optional[str]) -> Tuple[str, bool]:
+def patch_operation(doc: str, operation: str, enabled: Optional[int],
+                    modversion: Optional[int], params: Optional[str]) -> Tuple[str, bool]:
     found = find_rdf_li_start_tag(doc, operation)
     if not found:
         return doc, False
@@ -141,85 +122,10 @@ def patch_operation(doc: str, operation: str,
     return doc[:s] + new_tag + doc[e:], True
 
 
-def _find_history_seq_bounds(doc: str) -> Optional[Tuple[int, int]]:
-    """
-    Return (insert_pos, end_pos) where insert_pos is right before </rdf:Seq> of <darktable:history>.
-    """
-    # Find <darktable:history> ... <rdf:Seq> ... </rdf:Seq> ... </darktable:history>
-    m = re.search(r"<darktable:history>\s*<rdf:Seq>(.*?)</rdf:Seq>\s*</darktable:history>",
-                  doc, flags=re.DOTALL)
-    if not m:
-        return None
-    # insert before the closing </rdf:Seq> within that match
-    full = m.group(0)
-    inner = m.group(1)
-    start = m.start(0)
-    # position of </rdf:Seq> inside doc:
-    end_seq = doc.find("</rdf:Seq>", start)
-    if end_seq < 0:
-        return None
-    return end_seq, end_seq
-
-
-def _get_next_history_num(doc: str) -> int:
-    nums = [int(x) for x in re.findall(r'darktable:num="(\d+)"', doc)]
-    return (max(nums) + 1) if nums else 0
-
-
-def _set_history_end(doc: str, new_end: int) -> str:
-    # history_end is in rdf:Description attributes
-    pat = re.compile(r'(darktable:history_end=")(\d+)(")')
-    if pat.search(doc):
-        return pat.sub(rf"\g<1>{new_end}\g<3>", doc, count=1)
-    return doc
-
-
-def _first_li_template(doc: str) -> Optional[str]:
-    """
-    Grab the first <rdf:li .../> start tag as a template for insertion.
-    """
-    m = re.search(r'(<rdf:li\b[^>]*?/>)', doc, flags=re.DOTALL)
-    return m.group(1) if m else None
-
-
-def insert_operation(doc: str, operation: str,
-                     enabled: Optional[int],
-                     modversion: Optional[int],
-                     params: Optional[str]) -> Tuple[str, bool]:
-    bounds = _find_history_seq_bounds(doc)
-    tpl = _first_li_template(doc)
-    if not bounds or not tpl:
-        return doc, False
-
-    num = _get_next_history_num(doc)
-    tag = tpl
-
-    tag = replace_or_insert_attr(tag, "darktable:num", str(num))
-    tag = replace_or_insert_attr(tag, "darktable:operation", operation)
-    tag = replace_or_insert_attr(tag, "darktable:multi_name", "")
-    tag = replace_or_insert_attr(tag, "darktable:multi_name_hand_edited", "0")
-    tag = replace_or_insert_attr(tag, "darktable:multi_priority", "0")
-
-    if enabled is not None:
-        tag = replace_or_insert_attr(tag, "darktable:enabled", str(int(enabled)))
-    if modversion is not None:
-        tag = replace_or_insert_attr(tag, "darktable:modversion", str(int(modversion)))
-    if params is not None:
-        tag = replace_or_insert_attr(tag, "darktable:params", params)
-
-    insert_pos, _ = bounds
-    # keep indentation similar to existing history items
-    tag = "\n     " + tag.strip() + "\n"
-    doc2 = doc[:insert_pos] + tag + doc[insert_pos:]
-
-    # history_end is last_num + 1
-    doc2 = _set_history_end(doc2, num + 1)
-    return doc2, True
-
-
-# ==========
-# ctypes structs
-# ==========
+# =========================
+# ctypes structs (same as before)
+# =========================
+CHANNEL_SIZE = 4
 
 class ExposureParams(ctypes.Structure):
     _fields_ = [
@@ -231,7 +137,6 @@ class ExposureParams(ctypes.Structure):
         ("compensate_exposure_bias", c_int32),
         ("compensate_hilite_pres", c_int32),
     ]
-
 
 class SigmoidParams(ctypes.Structure):
     _fields_ = [
@@ -250,7 +155,6 @@ class SigmoidParams(ctypes.Structure):
         ("purity", c_float),
         ("base_primaries", c_int32),
     ]
-
 
 class ToneEqualParams(ctypes.Structure):
     _fields_ = [
@@ -274,81 +178,13 @@ class ToneEqualParams(ctypes.Structure):
         ("iterations", c_int32),
     ]
 
-
 class TemperatureParams(ctypes.Structure):
     _fields_ = [
-        ("red", c_float),
-        ("green", c_float),
-        ("blue", c_float),
-        ("various", c_float),   # JSON 可不提供，預設 0.0
-        ("preset", c_int32),
+        ("temp_out", c_float),
+        ("coeffs", c_float * 3),
     ]
 
 
-# ---- diffuse ----
-# 直接照你 JSON 欄位順序建 layout：3 ints + 12 floats = 60 bytes
-class DiffuseParams(ctypes.Structure):
-    _fields_ = [
-        ("iterations", c_int32),
-        ("sharpness", c_float),
-        ("radius", c_int32),
-        ("regularization", c_float),
-        ("variance_threshold", c_float),
-        ("anisotropy_first", c_float),
-        ("anisotropy_second", c_float),
-        ("anisotropy_third", c_float),
-        ("anisotropy_fourth", c_float),
-        ("threshold", c_float),
-        ("first", c_float),
-        ("second", c_float),
-        ("third", c_float),
-        ("fourth", c_float),
-        ("radius_center", c_int32),
-    ]
-
-
-# ---- hazeremoval ----
-# 4 floats + 2 ints = 24 bytes
-class HazeRemovalParams(ctypes.Structure):
-    _fields_ = [
-        ("strength", c_float),
-        ("distance", c_float),
-        ("slope", c_float),
-        ("saturation", c_float),
-        ("unbound", c_int32),
-        ("iterations", c_int32),
-    ]
-
-
-# ---- vignette ----
-# scale/falloff/brightness/saturation + center[2] + autoratio + whratio + shape = 36 bytes
-class VignetteParams(ctypes.Structure):
-    _fields_ = [
-        ("scale", c_float),
-        ("falloff_scale", c_float),
-        ("brightness", c_float),
-        ("saturation", c_float),
-        ("center", c_float * 2),   # ✅ array
-        ("autoratio", c_int32),
-        ("whratio", c_float),
-        ("shape", c_float),
-        ("dithering", c_int32),
-        ("unbound", c_int32),
-    ]
-
-
-
-# ---- grain ----
-# int + 2 floats = 12 bytes（照你 JSON）
-class GrainParams(ctypes.Structure):
-    # 16 bytes in your sample XMP: int + 3 floats
-    _fields_ = [
-        ("channel", c_int32),
-        ("scale", c_float),
-        ("strength", c_float),
-        ("midtones", c_float),
-    ]
-# (kept from your previous code)
 class ColorBalanceRGBParams(ctypes.Structure):
     _fields_ = [
         ("shadows_Y", c_float), ("shadows_C", c_float), ("shadows_H", c_float),
@@ -364,7 +200,6 @@ class ColorBalanceRGBParams(ctypes.Structure):
         ("vibrance", c_float), ("grey_fulcrum", c_float), ("contrast", c_float),
         ("saturation_formula", c_int32),
     ]
-
 
 class ColorEqualParams(ctypes.Structure):
     _fields_ = [
@@ -388,26 +223,81 @@ class ColorEqualParams(ctypes.Structure):
         ("hue_shift", c_float),
     ]
 
+class ChannelMixerRGBParams(ctypes.Structure):
+    _fields_ = [
+        ("red", c_float * CHANNEL_SIZE),
+        ("green", c_float * CHANNEL_SIZE),
+        ("blue", c_float * CHANNEL_SIZE),
+        ("saturation", c_float * CHANNEL_SIZE),
+        ("lightness", c_float * CHANNEL_SIZE),
+        ("grey", c_float * CHANNEL_SIZE),
+
+        ("normalize_R", c_int32),
+        ("normalize_G", c_int32),
+        ("normalize_B", c_int32),
+        ("normalize_sat", c_int32),
+        ("normalize_light", c_int32),
+        ("normalize_grey", c_int32),
+
+        ("illuminant", c_int32),
+        ("illum_fluo", c_int32),
+        ("illum_led", c_int32),
+        ("adaptation", c_int32),
+
+        ("x", c_float),
+        ("y", c_float),
+        ("temperature", c_float),
+        ("gamut", c_float),
+
+        ("clip", c_int32),
+        ("version", c_int32),
+    ]
+
+# filmicrgb: gz in your sample, but struct is build-sensitive. Prefer params_gz passthrough.
+class FilmicRGBParams(ctypes.Structure):
+    _fields_ = [
+        ("grey_point_source", c_float),
+        ("black_point_source", c_float),
+        ("white_point_source", c_float),
+        ("reconstruct_threshold", c_float),
+        ("reconstruct_feather", c_float),
+        ("reconstruct_bloom_vs_details", c_float),
+        ("reconstruct_grey_vs_color", c_float),
+        ("reconstruct_structure_vs_texture", c_float),
+        ("security_factor", c_float),
+        ("grey_point_target", c_float),
+        ("black_point_target", c_float),
+        ("white_point_target", c_float),
+        ("output_power", c_float),
+        ("latitude", c_float),
+        ("contrast", c_float),
+        ("saturation", c_float),
+        ("balance", c_float),
+        ("noise_level", c_float),
+
+        ("preserve_color", c_int32),
+        ("version", c_int32),
+        ("auto_hardness", c_int32),
+        ("custom_grey", c_int32),
+        ("high_quality_reconstruction", c_int32),
+        ("noise_distribution", c_int32),
+        ("shadows", c_int32),
+        ("highlights", c_int32),
+        ("compensate_icc_black", c_int32),
+        ("spline_version", c_int32),
+        ("enable_highlight_reconstruction", c_int32),
+    ]
+
 
 OP_TO_STRUCT = {
     "exposure": ExposureParams,
+    "filmicrgb": FilmicRGBParams,
     "sigmoid": SigmoidParams,
     "toneequal": ToneEqualParams,
-    "temperature": TemperatureParams,
-    "diffuse": DiffuseParams,
-    "hazeremoval": HazeRemovalParams,
-    "vignette": VignetteParams,
-    "grain": GrainParams,
     "colorbalancergb": ColorBalanceRGBParams,
     "colorequal": ColorEqualParams,
+    "channelmixerrgb": ChannelMixerRGBParams,
 }
-
-
-def _as_float(v: Any) -> float:
-    # allow "inf"/"-inf"/"nan" as strings in JSON
-    if isinstance(v, str):
-        return float(v.strip())
-    return float(v)
 
 
 def fill_struct(st: ctypes.Structure, params: Dict[str, Any]) -> None:
@@ -421,14 +311,13 @@ def fill_struct(st: ctypes.Structure, params: Dict[str, Any]) -> None:
                 if not isinstance(v, list):
                     continue
                 for i in range(min(len(cur), len(v))):
-                    cur[i] = _as_float(v[i])
+                    cur[i] = float(v[i])
             else:
                 if field_type is c_float:
-                    setattr(st, field_name, _as_float(v))
+                    setattr(st, field_name, float(v))
                 else:
                     setattr(st, field_name, int(v))
         except Exception:
-            # never abort whole run
             continue
 
 
@@ -437,7 +326,7 @@ def build_params_string(op: str, mcfg: Dict[str, Any]) -> Optional[str]:
     if isinstance(mcfg.get("params_gz"), str) and mcfg["params_gz"].startswith("gz"):
         return mcfg["params_gz"]
     if isinstance(mcfg.get("params_hex"), str):
-        return str(mcfg["params_hex"]).strip().lower()
+        return mcfg["params_hex"].lower()
 
     params = mcfg.get("params")
     if not isinstance(params, dict):
@@ -451,8 +340,10 @@ def build_params_string(op: str, mcfg: Dict[str, Any]) -> Optional[str]:
     fill_struct(st, params)
     raw = bytes(st)
 
+    # Optional size sanity (do NOT crash whole run)
     expected = mcfg.get("_expected_bytes")
     if isinstance(expected, int) and expected > 0 and len(raw) != expected:
+        # skip writing params if layout mismatch
         return None
 
     force_format = mcfg.get("format")  # "hex" / "gz" / None
@@ -460,12 +351,6 @@ def build_params_string(op: str, mcfg: Dict[str, Any]) -> Optional[str]:
         force_format = None
 
     return encode_params(op, raw, force_format=force_format)
-
-
-def run_darktable_cli(cli: str, input_img: str, xmp_path: str, output_img: str) -> int:
-    # Use list-form args on POSIX; on Windows shell=True is simpler but less safe.
-    cmd = f'"{cli}" "{input_img}" "{xmp_path}" "{output_img}"'
-    return os.system(cmd)
 
 
 def gen(input_path, config, output_path) -> int:
@@ -489,13 +374,11 @@ def gen(input_path, config, output_path) -> int:
         print("[ERR] json must be an object (or contain 'modules' object)", file=sys.stderr)
         return 2
 
-    patched: List[str] = []
-    inserted: List[str] = []
-    not_found: List[str] = []
-    skipped_params: List[str] = []
+    patched, not_found = [], []
 
     for op, mcfg in modules.items():
         if not isinstance(mcfg, dict):
+            not_found.append(op)
             continue
 
         enabled = mcfg.get("enabled")
@@ -507,26 +390,15 @@ def gen(input_path, config, output_path) -> int:
         try:
             params_str = build_params_string(op, mcfg)
         except Exception as e:
-            if not True:
-                print(f"[WARN] {op}: build params failed, skipped params ({e})")
+            # never abort; just skip this module
+            if not args.quiet:
+                print(f"[WARN] {op}: build params failed, skipped ({e})")
             params_str = None
 
-        if params_str is None and ("params" in mcfg or "params_hex" in mcfg or "params_gz" in mcfg):
-            skipped_params.append(op)
-
         doc2, ok = patch_operation(doc, op, enabled_val, modversion_val, params_str)
+        doc = doc2
         if ok:
-            doc = doc2
             patched.append(op)
-            continue
-
-        if True:
-            doc3, ok2 = insert_operation(doc, op, enabled_val, modversion_val, params_str)
-            if ok2:
-                doc = doc3
-                inserted.append(op)
-            else:
-                not_found.append(op)
         else:
             not_found.append(op)
 
@@ -535,22 +407,14 @@ def gen(input_path, config, output_path) -> int:
     except Exception as e:
         print(f"[ERR] write xmp failed: {e}", file=sys.stderr)
         return 2
-    
+
     if True:
-        print(f"[OK] wrote: {output_path}" + (" (dry-run)" if False else ""))
-        if patched:
-            print("[OK] patched:", ", ".join(patched))
-        if inserted:
-            print("[OK] inserted:", ", ".join(inserted))
-        if skipped_params:
-            print("[WARN] params skipped (struct/size mismatch):", ", ".join(skipped_params))
-        if not_found:
-            print("[WARN] operations not found:", ", ".join(not_found))
-
+        print("[OK] wrote:", "sunset_out.xmp")
+        print("[OK] patched:", ", ".join(patched) if patched else "(none)")
+        print("[WARN] not found:", ", ".join(not_found) if not_found else "(none)")
     os.system(f"darktable-cli {input_path} sunset_out.xmp {output_path}")
-
     return output_path
 
 
 if __name__ == "__main__":
-    raise SystemExit(gen())
+    raise SystemExit(gen({}))
