@@ -299,9 +299,7 @@
     "factors": {
       "exposure": 0.0,
       "temperature": 0.0,
-      "tint": 0.0,
-      "vibrance": 0.0,
-      "saturation": 0.0
+      "tint": 0.0
     },
     "modules": {
       "colorbalancergb": { "enabled": 1, "modversion": 5, "params": { ... } },
