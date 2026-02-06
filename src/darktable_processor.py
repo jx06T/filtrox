@@ -126,17 +126,13 @@ if __name__ == "__main__":
     target_path = "tt/result.jpg"
     
     params = {
-        # # 1. 嘗試全域彩度偏移 (通常 -0.5 是完全無色)
-        # "global_C": -0.5, 
+        "global_C": -0.5, 
         
-        # # 2. 嘗試全域飽和度乘數 (0.0 應該是黑白)
-        # "saturation_global": 0.0, 
+        "saturation_global": 0.0, 
         
-        # # 3. 嘗試把亮度壓到最低 (測試 Y 軸極端值)
-        # "global_Y": -0.5, 
+        "global_Y": -0.5, 
         
-        # # 4. 強制指定飽和度公式為 1 (新算法)
-        # "saturation_formula": 1 
+        "saturation_formula": 1 
     }
 
     try:

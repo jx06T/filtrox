@@ -50,6 +50,7 @@ class PhotoEditingAgent:
         """
         System Prompt: 教導 AI 成為 Darktable 專家
         """
+        
         return f"""
 You are an expert Colorist utilizing Darktable's "Color Balance RGB" module.
 Your task is to translate user requests into precise technical parameters.
