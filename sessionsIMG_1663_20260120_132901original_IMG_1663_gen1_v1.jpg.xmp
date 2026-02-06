@@ -14,19 +14,19 @@
    exif:GPSLatitude="25,2.331167N"
    exif:GPSAltitudeRef="0"
    exif:GPSAltitude="328/10"
-   xmpMM:DerivedFrom="IMG_1663.JPG"
+   xmpMM:DerivedFrom="sessionsIMG_1663_20260120_132901original_IMG_1663_gen1_v1.jpg"
    xmp:Rating="1"
-   darktable:import_timestamp="63901752951127086"
-   darktable:change_timestamp="63905954836062969"
+   darktable:import_timestamp="63905955320067060"
+   darktable:change_timestamp="-1"
    darktable:export_timestamp="-1"
    darktable:print_timestamp="-1"
    darktable:xmp_version="5"
    darktable:raw_params="0"
    darktable:auto_presets_applied="1"
-   darktable:history_end="6"
+   darktable:history_end="4"
    darktable:iop_order_version="5"
    darktable:history_basic_hash="02d4cdbda625305c5e181669466f51d2"
-   darktable:history_current_hash="69ffe8267986f3a96c74a342a9d98b62">
+   darktable:history_current_hash="02d4cdbda625305c5e181669466f51d2">
    <darktable:masks_history>
     <rdf:Seq/>
    </darktable:masks_history>
@@ -76,33 +76,10 @@
       darktable:multi_priority="0"
       darktable:blendop_version="14"
       darktable:blendop_params="gz11eJxjYIAACQYYOOHEgAZY0QWAgBGLGANDgz0Ej1Q+dcF/IADRAGpyHQU="/>
-     <rdf:li
-      darktable:num="4"
-      darktable:operation="colorbalancergb"
-      darktable:enabled="1"
-      darktable:modversion="5"
-      darktable:params="gz05eJxjYCAVNNij0kgyh77aENI98a2NHTLNCMQANQcH4w=="
-      darktable:multi_name=""
-      darktable:multi_name_hand_edited="0"
-      darktable:multi_priority="0"
-      darktable:blendop_version="14"
-      darktable:blendop_params="gz08eJxjYGBgYAFiCQYYOOHEgAZY0QWAgBGLGANDgz0Ej1Q+dlAx68oBEMbFxwX+AwGIBgCbGCeh"/>
-     <rdf:li
-      darktable:num="5"
-      darktable:operation="colorbalancergb"
-      darktable:enabled="1"
-      darktable:modversion="5"
-      darktable:params="gz03eJxjYCAVNNjD6H//66H4v92iglowG6YKyN6PTffEtzZ2IPVQeh8jUAwAxcAc2A=="
-      darktable:multi_name=""
-      darktable:multi_name_hand_edited="0"
-      darktable:multi_priority="0"
-      darktable:blendop_version="14"
-      darktable:blendop_params="gz08eJxjYGBgYAFiCQYYOOHEgAZY0QWAgBGLGANDgz0Ej1Q+dlAx68oBEMbFxwX+AwGIBgCbGCeh"/>
     </rdf:Seq>
    </darktable:history>
    <dc:subject>
     <rdf:Bag>
-     <rdf:li>changed</rdf:li>
      <rdf:li>darktable</rdf:li>
      <rdf:li>format</rdf:li>
      <rdf:li>jpg</rdf:li>
@@ -110,7 +87,6 @@
    </dc:subject>
    <lr:hierarchicalSubject>
     <rdf:Bag>
-     <rdf:li>darktable|changed</rdf:li>
      <rdf:li>darktable|format|jpg</rdf:li>
     </rdf:Bag>
    </lr:hierarchicalSubject>

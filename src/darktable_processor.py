@@ -1,14 +1,12 @@
 import os
 import subprocess
 import tempfile
-from .dt_patcher import XMPPatcher
 from .xmp_gen import gen
 
 
 class DarktableProcessor:
     def __init__(self, binary_path="darktable-cli"):
         self.binary_path = binary_path
-
   
 
     def apply_effect(self, input_path: str, ai_params: dict, output_path: str):

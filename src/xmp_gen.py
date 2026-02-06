@@ -462,18 +462,18 @@ def build_params_string(op: str, mcfg: Dict[str, Any]) -> Optional[str]:
     return encode_params(op, raw, force_format=force_format)
 
 
-def run_darktable_cli(cli: str, input_img: str, xmp_path: str, output_img: str) -> int:
-    # Use list-form args on POSIX; on Windows shell=True is simpler but less safe.
-    cmd = f'"{cli}" "{input_img}" "{xmp_path}" "{output_img}"'
-    return os.system(cmd)
+# def run_darktable_cli(cli: str, input_img: str, xmp_path: str, output_img: str) -> int:
+#     # Use list-form args on POSIX; on Windows shell=True is simpler but less safe.
+#     cmd = f'"{cli}" "{input_img}" "{xmp_path}" "{output_img}"'
+#     return os.system(cmd)
 
 
 def gen(input_path, config, output_path) -> int:
-    ap = argparse.ArgumentParser()
 
     try:
         doc = ""
-        doc = read_text_keep_newlines("sunset.xmp")
+        # doc = read_text_keep_newlines("sunset.xmp")
+        doc = read_text_keep_newlines("ssss.xmp")
     except Exception as e:
         print(f"[ERR] read xmp failed: {e}", file=sys.stderr)
         return 2
@@ -493,6 +493,15 @@ def gen(input_path, config, output_path) -> int:
     inserted: List[str] = []
     not_found: List[str] = []
     skipped_params: List[str] = []
+    root, ext = os.path.splitext(output_path)
+
+    print(f"原始路徑: {output_path}")
+    print(f"分割後的根路徑 (root): {root}") # 輸出: sessions/112學年度生教組長李少博_20260206_111326/original_112學年度生教組長李少博_gen1_v1
+    # print(f"分割後的副檔名 (ext): {ext}")   # 輸出: .jpg
+
+    # 2. 替換副檔名為 '.xmp'
+    # output_xmp_path = root + ".xmp"
+    output_xmp_path = "xxx.xmp"
 
     for op, mcfg in modules.items():
         if not isinstance(mcfg, dict):
@@ -507,8 +516,7 @@ def gen(input_path, config, output_path) -> int:
         try:
             params_str = build_params_string(op, mcfg)
         except Exception as e:
-            if not True:
-                print(f"[WARN] {op}: build params failed, skipped params ({e})")
+            print(f"[WARN] {op}: build params failed, skipped params ({e})")
             params_str = None
 
         if params_str is None and ("params" in mcfg or "params_hex" in mcfg or "params_gz" in mcfg):
@@ -530,8 +538,10 @@ def gen(input_path, config, output_path) -> int:
         else:
             not_found.append(op)
 
+
     try:
-        write_text_keep_newlines("sunset_out.xmp", doc)
+        write_text_keep_newlines(output_xmp_path, doc)
+        
     except Exception as e:
         print(f"[ERR] write xmp failed: {e}", file=sys.stderr)
         return 2
@@ -547,10 +557,34 @@ def gen(input_path, config, output_path) -> int:
         if not_found:
             print("[WARN] operations not found:", ", ".join(not_found))
 
-    os.system(f"darktable-cli {input_path} sunset_out.xmp {output_path}")
+    os.system(f"darktable-cli {input_path} {output_xmp_path} {output_path}")
 
     return output_path
 
 
 if __name__ == "__main__":
-    raise SystemExit(gen())
+    input_image_path = "IMG_1663.jpg"
+    config_file_path = "b.json" # 假設你把 JSON 內容保存到這個檔案
+    output_image_path = "test/t6.jpg"
+
+    parsed_config = {}
+    try:
+        with open(config_file_path, 'r', encoding='utf-8') as f:
+            parsed_config = json.load(f)
+        print(f"成功從 {config_file_path} 加載並解析配置檔案。")
+    except FileNotFoundError:
+        print(f"錯誤: 配置檔案未找到於 {config_file_path}", file=sys.stderr)
+        sys.exit(1) # 以錯誤碼 1 退出
+    except json.JSONDecodeError:
+        print(f"錯誤: 無法從 {config_file_path} 解析 JSON。這是一個有效的 JSON 檔案嗎?", file=sys.stderr)
+        sys.exit(1) # 以錯誤碼 1 退出
+    except Exception as e:
+        print(f"讀取配置時發生意外錯誤: {e}", file=sys.stderr)
+        sys.exit(1) # 以錯誤碼 1 退出
+
+    # print(parsed_config)
+    # --- 調用 gen 函數 ---
+    # 將 gen 函數的返回值作為程序的退出碼
+    exit_code = gen(input_image_path, parsed_config, output_image_path)
+
+    sys.exit(exit_code) # 使用 sys.exit() 以確保程序以正確的狀態碼退出
