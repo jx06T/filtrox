@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import time
 import json
+from typing import Optional, Dict, List
 from datetime import datetime
 from pathlib import Path
 from PIL import Image
@@ -35,8 +36,87 @@ if "session_id" not in st.session_state:
     st.session_state.current_variations = [] # 當前生成的組 (含路徑與參數)
     st.session_state.selected_params = None  # 使用者選中的上一代參數
     st.session_state.original_path = None    # 原始圖片路徑
+    st.session_state.disliked_factors = {
+        "exposure": [],
+        "temperature": [],
+        "tint": [],
+        "vibrance": [],
+        "saturation": [],
+    }
+    st.session_state.liked_factors = {
+        "exposure": [],
+        "temperature": [],
+        "tint": [],
+        "vibrance": [],
+        "saturation": [],
+    }
 
 # ================= 3. 輔助函式 =================
+
+FACTOR_TOLERANCES = {
+    "exposure": 0.05,
+    "temperature": 50.0,
+    "tint": 1.0,
+    "vibrance": 3.0,
+    "saturation": 1.0,
+}
+
+def _extract_factors(config: dict) -> Optional[Dict[str, float]]:
+    factors = config.get("factors")
+    if not isinstance(factors, dict):
+        return None
+    extracted = {}
+    for key in FACTOR_TOLERANCES:
+        val = factors.get(key)
+        if isinstance(val, (int, float)):
+            extracted[key] = float(val)
+    return extracted if extracted else None
+
+def _is_disliked(factors: Dict[str, float], disliked: Dict[str, list]) -> bool:
+    for key, val in factors.items():
+        tol = FACTOR_TOLERANCES.get(key, 0.0)
+        for blocked in disliked.get(key, []):
+            if abs(val - blocked) <= tol:
+                return True
+    return False
+
+def _filter_variations(variations: list, disliked: Dict[str, list]) -> list:
+    filtered = []
+    for var in variations:
+        factors = _extract_factors(var)
+        if factors and _is_disliked(factors, disliked):
+            continue
+        filtered.append(var)
+    return filtered
+
+def _remember_disliked_from_unselected(selected_idx: int, variations: list) -> None:
+    for idx, var in enumerate(variations):
+        if idx == selected_idx:
+            continue
+        factors = _extract_factors(var.get("params", {}))
+        if not factors:
+            continue
+        for key, val in factors.items():
+            if not any(abs(val - existing) <= FACTOR_TOLERANCES[key] for existing in st.session_state.disliked_factors[key]):
+                st.session_state.disliked_factors[key].append(val)
+
+def _remember_liked_from_selected(selected: dict) -> None:
+    factors = _extract_factors(selected.get("params", {}))
+    if not factors:
+        return
+    for key, val in factors.items():
+        st.session_state.liked_factors[key].append(val)
+
+def _compute_preferred_factors() -> Optional[Dict[str, float]]:
+    preferred = {}
+    for key, values in st.session_state.liked_factors.items():
+        if values:
+            preferred[key] = sum(values) / len(values)
+    return preferred if preferred else None
+
+def _variation_scale(iteration: int) -> float:
+    # Reduce variation as iterations increase.
+    return max(0.35, 1.0 - 0.15 * max(0, iteration - 1))
 
 def create_session_folder(original_name):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -57,22 +137,40 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
             variations_data = agent.cold_start(prompt)
         else:
             # 迭代階段
+            preferred_factors = _compute_preferred_factors()
+            variation_scale = _variation_scale(iter_idx)
             if feedback.strip():
                 # 有文字建議
-                variations_data = agent.text_refine(st.session_state.selected_params, feedback)
+                variations_data = agent.text_refine(
+                    st.session_state.selected_params,
+                    feedback,
+                    st.session_state.disliked_factors,
+                    preferred_factors,
+                    variation_scale,
+                )
             else:
                 # 純點擊 (自動迭代)
-                variations_data = agent.auto_iterate(st.session_state.selected_params)
+                variations_data = agent.auto_iterate(
+                    st.session_state.selected_params,
+                    st.session_state.disliked_factors,
+                    preferred_factors,
+                    variation_scale,
+                )
 
         if not variations_data:
             st.error("AI 生成參數失敗，請檢查 API 狀態。")
             return
 
+        filtered_variations = _filter_variations(variations_data, st.session_state.disliked_factors)
+        if not filtered_variations and variations_data:
+            st.warning("自動過濾後沒有保留的可選方案，已回退到原始結果。")
+            filtered_variations = variations_data
+        print(filtered_variations)
+        
         # 2. 渲染圖片並儲存
         new_variations = []
         session_path = Path(BASE_SAVE_DIR) / st.session_state.session_id
-        
-        for i, var in enumerate(variations_data):
+        for i, var in enumerate(filtered_variations):
             # 檔名規範: {原圖名}_gen{第幾代}_{第幾張}.jpg
             stem = Path(st.session_state.original_path).stem
             file_name = f"{stem}_gen{iter_idx}_v{i+1}.jpg"
@@ -83,13 +181,13 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
             try:
                 processor.apply_effect(
                     input_path=input_img_path,
-                    ai_params=var['parameters'],
+                    ai_params=var,
                     output_path=output_img_path
                 )
                 new_variations.append({
-                    "name": var['name'],
-                    "reasoning": var['reasoning'],
-                    "params": var['parameters'],
+                    "name": "name",
+                    "reasoning": "reasoning",
+                    "params": var,
                     "path": output_img_path
                 })
             except Exception as e:
@@ -153,6 +251,8 @@ else:
                 
                 # 選擇按鈕
                 if st.button(f"🎯 選中方案 {i+1}", key=f"btn_{i}"):
+                    _remember_disliked_from_unselected(i, st.session_state.current_variations)
+                    _remember_liked_from_selected(var)
                     st.session_state.selected_params = var['params']
                     st.toast(f"已選中方案 {i+1}")
 
