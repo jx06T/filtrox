@@ -472,8 +472,8 @@ def gen(input_path, config, output_path) -> int:
 
     try:
         doc = ""
-        # doc = read_text_keep_newlines("sunset.xmp")
-        doc = read_text_keep_newlines("ssss.xmp")
+        doc = read_text_keep_newlines("sunset.xmp")
+        # doc = read_text_keep_newlines("ssss.xmp")
     except Exception as e:
         print(f"[ERR] read xmp failed: {e}", file=sys.stderr)
         return 2
@@ -563,9 +563,9 @@ def gen(input_path, config, output_path) -> int:
 
 
 if __name__ == "__main__":
-    input_image_path = "IMG_1663.jpg"
+    input_image_path = "IMG_2856.jpg"
     config_file_path = "b.json" # 假設你把 JSON 內容保存到這個檔案
-    output_image_path = "test/t6.jpg"
+    output_image_path = "test/2856/t8.jpg"
 
     parsed_config = {}
     try:

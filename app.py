@@ -20,7 +20,7 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 CLI_PATH = "darktable-cli"  # 確保 darktable-cli 在 PATH 中
 BASE_SAVE_DIR = Path("sessions") # 存放所有修圖紀錄的根目錄
 
-# @st.cache_resource
+@st.cache_resource
 def init_engines():
     llm_service = Gemini(api_key=API_KEY)
     agent = PhotoEditingAgent(llm_provider=llm_service)
@@ -36,6 +36,7 @@ if "session_id" not in st.session_state:
     st.session_state.current_variations = [] # 當前生成的組 (含路徑與參數)
     st.session_state.selected_params = None  # 使用者選中的上一代參數
     st.session_state.original_path = None    # 原始圖片路徑
+
     st.session_state.disliked_factors = {
         "exposure": [],
         "temperature": [],
@@ -50,6 +51,12 @@ if "session_id" not in st.session_state:
         "vibrance": [],
         "saturation": [],
     }
+    # [修正] 新增狀態：暫存用戶當前代數選中的方案索引
+    st.session_state.current_selected_idx_for_feedback = None 
+    # [修正] 新增狀態：標記用戶是否已為當前代做出選擇
+    st.session_state.has_made_selection_in_current_gen = False 
+
+    st.session_state.selected_quick_feedback = []
 
 # ================= 3. 輔助函式 =================
 
@@ -61,13 +68,26 @@ FACTOR_TOLERANCES = {
     "saturation": 1.0,
 }
 
-def _extract_factors(config: dict) -> Optional[Dict[str, float]]:
-    factors = config.get("factors")
-    if not isinstance(factors, dict):
+def _extract_factors(variation_or_params: dict) -> Optional[Dict[str, float]]:
+    """
+    從一個變體字典 (e.g., {"params": {"factors": {...}}}) 或直接從 params 字典 (e.g., {"factors": {...}}) 中提取 factors。
+    """
+    factors_section = None
+
+    # 情況A: 傳入的是 params 字典 (例如從 agent 直接回傳的數據)
+    if "factors" in variation_or_params and isinstance(variation_or_params["factors"], dict):
+        factors_section = variation_or_params["factors"]
+    # 情況B: 傳入的是 session_state 中的 variation 字典 (包含 'params' key)
+    elif "params" in variation_or_params and isinstance(variation_or_params["params"], dict):
+        if "factors" in variation_or_params["params"] and isinstance(variation_or_params["params"]["factors"], dict):
+            factors_section = variation_or_params["params"]["factors"]
+    
+    if not isinstance(factors_section, dict):
         return None
+
     extracted = {}
     for key in FACTOR_TOLERANCES:
-        val = factors.get(key)
+        val = factors_section.get(key)
         if isinstance(val, (int, float)):
             extracted[key] = float(val)
     return extracted if extracted else None
@@ -89,23 +109,64 @@ def _filter_variations(variations: list, disliked: Dict[str, list]) -> list:
         filtered.append(var)
     return filtered
 
-def _remember_disliked_from_unselected(selected_idx: int, variations: list) -> None:
+def _apply_feedback_from_selection() -> None:
+    """
+    [修正] 核心邏輯修改：
+    只有在點擊「產生下一代」時調用。
+    比較「選中」與「未選中」的方案，只有當差異足夠大時，才將未選中的加入 disliked。
+    """
+    if st.session_state.current_selected_idx_for_feedback is None:
+        return
+
+    selected_idx = st.session_state.current_selected_idx_for_feedback
+    variations = st.session_state.current_variations
+
+    # 獲取被選中方案的關鍵因素
+    selected_var = variations[selected_idx]
+    selected_factors = _extract_factors(selected_var)
+    
+    if not selected_factors:
+        # 重置狀態並返回
+        st.session_state.current_selected_idx_for_feedback = None
+        st.session_state.has_made_selection_in_current_gen = False
+        return
+
     for idx, var in enumerate(variations):
         if idx == selected_idx:
+            continue # 跳過選中的方案
+        
+        unselected_factors = _extract_factors(var)
+        if not unselected_factors:
             continue
-        factors = _extract_factors(var.get("params", {}))
-        if not factors:
-            continue
-        for key, val in factors.items():
-            if not any(abs(val - existing) <= FACTOR_TOLERANCES[key] for existing in st.session_state.disliked_factors[key]):
-                st.session_state.disliked_factors[key].append(val)
 
-def _remember_liked_from_selected(selected: dict) -> None:
-    factors = _extract_factors(selected.get("params", {}))
-    if not factors:
-        return
-    for key, val in factors.items():
-        st.session_state.liked_factors[key].append(val)
+        # 遍歷未選中方案的每一個參數
+        for key, unselected_val in unselected_factors.items():
+            # 獲取選中方案的對應參數值
+            selected_val = selected_factors.get(key)
+
+            # 如果選中方案沒有這個參數，或者參數值差異顯著，才視為不喜歡
+            if selected_val is None:
+                # 這種情況較少見，但如果發生，可以認為是不喜歡的
+                is_different = True
+            else:
+                # 使用容錯值來判斷差異是否「顯著」
+                tol = FACTOR_TOLERANCES.get(key, 0.0)
+                is_different = abs(unselected_val - selected_val) > tol
+
+            if is_different:
+                # 只有當參數值確實不同時，才將其加入不喜歡列表
+                # 並且檢查是否已存在相似值
+                if not any(abs(unselected_val - existing) <= FACTOR_TOLERANCES[key] for existing in st.session_state.disliked_factors[key]):
+                    st.session_state.disliked_factors[key].append(unselected_val)
+    
+    # 2. 記錄喜歡的方案 (Liked)
+    for key, val in selected_factors.items():
+        if not any(abs(val - existing) <= FACTOR_TOLERANCES[key] for existing in st.session_state.liked_factors[key]):
+            st.session_state.liked_factors[key].append(val)
+
+    # 重置選擇狀態
+    st.session_state.current_selected_idx_for_feedback = None
+    st.session_state.has_made_selection_in_current_gen = False
 
 def _compute_preferred_factors() -> Optional[Dict[str, float]]:
     preferred = {}
@@ -124,6 +185,44 @@ def create_session_folder(original_name):
     path = BASE_SAVE_DIR / folder_name
     path.mkdir(parents=True, exist_ok=True)
     return path # 回傳 Path 物件
+
+
+
+@st.cache_data
+def get_session_history(session_id: str) -> Dict[int, List[str]]:
+    """掃描 session 資料夾，回傳按代數整理好的圖片路徑字典"""
+    if not session_id:
+        return {}
+        
+    history = {}
+    session_path = BASE_SAVE_DIR / session_id
+    if not session_path.exists():
+        return {}
+
+    # 使用 glob 尋找符合模式的檔案
+    # 檔名格式: {stem}_gen{代數}_v{版本}.jpg
+    image_files = sorted(session_path.glob("*_gen*_v*.jpg"))
+    
+    for img_path in image_files:
+        try:
+            # 從檔名解析代數
+            parts = img_path.stem.split('_')
+            gen_part = [p for p in parts if p.startswith('gen')]
+            if not gen_part:
+                continue
+            
+            generation_num = int(gen_part[0].replace('gen', ''))
+            
+            if generation_num not in history:
+                history[generation_num] = []
+            history[generation_num].append(str(img_path))
+        except (IndexError, ValueError):
+            # 檔名格式不符，跳過
+            continue
+            
+    # 按代數排序
+    return dict(sorted(history.items()))
+
 
 def run_generation(prompt=None, is_refinement=False, feedback=""):
     """執行 AI 生成與 Darktable 渲染的核心邏輯"""
@@ -165,7 +264,6 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
         if not filtered_variations and variations_data:
             st.warning("自動過濾後沒有保留的可選方案，已回退到原始結果。")
             filtered_variations = variations_data
-        print(filtered_variations)
         
         # 2. 渲染圖片並儲存
         new_variations = []
@@ -179,14 +277,15 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
             input_img_path = Path(st.session_state.original_path).as_posix()
             
             try:
+                # [維持外部調用] var 這裡是 parameters 字典
                 processor.apply_effect(
                     input_path=input_img_path,
-                    ai_params=var,
+                    ai_params=var, 
                     output_path=output_img_path
                 )
                 new_variations.append({
-                    "name": "name",
-                    "reasoning": "reasoning",
+                    "name": f"方案 {i+1}", # 簡化 name 處理
+                    "reasoning": "AI 生成", # 簡化 reasoning
                     "params": var,
                     "path": output_img_path
                 })
@@ -194,6 +293,10 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
                 st.error(f"渲染失敗: {e}")
 
         st.session_state.current_variations = new_variations
+        # 重置當前代的選擇狀態，確保新一代開始時沒有殘留選擇
+        st.session_state.current_selected_idx_for_feedback = None
+        st.session_state.has_made_selection_in_current_gen = False
+
 
 # ================= 4. UI 介面 =================
 
@@ -210,21 +313,59 @@ with st.sidebar:
             folder = create_session_folder(uploaded_file.name)
             st.session_state.session_id = folder.name
             
-            # 使用 .as_posix()
             orig_save_path = (folder / f"original_{uploaded_file.name}").as_posix()
             with open(orig_save_path, "wb") as f:
                 f.write(uploaded_file.getbuffer())
             
             st.session_state.original_path = orig_save_path
+            
+            # 重置所有狀態
+            st.session_state.iteration = 0
+            st.session_state.current_variations = []
+            st.session_state.selected_params = None
+            st.session_state.disliked_factors = {k: [] for k in FACTOR_TOLERANCES.keys()}
+            st.session_state.liked_factors = {k: [] for k in FACTOR_TOLERANCES.keys()}
+            st.session_state.current_selected_idx_for_feedback = None
+            st.session_state.has_made_selection_in_current_gen = False
+            st.rerun()
 
     st.divider()
     if st.session_state.original_path:
         st.image(st.session_state.original_path, caption="原始圖片", use_container_width=True)
 
+    
+    # --- 頁尾資訊 ---
+    if st.session_state.session_id:
+        with st.expander("📁 檔案紀錄資訊"):
+            st.write(f"當前工作資料夾: `sessions/{st.session_state.session_id}`")
+            st.write(f"累計迭代次數: {st.session_state.iteration}")
+            st.write("**不喜歡的參數紀錄 (Disliked):**")
+            st.json(st.session_state.disliked_factors)
+            st.write("**喜歡的參數紀錄 (Liked):**")
+            st.json(st.session_state.liked_factors)
+            
+
 # --- 主畫面邏輯 ---
 if not st.session_state.original_path:
     st.info("請先在左側上傳圖片。")
 else:
+    if st.session_state.session_id:
+        history_data = get_session_history(st.session_state.session_id)
+        if not history_data:
+            st.caption("尚無歷史紀錄")
+        else:
+            # for gen_num, img_paths in reversed(history_data.items()):
+            for gen_num, img_paths in history_data.items():
+                with st.expander(f"第 {gen_num} 代"):
+                    # 可以在一行內顯示多張小圖
+                    cols = st.columns(len(img_paths))
+                    for i, path in enumerate(img_paths):
+                        with cols[i]:
+                            st.image(path, use_container_width=True)
+    else:
+        st.caption("上傳圖片後將顯示歷史紀錄")
+
+    
     # 第一階段：初始風格要求
     if st.session_state.iteration == 0:
         st.subheader("🚀 第一步：告訴 AI 你想要的風格")
@@ -232,7 +373,8 @@ else:
         if st.button("開始修圖"):
             if init_prompt:
                 run_generation(prompt=init_prompt)
-                st.rerun()
+                get_session_history.clear() # 清理快取
+                st.rerun() 
             else:
                 st.warning("請輸入描述內容")
     
@@ -243,33 +385,101 @@ else:
         cols = st.columns(len(st.session_state.current_variations))
         
         for i, var in enumerate(st.session_state.current_variations):
+            # [修正] 視覺反饋：檢查該方案是否為「當前暫時選中」
+            is_selected = (st.session_state.current_selected_idx_for_feedback == i)
+            
             with cols[i]:
-                st.image(var['path'], caption=f"方案 {i+1}: {var['name']}", use_container_width=True)
-                with st.expander("查看 AI 理由與參數"):
-                    st.write(f"**理由:** {var['reasoning']}")
+                # 使用 HTML/CSS 增加選中邊框
+                border_style = "3px solid #FF4B4B" if is_selected else "1px solid #ddd"
+                st.markdown(
+                    f'<div style="border: {border_style}; padding: 5px; border-radius: 5px;">', 
+                    unsafe_allow_html=True
+                )
+                st.image(var['path'], caption=f"方案 {i+1}", use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+                
+                with st.expander("查看參數"):
                     st.json(var['params'])
                 
-                # 選擇按鈕
-                if st.button(f"🎯 選中方案 {i+1}", key=f"btn_{i}"):
-                    _remember_disliked_from_unselected(i, st.session_state.current_variations)
-                    _remember_liked_from_selected(var)
+                # [修正] 選中按鈕邏輯
+                # 點擊只更新暫存狀態，不立即寫入 disliked/liked
+                if st.button(f"🎯 {'已' if st.session_state.current_selected_idx_for_feedback == i else ''}選中方案 {i+1}", key=f"btn_{i}"):
                     st.session_state.selected_params = var['params']
-                    st.toast(f"已選中方案 {i+1}")
+                    st.session_state.current_selected_idx_for_feedback = i
+                    st.session_state.has_made_selection_in_current_gen = True
+                    st.rerun() # 刷新以顯示邊框
 
         st.divider()
 
         # 迭代控制區
+        # 只要前一代有被選中的參數 (意味著已經進入了迭代循環)，就顯示介面
+        # 但按鈕的有效性取決於當前代是否做出了選擇
         if st.session_state.selected_params:
             st.subheader("🔄 繼續迭代")
-            col_fb, col_go = st.columns([4, 1])
-            feedback = col_fb.text_input("輸入修改建議 (若留白則由 AI 自動優化)", placeholder="例如：再亮一點、陰影藍一點...")
-            
-            if col_go.button("產生下一代", type="primary"):
-                run_generation(is_refinement=True, feedback=feedback)
-                st.rerun()
 
-# --- 頁尾資訊 ---
-if st.session_state.session_id:
-    with st.expander("📁 檔案紀錄資訊"):
-        st.write(f"當前工作資料夾: `sessions/{st.session_state.session_id}`")
-        st.write(f"累計迭代次數: {st.session_state.iteration}")
+            quick_feedback_options = {
+                "太暗": "Increase the exposure and lift the shadows.",
+                "太亮": "Reduce the exposure and lower the highlights.",
+                "太黃": "Make the color temperature cooler (more blue).",
+                "太藍": "Make the color temperature warmer (more yellow).",
+                "鮮豔點": "Increase the vibrance and saturation.",
+                "清淡點": "Decrease the vibrance and saturation.",
+            }
+
+            # --- 快捷按鈕 UI 與邏輯 (支援多選和高亮) ---
+            st.write("**快捷指令 (可多選):**")
+            
+            keys = list(quick_feedback_options.keys())
+            # 建立一個持久的列容器，避免在循環中重複創建
+            row1_cols = st.columns(3)
+            row2_cols = st.columns(3)
+            
+            for i, key in enumerate(keys):
+                # 根據索引分配到對應的行和列
+                col = row1_cols[i] if i < 3 else row2_cols[i - 3]
+                
+                with col:
+                    is_selected = key in st.session_state.selected_quick_feedback
+                    button_type = "primary" if is_selected else "secondary"
+                    
+                    if st.button(key, use_container_width=True, type=button_type):
+                        if is_selected:
+                            st.session_state.selected_quick_feedback.remove(key)
+                        else:
+                            st.session_state.selected_quick_feedback.append(key)
+                        st.rerun()
+
+            # --- 文字輸入與生成按鈕 ---
+            # 使用新的佈局來放置輸入框和按鈕
+            feedback_col, button_col = st.columns([4, 1])
+
+            with feedback_col:
+                feedback = st.text_input("或輸入更詳細的建議：", placeholder="例如：讓天空更藍...")
+
+            with button_col:
+                # 為了對齊，我們可以使用一個空元素或調整垂直對齊，但簡單的 st.button 通常也夠用
+                st.write("") # 佔位符，讓按鈕和輸入框頂部大致對齊
+                if st.button("產生下一代", type="primary", use_container_width=True):
+                    if st.session_state.has_made_selection_in_current_gen:
+                        
+                        # 組合所有反饋
+                        quick_prompts = [quick_feedback_options[key] for key in st.session_state.selected_quick_feedback]
+                        all_prompts = quick_prompts + [feedback.strip()]
+                        final_feedback = ". ".join(p for p in all_prompts if p)
+                        
+                        # 顯示即將發送的指令
+                        if final_feedback:
+                            st.info(f"🤖 **正在傳送給 AI 的指令:** {final_feedback}")
+                        
+                        # 執行生成
+                        _apply_feedback_from_selection()
+                        run_generation(is_refinement=True, feedback=final_feedback) # 注意：run_generation 內部不應該有 st.rerun()
+
+                        # 清理狀態並觸發刷新
+                        st.session_state.selected_quick_feedback.clear()
+                        get_session_history.clear() # 清除歷史快取
+                        st.rerun() # 在所有操作完成後，統一在這裡刷新
+                    else:
+                        st.warning("請先點擊上方圖片下的「🎯 選中方案」按鈕。")
+
+

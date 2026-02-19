@@ -1,0 +1,182 @@
+{
+    "factors": {
+        "exposure": 0.25,
+        "temperature": 55,
+        "tint": 1.2,
+        "vibrance": 21,
+        "saturation": 10.5
+    },
+    "modules": {
+        "colorbalancergb": {
+            "enabled": 1,
+            "modversion": 5,
+            "params": {
+                "shadows_Y": -0.01,
+                "shadows_C": 0.03,
+                "shadows_H": 238,
+                "midtones_C": 0.015,
+                "midtones_H": 300,
+                "highlights_C": 0.025,
+                "highlights_H": 332,
+                "global_C": 0.015,
+                "saturation_global": 0.155,
+                "vibrance": 0.125,
+                "contrast": 0.03,
+                "brilliance_highlights": 0.03,
+                "mask_grey_fulcrum": 0.22,
+                "grey_fulcrum": 0.28,
+                "saturation_formula": 1,
+                "global_Y": 0.06,
+                "brilliance_global": 0.02
+            }
+        },
+        "colorequal": {
+            "enabled": 1,
+            "modversion": 4,
+            "params": {
+                "sat_cyan": 1.32,
+                "sat_magenta": 1.27,
+                "bright_cyan": 1.1,
+                "bright_magenta": 1.08,
+                "threshold": 0.08,
+                "smoothing_hue": 0.8,
+                "use_filter": 0,
+                "contrast": 0,
+                "white_level": 1,
+                "chroma_size": 1,
+                "param_size": 1,
+                "hue_shift": 0
+            }
+        },
+        "exposure": {
+            "enabled": 1,
+            "modversion": 7,
+            "params": {
+                "exposure": 0.3,
+                "black": 0,
+                "mode": 0,
+                "deflicker_percentile": 50,
+                "deflicker_target_level": -4,
+                "compensate_exposure_bias": 0,
+                "compensate_hilite_pres": 0
+            }
+        },
+        "sigmoid": {
+            "enabled": 1,
+            "modversion": 3,
+            "params": {
+                "middle_grey_contrast": 1.25,
+                "contrast_skewness": 0,
+                "display_white_target": 110,
+                "display_black_target": 0.055,
+                "color_processing": 0,
+                "hue_preservation": 70,
+                "red_inset": 0,
+                "red_rotation": 0,
+                "green_inset": 0,
+                "green_rotation": 0,
+                "blue_inset": 0,
+                "blue_rotation": 0,
+                "purity": 0,
+                "base_primaries": 0
+            }
+        },
+        "toneequal": {
+            "enabled": 1,
+            "modversion": 2,
+            "params": {
+                "shadows": 0.05,
+                "midtones": 0.18,
+                "highlights": 0.18,
+                "noise": 0,
+                "ultra_deep_blacks": 0,
+                "deep_blacks": 0,
+                "blacks": 0.03,
+                "whites": 0,
+                "speculars": 0,
+                "blending": 0,
+                "smoothing": 1,
+                "feathering": 1,
+                "quantization": 0,
+                "contrast_boost": 0,
+                "exposure_boost": 0,
+                "details": 0,
+                "method": 2,
+                "iterations": 1
+            }
+        },
+        "temperature": {
+            "enabled": 1,
+            "modversion": 4,
+            "params": {
+                "red": 1.035,
+                "green": 0.998,
+                "blue": 0.97,
+                "various": "inf",
+                "preset": 2
+            }
+        },
+        "diffuse": {
+            "enabled": 1,
+            "modversion": 2,
+            "params": {
+                "iterations": 2,
+                "sharpness": 0,
+                "radius": 5,
+                "radius_center": 2,
+                "regularization": 0.4,
+                "variance_threshold": 0.05,
+                "threshold": 0.03,
+                "anisotropy_first": 0,
+                "anisotropy_second": 0,
+                "anisotropy_third": 0,
+                "anisotropy_fourth": 0,
+                "first": 0.07,
+                "second": 0.04,
+                "third": 0,
+                "fourth": 0
+            }
+        },
+        "hazeremoval": {
+            "enabled": 0,
+            "modversion": 3,
+            "params": {
+                "strength": 0,
+                "distance": 0,
+                "slope": 0,
+                "saturation": 1,
+                "unbound": 0,
+                "iterations": 1
+            }
+        },
+        "vignette": {
+            "enabled": 0,
+            "modversion": 4,
+            "params": {
+                "scale": 100,
+                "falloff_scale": 100,
+                "brightness": 0,
+                "saturation": 0,
+                "center": [
+                    0,
+                    0
+                ],
+                "autoratio": 0,
+                "whratio": 1,
+                "shape": 1,
+                "dithering": 0,
+                "unbound": 0
+            }
+        },
+        "grain": {
+            "enabled": 0,
+            "modversion": 2,
+            "params": {
+                "channel": 2,
+                "scale": 1000,
+                "strength": 0,
+                "midtones_bias": 50
+            }
+        }
+    }
+}
