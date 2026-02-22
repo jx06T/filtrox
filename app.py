@@ -300,6 +300,44 @@ def run_generation(prompt=None, is_refinement=False, feedback=""):
 
 # ================= 4. UI 介面 =================
 
+
+@st.fragment
+def render_history_fragment(session_id: str, current_iteration: int):
+    """
+    獨立渲染歷史紀錄的 Fragment。
+    只有當 session_id 或 current_iteration 改變時，這裡才會重新渲染。
+    這能保證在同一代內點擊按鈕時，歷史紀錄絕對不會閃爍。
+    """
+    history_data = get_session_history(session_id)
+    if not history_data:
+        st.caption("尚無歷史紀錄")
+    else:
+        for gen_num, img_paths in history_data.items():
+            with st.expander(f"第 {gen_num} 代"):
+                num_images = len(img_paths)
+                image_width_unit = 2
+                total_width_units = 10
+                
+                col_ratios = [image_width_unit] * num_images
+                remaining_space = total_width_units - sum(col_ratios)
+                
+                if remaining_space > 0:
+                    col_ratios.append(remaining_space)
+                    
+                cols = st.columns(col_ratios)
+                
+                for i, path in enumerate(img_paths):
+                    if i < len(cols):
+                        with cols[i]:
+                            # 為了完美呈現燈箱效果，建議這裡加上 st.dialog (可選)
+                            st.image(path, use_container_width=True, width=150)
+                            # 如果您想加上點擊放大的按鈕，可以解除下面註解：
+                            # if st.button("放大", key=f"view_hist_{path}", use_container_width=True):
+                            #    with st.dialog(f"第 {gen_num} 代 - 方案 {i+1}"):
+                            #        st.image(path, use_container_width=True)
+
+
+
 st.set_page_config(page_title="AI Darktable 迭代助手", layout="wide")
 st.title("🎨 AI Darktable 迭代修圖助手")
 
@@ -350,34 +388,7 @@ if not st.session_state.original_path:
     st.info("請先在左側上傳圖片。")
 else:
     if st.session_state.session_id:
-        history_data = get_session_history(st.session_state.session_id)
-        if not history_data:
-            st.caption("尚無歷史紀錄")
-        else:
-            # for gen_num, img_paths in reversed(history_data.items()):
-            for gen_num, img_paths in history_data.items():
-                with st.expander(f"第 {gen_num} 代"):
-                    num_images = len(img_paths)
-                
-                    image_width_unit = 2
-                    total_width_units = 10
-                    
-                    col_ratios = [image_width_unit] * num_images
-                    remaining_space = total_width_units - sum(col_ratios)
-                    
-                    # 如果有剩餘空間，就添加一個空白欄
-                    if remaining_space > 0:
-                        col_ratios.append(remaining_space)
-                        
-                    cols = st.columns(col_ratios)
-                    
-                    for i, path in enumerate(img_paths):
-                        # 確保我們只在圖片欄裡放圖片
-                        if i < len(cols):
-                            with cols[i]:
-                                st.image(path, use_container_width=True, width=150)
-                                # 也可以加上標題
-                                # st.caption(Path(path).name)
+        render_history_fragment(st.session_state.session_id, st.session_state.iteration)
     else:
         st.caption("上傳圖片後將顯示歷史紀錄")
 
@@ -394,108 +405,121 @@ else:
             else:
                 st.warning("請輸入描述內容")
     
-    # 第二階段：迭代顯示區
-    if st.session_state.iteration > 0 and st.session_state.current_variations:
-        st.subheader(f"✨ 第 {st.session_state.iteration} 代生成結果")
+    @st.fragment
+    def render_interactive_workspace():
         
-        cols = st.columns(len(st.session_state.current_variations))
+        # --- 定義回呼函式 (Callbacks) ---
+        # 這些函式會在按鈕被點擊後，且腳本重新執行"之前"被呼叫
         
-        for i, var in enumerate(st.session_state.current_variations):
-            # [修正] 視覺反饋：檢查該方案是否為「當前暫時選中」
-            is_selected = (st.session_state.current_selected_idx_for_feedback == i)
-            
-            with cols[i]:
-                # 使用 HTML/CSS 增加選中邊框
-                border_style = "3px solid #FF4B4B" if is_selected else "1px solid #ddd"
-                st.markdown(
-                    f'<div style="border: {border_style}; padding: 5px; border-radius: 5px;">', 
-                    unsafe_allow_html=True
-                )
-                st.image(var['path'], caption=f"方案 {i+1}", use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+        def select_variation_callback(idx, params):
+            """處理選中方案的邏輯"""
+            st.session_state.selected_params = params
+            st.session_state.current_selected_idx_for_feedback = idx
+            st.session_state.has_made_selection_in_current_gen = True
+
+        def toggle_quick_feedback_callback(key):
+            """處理快捷按鈕的切換邏輯"""
+            if key in st.session_state.selected_quick_feedback:
+                st.session_state.selected_quick_feedback.remove(key)
+            else:
+                st.session_state.selected_quick_feedback.append(key)
                 
-                with st.expander("查看參數"):
-                    st.json(var['params'])
-                
-                # [修正] 選中按鈕邏輯
-                # 點擊只更新暫存狀態，不立即寫入 disliked/liked
-                if st.button(f"🎯 {'已' if st.session_state.current_selected_idx_for_feedback == i else ''}選中方案 {i+1}", key=f"btn_{i}"):
-                    st.session_state.selected_params = var['params']
-                    st.session_state.current_selected_idx_for_feedback = i
-                    st.session_state.has_made_selection_in_current_gen = True
-                    st.rerun() # 刷新以顯示邊框
+        # ----------------------------------------
 
-        st.divider()
-
-        # 迭代控制區
-        # 只要前一代有被選中的參數 (意味著已經進入了迭代循環)，就顯示介面
-        # 但按鈕的有效性取決於當前代是否做出了選擇
-        if st.session_state.selected_params:
-            st.subheader("🔄 繼續迭代")
-
-            quick_feedback_options = {
-                "太暗": "Increase the exposure and lift the shadows.",
-                "太亮": "Reduce the exposure and lower the highlights.",
-                "太黃": "Make the color temperature cooler (more blue).",
-                "太藍": "Make the color temperature warmer (more yellow).",
-                "鮮豔點": "Increase the vibrance and saturation.",
-                "清淡點": "Decrease the vibrance and saturation.",
-            }
-
-            # --- 快捷按鈕 UI 與邏輯 (支援多選和高亮) ---
-            st.write("**快捷指令 (可多選):**")
+        # 第二階段：迭代顯示區
+        if st.session_state.iteration > 0 and st.session_state.current_variations:
+            st.subheader(f"✨ 第 {st.session_state.iteration} 代生成結果")
             
-            keys = list(quick_feedback_options.keys())
-            # 建立一個持久的列容器，避免在循環中重複創建
-            row1_cols = st.columns(3)
-            row2_cols = st.columns(3)
+            cols = st.columns(len(st.session_state.current_variations))
             
-            for i, key in enumerate(keys):
-                # 根據索引分配到對應的行和列
-                col = row1_cols[i] if i < 3 else row2_cols[i - 3]
+            for i, var in enumerate(st.session_state.current_variations):
+                # 這裡讀取的狀態，保證是回呼函式執行過後的"最新"狀態
+                is_selected = (st.session_state.current_selected_idx_for_feedback == i)
                 
-                with col:
-                    is_selected = key in st.session_state.selected_quick_feedback
-                    button_type = "primary" if is_selected else "secondary"
+                with cols[i]:
+                    border_style = "3px solid #FF4B4B" if is_selected else "1px solid #ddd"
+                    st.markdown(
+                        f'<div style="border: {border_style}; padding: 5px; border-radius: 5px;">', 
+                        unsafe_allow_html=True
+                    )
+                    st.image(var['path'], caption=f"方案 {i+1}", use_container_width=True)
+                    st.markdown('</div>', unsafe_allow_html=True)
                     
-                    if st.button(key, use_container_width=True, type=button_type):
-                        if is_selected:
-                            st.session_state.selected_quick_feedback.remove(key)
+                    with st.expander("查看參數"):
+                        st.json(var['params'])
+                    
+                    # 【關鍵修改】：使用 on_click 和 args 來綁定回呼函式
+                    st.button(
+                        f"🎯 {'已' if is_selected else ''}選中方案 {i+1}", 
+                        key=f"btn_{i}",
+                        on_click=select_variation_callback,
+                        args=(i, var['params']) # 傳遞參數給回呼函式
+                    )
+
+            st.divider()
+
+            # 迭代控制區
+            if st.session_state.selected_params:
+                st.subheader("🔄 繼續迭代")
+
+                quick_feedback_options = {
+                    "太暗": "Increase the exposure and lift the shadows.",
+                    "太亮": "Reduce the exposure and lower the highlights.",
+                    "太黃": "Make the color temperature cooler (more blue).",
+                    "太藍": "Make the color temperature warmer (more yellow).",
+                    "鮮豔點": "Increase the vibrance and saturation.",
+                    "清淡點": "Decrease the vibrance and saturation.",
+                }
+
+                st.write("**快捷指令 (可多選):**")
+                
+                keys = list(quick_feedback_options.keys())
+                row1_cols = st.columns(3)
+                row2_cols = st.columns(3)
+                
+                for i, key in enumerate(keys):
+                    col = row1_cols[i] if i < 3 else row2_cols[i - 3]
+                    
+                    with col:
+                        # 這裡讀取的狀態也是最新的
+                        is_selected = key in st.session_state.selected_quick_feedback
+                        button_type = "primary" if is_selected else "secondary"
+                        
+                        # 【關鍵修改】：使用 on_click 綁定回呼函式
+                        st.button(
+                            key, 
+                            use_container_width=True, 
+                            type=button_type,
+                            on_click=toggle_quick_feedback_callback,
+                            args=(key,) # 注意這裡傳遞單個參數時需要逗號
+                        )
+
+                feedback_col, button_col = st.columns([4, 1])
+
+                with feedback_col:
+                    feedback = st.text_input("或輸入更詳細的建議：", placeholder="例如：讓天空更藍...")
+
+                with button_col:
+                    st.write("") 
+                    # 產生下一代按鈕的邏輯保持不變，因為它觸發的是全局的 run_generation
+                    if st.button("產生下一代", type="primary", use_container_width=True):
+                        if st.session_state.has_made_selection_in_current_gen:
+                            
+                            quick_prompts = [quick_feedback_options[k] for k in st.session_state.selected_quick_feedback]
+                            all_prompts = quick_prompts + [feedback.strip()]
+                            final_feedback = ". ".join(p for p in all_prompts if p)
+                            
+                            if final_feedback:
+                                st.info(f"🤖 **正在傳送給 AI 的指令:** {final_feedback}")
+                            
+                            _apply_feedback_from_selection()
+                            run_generation(is_refinement=True, feedback=final_feedback)
+                            
+                            st.session_state.selected_quick_feedback.clear()
+                            get_session_history.clear() 
+                            st.rerun() # 這裡依然需要全局刷新
                         else:
-                            st.session_state.selected_quick_feedback.append(key)
-                        st.rerun()
+                            st.warning("請先點擊上方圖片下的「🎯 選中方案」按鈕。")
 
-            # --- 文字輸入與生成按鈕 ---
-            # 使用新的佈局來放置輸入框和按鈕
-            feedback_col, button_col = st.columns([4, 1])
-
-            with feedback_col:
-                feedback = st.text_input("或輸入更詳細的建議：", placeholder="例如：讓天空更藍...")
-
-            with button_col:
-                # 為了對齊，我們可以使用一個空元素或調整垂直對齊，但簡單的 st.button 通常也夠用
-                st.write("") # 佔位符，讓按鈕和輸入框頂部大致對齊
-                if st.button("產生下一代", type="primary", use_container_width=True):
-                    if st.session_state.has_made_selection_in_current_gen:
-                        
-                        # 組合所有反饋
-                        quick_prompts = [quick_feedback_options[key] for key in st.session_state.selected_quick_feedback]
-                        all_prompts = quick_prompts + [feedback.strip()]
-                        final_feedback = ". ".join(p for p in all_prompts if p)
-                        
-                        # 顯示即將發送的指令
-                        if final_feedback:
-                            st.info(f"🤖 **正在傳送給 AI 的指令:** {final_feedback}")
-                        
-                        # 執行生成
-                        _apply_feedback_from_selection()
-                        run_generation(is_refinement=True, feedback=final_feedback) # 注意：run_generation 內部不應該有 st.rerun()
-
-                        # 清理狀態並觸發刷新
-                        st.session_state.selected_quick_feedback.clear()
-                        get_session_history.clear() # 清除歷史快取
-                        st.rerun() # 在所有操作完成後，統一在這裡刷新
-                    else:
-                        st.warning("請先點擊上方圖片下的「🎯 選中方案」按鈕。")
-
-
+    # 4. 呼叫這個工作區 Fragment
+    render_interactive_workspace()
