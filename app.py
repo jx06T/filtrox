@@ -357,11 +357,27 @@ else:
             # for gen_num, img_paths in reversed(history_data.items()):
             for gen_num, img_paths in history_data.items():
                 with st.expander(f"第 {gen_num} 代"):
-                    # 可以在一行內顯示多張小圖
-                    cols = st.columns(len(img_paths))
+                    num_images = len(img_paths)
+                
+                    image_width_unit = 2
+                    total_width_units = 10
+                    
+                    col_ratios = [image_width_unit] * num_images
+                    remaining_space = total_width_units - sum(col_ratios)
+                    
+                    # 如果有剩餘空間，就添加一個空白欄
+                    if remaining_space > 0:
+                        col_ratios.append(remaining_space)
+                        
+                    cols = st.columns(col_ratios)
+                    
                     for i, path in enumerate(img_paths):
-                        with cols[i]:
-                            st.image(path, use_container_width=True)
+                        # 確保我們只在圖片欄裡放圖片
+                        if i < len(cols):
+                            with cols[i]:
+                                st.image(path, use_container_width=True, width=150)
+                                # 也可以加上標題
+                                # st.caption(Path(path).name)
     else:
         st.caption("上傳圖片後將顯示歷史紀錄")
 
