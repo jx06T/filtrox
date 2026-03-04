@@ -10,7 +10,7 @@ load_dotenv()
 # ================= 設定區 =================
 API_KEY = os.getenv("GEMINI_API_KEY")
 INPUT_IMAGE = "IMG_1663.jpg"        # 請確保此檔案存在於同一目錄
-CLI_PATH = "darktable-cli"       # 請確保 darktable-cli 在 PATH 中，或填寫絕對路徑
+CLI_PATH = os.getenv("DARKTABLE_CLI_PATH", "darktable-cli")
 # ==========================================
 
 def main():

@@ -10,7 +10,12 @@ class DarktableProcessor:
   
 
     def apply_effect(self, input_path: str, ai_params: dict, output_path: str):
-        final_output_path = gen(input_path, ai_params, output_path)
+        final_output_path = gen(
+            input_path,
+            ai_params,
+            output_path,
+            darktable_cli_path=self.binary_path,
+        )
         return final_output_path
 
 # ==========================================
@@ -41,4 +46,3 @@ if __name__ == "__main__":
         print(f"✨ 渲染完成！最終檔案儲存於: {actual_path}")
     except Exception as e:
         print(f"❌ 發生錯誤: {e}")
-

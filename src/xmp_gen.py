@@ -17,6 +17,7 @@ import base64
 import ctypes
 import json
 import os
+import subprocess
 import re
 import sys
 import zlib
@@ -468,7 +469,13 @@ def build_params_string(op: str, mcfg: Dict[str, Any]) -> Optional[str]:
 #     return os.system(cmd)
 
 
-def gen(input_path, config, output_path) -> int:
+def gen(
+    input_path,
+    config,
+    output_path,
+    darktable_cli_path: Optional[str] = None,
+    output_xmp_path: Optional[str] = None,
+) -> int:
 
     try:
         doc = ""
@@ -499,9 +506,9 @@ def gen(input_path, config, output_path) -> int:
     print(f"分割後的根路徑 (root): {root}") # 輸出: sessions/112學年度生教組長李少博_20260206_111326/original_112學年度生教組長李少博_gen1_v1
     # print(f"分割後的副檔名 (ext): {ext}")   # 輸出: .jpg
 
-    # 2. 替換副檔名為 '.xmp'
-    # output_xmp_path = root + ".xmp"
-    output_xmp_path = "xxx.xmp"
+    # 2. 替換副檔名為 '.xmp'（與輸出圖片同名）
+    if output_xmp_path is None:
+        output_xmp_path = root + ".xmp"
 
     for op, mcfg in modules.items():
         if not isinstance(mcfg, dict):
@@ -557,7 +564,18 @@ def gen(input_path, config, output_path) -> int:
         if not_found:
             print("[WARN] operations not found:", ", ".join(not_found))
 
-    os.system(f"darktable-cli {input_path} {output_xmp_path} {output_path}")
+    cli_path = darktable_cli_path or os.getenv("DARKTABLE_CLI_PATH", "darktable-cli")
+    try:
+        subprocess.run(
+            [cli_path, input_path, output_xmp_path, output_path],
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"[ERR] darktable-cli failed with exit code: {e.returncode}", file=sys.stderr)
+        return e.returncode or 1
+    except FileNotFoundError:
+        print(f"[ERR] darktable-cli not found: {cli_path}", file=sys.stderr)
+        return 127
 
     return output_path
 
