@@ -16,7 +16,15 @@ class DarktableProcessor:
             output_path,
             darktable_cli_path=self.binary_path,
         )
-        return final_output_path
+        # return final_output_path
+
+        # 檢查回傳值是否為字串路徑，且該路徑檔案真的存在
+        if isinstance(final_output_path, str) and os.path.exists(final_output_path):
+            return final_output_path
+        
+        # 如果失敗，回傳 None 或拋出異常，讓 app.py 知道不要去讀取圖片
+        print(f"[DEBUG] apply_effect failed. Received from gen: {final_output_path}")
+        return None
 
 # ==========================================
 # 測試區

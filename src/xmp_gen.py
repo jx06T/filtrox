@@ -12,6 +12,11 @@ Tested to be robust against:
 - multiline <rdf:li .../> tags
 """
 
+import platform
+import tempfile
+
+import shutil
+import uuid
 import argparse
 import base64
 import ctypes
@@ -564,20 +569,61 @@ def gen(
         if not_found:
             print("[WARN] operations not found:", ", ".join(not_found))
 
+    is_windows = platform.system() == "Windows"
     cli_path = darktable_cli_path or os.getenv("DARKTABLE_CLI_PATH", "darktable-cli")
+
+    # 2. 建立暫存設定目錄 (使用 tempfile 更安全)
+    tmp_config_dir = tempfile.mkdtemp(prefix="dt_config_")
+
+    if is_windows:
+        full_cmd = [
+            cli_path,
+            input_path,
+            output_xmp_path,
+            output_path,
+            "--core",              # 核心參數開始
+            "--configdir", tmp_config_dir,
+            "--disable-opencl"
+        ]
+    else:
+        full_cmd = [
+            "xvfb-run", "-a",
+            cli_path,
+            input_path,
+            output_xmp_path,
+            output_path,
+            "--core",              # 核心參數開始
+            "--configdir", tmp_config_dir,
+            "--disable-opencl"
+        ]
+    print(f"[DEBUG] Platform: {platform.system()}, Executing: {' '.join(full_cmd)}")
+
     try:
-        subprocess.run(
-            [cli_path, input_path, output_xmp_path, output_path],
+        # 執行指令
+        result = subprocess.run(
+            full_cmd,
             check=True,
+            capture_output=True,
+            text=True
         )
+        
+        # 關鍵：執行完後一定要確認檔案真的產生了
+        if os.path.exists(output_path):
+            return output_path
+        else:
+            print(f"[ERR] Darktable finished but output file missing: {output_path}")
+            return 1
+
     except subprocess.CalledProcessError as e:
-        print(f"[ERR] darktable-cli failed with exit code: {e.returncode}", file=sys.stderr)
+        print(f"[ERR] darktable-cli failed (Code {e.returncode})")
+        print(f"[STDOUT] {e.stdout}")
+        print(f"[STDERR] {e.stderr}")
         return e.returncode or 1
     except FileNotFoundError:
-        print(f"[ERR] darktable-cli not found: {cli_path}", file=sys.stderr)
+        print(f"[ERR] Executable not found. CLI path: {cli_path}")
         return 127
-
-    return output_path
+    finally:
+        shutil.rmtree(tmp_config_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":
