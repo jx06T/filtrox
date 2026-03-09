@@ -19,12 +19,13 @@ load_dotenv()
 # ================= 1. 配置與初始化 =================
 API_KEY = os.getenv("GEMINI_API_KEY")
 CLI_PATH = os.getenv("DARKTABLE_CLI_PATH", "darktable-cli")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 BASE_SAVE_DIR = Path("sessions") # 存放所有修圖紀錄的根目錄
 SAVED_FILTERS_FILE = Path("saved_filters/filters.json")
 
 @st.cache_resource
 def init_engines():
-    llm_service = Gemini(api_key=API_KEY)
+    llm_service = Gemini(api_key=API_KEY,model_name=GEMINI_MODEL)
     agent = PhotoEditingAgent(llm_provider=llm_service)
     processor = DarktableProcessor(binary_path=CLI_PATH)
     return agent, processor

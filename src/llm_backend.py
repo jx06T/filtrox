@@ -14,7 +14,7 @@ class BaseLLM(ABC):
 
 class Gemini(BaseLLM):
     """Google Gemini 的具體實作"""
-    def __init__(self, api_key: str, model_name: str = 'gemini-2.5-pro'):
+    def __init__(self, api_key: str, model_name: str = 'gemini-2.5-flash'):
         self.api_key = api_key
         self.model_name = model_name
         self._configure()
