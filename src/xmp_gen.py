@@ -16,8 +16,6 @@ import platform
 import tempfile
 
 import shutil
-import uuid
-import argparse
 import base64
 import ctypes
 import json

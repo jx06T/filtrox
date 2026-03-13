@@ -1,6 +1,4 @@
 import os
-import subprocess
-import tempfile
 from .xmp_gen import gen
 
 
