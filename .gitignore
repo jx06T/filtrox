@@ -14,3 +14,9 @@ sessions
 test
 or
 old
+
+__pycache__
+.devcontainer
+
+src/tt
+src/ai
