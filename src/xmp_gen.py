@@ -485,7 +485,6 @@ def gen(
     try:
         doc = ""
         doc = read_text_keep_newlines("sunset.xmp")
-        # doc = read_text_keep_newlines("ssss.xmp")
     except Exception as e:
         print(f"[ERR] read xmp failed: {e}", file=sys.stderr)
         return 2
