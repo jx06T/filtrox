@@ -20,3 +20,5 @@ __pycache__
 
 src/tt
 src/ai
+
+.DS_Store
